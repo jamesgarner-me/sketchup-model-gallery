@@ -7,7 +7,7 @@ Lets the owner publish or update Models through files and Catalog data, with bui
 ## Requirements
 
 ### Requirement: Catalog entry fields
-Each Catalog entry SHALL have a unique stable ID, title, Description, GLB path, thumbnail path and manual order, and MAY have a Notes path, initial camera settings and a Stage name.
+Each Catalog entry SHALL have a unique stable ID, title, Description, GLB path, thumbnail path and manual order, and MAY have a Notes path, initial camera settings, a Stage name and an Auto-orbit setting.
 
 #### Scenario: Add a Model
 - **WHEN** the owner adds a GLB, thumbnail, optional Notes and a Catalog entry
@@ -17,8 +17,12 @@ Each Catalog entry SHALL have a unique stable ID, title, Description, GLB path, 
 - **WHEN** the owner sets an entry's Stage to `showroom`
 - **THEN** that Model is displayed on the Showroom stage with no viewer code changes
 
+#### Scenario: Enable Auto-orbit
+- **WHEN** the owner sets an entry's Auto-orbit to `true` or to a speed in degrees per second
+- **THEN** that Model orbits on load with no viewer code changes
+
 ### Requirement: Build-time validation
-The build SHALL fail with a clear message when an entry has a duplicate ID, a missing GLB or thumbnail file, or an unknown Stage name. A missing Notes file or path SHALL NOT fail the build.
+The build SHALL fail with a clear message when an entry has a duplicate ID, a missing GLB or thumbnail file, an unknown Stage name, or an invalid Auto-orbit setting. A missing Notes file or path SHALL NOT fail the build.
 
 #### Scenario: Missing GLB
 - **WHEN** an entry's GLB path does not exist
@@ -35,6 +39,10 @@ The build SHALL fail with a clear message when an entry has a duplicate ID, a mi
 #### Scenario: Unknown Stage
 - **WHEN** an entry's Stage is not a known Stage name
 - **THEN** the build fails naming the entry and the Stage
+
+#### Scenario: Invalid Auto-orbit
+- **WHEN** an entry's Auto-orbit is neither a boolean nor an object with a non-zero numeric `degreesPerSecond`
+- **THEN** the build fails naming the entry
 
 ### Requirement: Hosting and routing
 The site SHALL deploy to Vercel on push, with `/models/<id>` served by the single Viewer page, on the default `*.vercel.app` URL.
