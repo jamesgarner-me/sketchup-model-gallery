@@ -61,11 +61,9 @@ test('gallery → viewer → info → reset', async ({ page, isMobile }) => {
   // Reset view returns to the initial framing.
   await page.getByRole('button', { name: 'Reset view' }).click()
   await expect.poll(() => orbit(page), { timeout: 3_000 }).toBe(initial)
-  // Stairs has Auto-orbit; Reset also undoes the turntable turn and leaves it still.
+  // Stairs has Auto-orbit; Reset returns to Initial framing, then restarts the orbit.
   const turntable = () => page.evaluate(() => (document.querySelector('model-viewer') as unknown as { turntableRotation: number }).turntableRotation)
-  expect(await turntable()).toBe(0)
-  await page.waitForTimeout(800)
-  expect(await turntable()).toBe(0)
+  await expect.poll(turntable, { timeout: 3_000, message: 'auto-orbit restarts after Reset' }).not.toBe(0)
 
   // Back to the Gallery.
   await page.getByRole('link', { name: '← Gallery' }).click()

@@ -75,8 +75,12 @@ function start(entry: CatalogEntry) {
     orbitStopped = true
     el.autoRotate = false
   }
+  // Set by Reset view: restart the orbit once the camera has settled, unless the visitor moves first.
+  let orbitRestartPending = false
   el.addEventListener('camera-change', (e) => {
-    if (!orbitStopped && (e as CustomEvent<{ source: string }>).detail.source === 'user-interaction') stopOrbit()
+    if ((e as CustomEvent<{ source: string }>).detail.source !== 'user-interaction') return
+    orbitRestartPending = false
+    if (!orbitStopped) stopOrbit()
   })
 
   let framing: Framing | undefined
@@ -116,8 +120,10 @@ function start(entry: CatalogEntry) {
   resetBtn.addEventListener('click', () => {
     if (!framing) return
     if (orbitSpeed !== undefined) {
+      // Pause during the glide back, undo the turntable turn, then restart once settled.
       stopOrbit()
       el.resetTurntableRotation()
+      orbitRestartPending = true
     }
     const { orbit, target, fov } = framing
     // model-viewer ignores a goal equal to the last one it was given even if the user has since
@@ -128,7 +134,14 @@ function start(entry: CatalogEntry) {
     el.cameraTarget = `${target[0]}m ${target[1]}m ${target[2]}m`
     el.fieldOfView = `${fov}deg`
     window.clearTimeout(jumpTimer)
-    jumpTimer = window.setTimeout(() => el.jumpCameraToGoal(), RESET_FALLBACK_MS)
+    jumpTimer = window.setTimeout(() => {
+      el.jumpCameraToGoal()
+      if (!orbitRestartPending) return
+      orbitRestartPending = false
+      orbitStopped = false
+      // If Info is open, its close handler resumes the orbit instead.
+      if (!infoDialog.open) el.autoRotate = true
+    }, RESET_FALLBACK_MS)
   })
 
   stage.appendChild(el)
