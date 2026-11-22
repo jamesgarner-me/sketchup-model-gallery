@@ -34,4 +34,6 @@ The stairs GLB (SimLab SketchUp export) has one root assembly node with 20 child
 
 ## Findings
 
-To be filled in after the iPhone check.
+- 2026-11-23, first iPhone check: "a good start". The effect is worth pursuing (not dropped).
+- Wanted next: explode relative to visible groups, i.e. only the groups currently shown, or within a chosen Layer or group. Depends on the parallel `model-layers` change (show and hide top-level groups).
+- Status: on hold until `model-layers` is merged; then revisit this spike to explode within visible Layers or groups. The spike branch `explode-spike` is kept, not deployed.
