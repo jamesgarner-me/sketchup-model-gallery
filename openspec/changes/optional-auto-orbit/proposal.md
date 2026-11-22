@@ -26,7 +26,7 @@ None.
 ## Decisions (from grilling)
 
 - Orbit stops for the rest of the visit on the first visitor touch, drag or zoom.
-- Reset view returns to Initial framing (undoing the turntable turn) and stays still.
+- Reset view returns to Initial framing (undoing the turntable turn) and, once the camera has settled, restarts Auto-orbit. The next visitor input stops it again. (Revised: originally Reset left the Model still.)
 - Optional per-Model speed in degrees per second, default 18°/s; negative reverses.
 - Disabled when the device prefers reduced motion.
 - Paused while Info is open; resumes on close if the visitor has not taken control.
