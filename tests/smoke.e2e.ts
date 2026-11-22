@@ -79,7 +79,7 @@ test('gallery → viewer → info → reset', async ({ page, isMobile }) => {
   await expect.poll(turntable, { timeout: 3_000, message: 'auto-orbit restarts after Reset' }).not.toBe(0)
 
   // Back to the Gallery.
-  await page.getByRole('link', { name: '← Gallery' }).click()
+  await page.getByRole('link', { name: 'Gallery', exact: true }).click()
   await expect(page).toHaveURL(/\/$/)
 })
 
