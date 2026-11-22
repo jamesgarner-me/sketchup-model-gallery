@@ -13,7 +13,7 @@
 ## 3. Deploy
 
 - [ ] 3.1 Connect the GitHub repo to Vercel with auto-deploy
-- [ ] 3.2 Verify `/models/anything` serves the viewer on the hosted site, including refresh
+- [x] 3.2 Verify `/models/anything` serves the viewer on the hosted site, including refresh
 
 ## 4. Phone validation and findings
 
