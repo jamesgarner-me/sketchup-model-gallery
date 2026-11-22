@@ -3,22 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Model viewer (spike)</title>
-    <style>
-      html, body { margin: 0; height: 100%; overscroll-behavior: none; }
-      model-viewer { width: 100%; height: 100dvh; background: #eceff1; touch-action: none; }
-    </style>
+    <title>Model viewer</title>
   </head>
   <body>
-    <!-- Spike: hardcoded path; replace with the owner's export. -->
-    <model-viewer
-      src="/models/stairs-james-design-v1-backup.glb"
-      alt="Stairs design"
-      camera-controls
-      touch-action="none"
-      shadow-intensity="0.6"
-      exposure="1"
-    ></model-viewer>
-    <script type="module" src="/src/model.ts"></script>
+    <div class="viewer">
+      <div id="stage" class="stage"></div>
+
+      <header class="topbar">
+        <a class="btn" id="back" href="/">&larr; Gallery</a>
+        <h1 id="title"></h1>
+      </header>
+
+      <div id="loading" class="loading" role="progressbar" aria-label="Loading model" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="loading-fill" id="loading-fill"></div>
+      </div>
+
+      <section id="error" class="state" role="alert" hidden>
+        <p>This model couldn't be loaded. Check your connection and try again.</p>
+        <div class="state-actions">
+          <button class="btn" id="retry" type="button">Retry</button>
+          <a class="btn" href="/">Back to Gallery</a>
+        </div>
+      </section>
+
+      <section id="notfound" class="state" hidden>
+        <h2>Model not found</h2>
+        <p>We couldn't find that model.</p>
+        <div class="state-actions"><a class="btn" href="/">Back to Gallery</a></div>
+      </section>
+
+      <footer class="controls" id="controls">
+        <p class="hint" id="hint"></p>
+        <div class="controls-row">
+          <button class="btn" id="reset" type="button">Reset view</button>
+          <span id="info-slot"></span>
+        </div>
+      </footer>
+    </div>
+    <script type="module" src="/src/viewer/main.ts"></script>
   </body>
 </html>
