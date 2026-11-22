@@ -3,6 +3,7 @@ import type { ModelViewerElement } from '@google/model-viewer'
 import { findModel, type CatalogEntry } from '../catalog'
 import { siteName } from '../config'
 import { getNotesHtml } from '../notes'
+import { getStage } from '../stages'
 import { parseModelId } from './path'
 import '../base.css'
 import './viewer.css'
@@ -43,8 +44,17 @@ function start(entry: CatalogEntry) {
   el.setAttribute('alt', entry.title)
   el.setAttribute('camera-controls', '')
   el.setAttribute('touch-action', 'none')
-  el.setAttribute('shadow-intensity', '0.6')
-  el.setAttribute('exposure', '1')
+
+  // Stage: background, lighting and control theme for this Model.
+  const preset = getStage(entry.stage)
+  const viewerEl = document.querySelector<HTMLElement>('.viewer')!
+  viewerEl.dataset.stage = entry.stage ?? 'neutral'
+  viewerEl.dataset.theme = preset.theme
+  el.setAttribute('exposure', String(preset.exposure))
+  el.setAttribute('shadow-intensity', String(preset.shadowIntensity))
+  el.setAttribute('shadow-softness', String(preset.shadowSoftness))
+  el.setAttribute('tone-mapping', preset.toneMapping)
+  if (preset.environmentImage) el.setAttribute('environment-image', preset.environmentImage)
   if (entry.camera?.orbit) el.setAttribute('camera-orbit', entry.camera.orbit)
   if (entry.camera?.target) el.setAttribute('camera-target', entry.camera.target)
   if (entry.camera?.fieldOfView) el.setAttribute('field-of-view', entry.camera.fieldOfView)

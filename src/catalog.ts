@@ -21,6 +21,8 @@ export interface CatalogEntry {
   /** Notes filename inside src/content (optional; defaults to `<id>.md`) */
   notes?: string
   camera?: CameraSettings
+  /** Stage name from src/stages.ts (optional; defaults to neutral) */
+  stage?: string
 }
 
 export const catalog: CatalogEntry[] = (models as CatalogEntry[])

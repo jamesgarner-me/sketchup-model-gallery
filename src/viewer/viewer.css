@@ -42,3 +42,23 @@ dialog.info::backdrop { background: #fff; }
 .prose p, .prose ul, .prose ol { margin: 0 0 1em; }
 .prose ul, .prose ol { padding-left: 1.4em; }
 .prose a { color: var(--accent); }
+
+/* Showroom stage: dark room, soft floor glow under the Model, darkened edges. */
+.viewer[data-stage="showroom"] {
+  background:
+    radial-gradient(ellipse 55% 22% at 50% 78%, rgba(150, 140, 125, .22), rgba(150, 140, 125, 0) 70%),
+    radial-gradient(ellipse 120% 90% at 50% 45%, #1b1b1f 0%, #0c0c0e 55%, #030304 100%);
+}
+.viewer[data-stage="showroom"]::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 0 160px 40px rgba(0, 0, 0, .75); }
+.viewer[data-stage="showroom"] model-viewer { background: transparent; }
+
+/* Dark theme for viewer chrome (the Info dialog lives outside .viewer and stays light). */
+.viewer[data-theme="dark"] { color: #ececf0; }
+.viewer[data-theme="dark"] .topbar, .viewer[data-theme="dark"] .controls { z-index: 2; }
+.viewer[data-theme="dark"] .btn { background: rgba(28, 28, 32, .82); color: #ececf0; border-color: rgba(255, 255, 255, .18); }
+.viewer[data-theme="dark"] .btn:hover { background: rgba(48, 48, 54, .9); }
+.viewer[data-theme="dark"] :focus-visible { outline-color: #8ab4ff; }
+.viewer[data-theme="dark"] .loading { background: rgba(255, 255, 255, .1); }
+.viewer[data-theme="dark"] .loading-fill { background: #8ab4ff; }
+.viewer[data-theme="dark"] .state { background: #0c0c0e; color: #ececf0; z-index: 4; }

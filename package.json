@@ -10,7 +10,8 @@
     "validate": "tsx scripts/validate-catalog.ts",
     "prebuild": "npm run validate",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "make:env": "tsx scripts/make-showroom-env.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",

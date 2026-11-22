@@ -39,3 +39,15 @@ _Avoid_: Docs, readme, article
 **Description**:
 The short summary of a Model shown on its Gallery card and at the top of Info.
 _Avoid_: Blurb, summary, caption
+
+**Stage**:
+The named background-and-lighting preset a Model is displayed in. Every Model has exactly one; the default is the Neutral stage.
+_Avoid_: Scene, environment, backdrop, theme
+
+**Neutral stage**:
+The default Stage: light neutral background with simple even lighting.
+_Avoid_: Default background, light mode
+
+**Showroom stage**:
+A Stage that shows the Model as if on display in a dark room lit by several lights.
+_Avoid_: Dark mode, night mode, dark background

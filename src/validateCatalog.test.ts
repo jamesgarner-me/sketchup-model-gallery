@@ -28,6 +28,15 @@ describe('validateCatalog', () => {
     const { title: _t, ...noTitle } = good
     expect(validateCatalog([noTitle], all)[0]).toContain('"title"')
   })
+  it('accepts a known stage', () => {
+    expect(validateCatalog([{ ...good, stage: 'showroom' }], all, ['neutral', 'showroom'])).toEqual([])
+  })
+  it('fails on an unknown stage, naming entry and stage', () => {
+    const errs = validateCatalog([{ ...good, stage: 'showrom' }], all, ['neutral', 'showroom'])
+    expect(errs).toHaveLength(1)
+    expect(errs[0]).toContain('"a"')
+    expect(errs[0]).toContain('showrom')
+  })
   it('does not fail when notes path points at a missing file', () => {
     expect(validateCatalog([{ ...good, notes: '/content/a.md' }], (p) => p !== '/content/a.md')).toEqual([])
   })

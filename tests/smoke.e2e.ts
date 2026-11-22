@@ -50,6 +50,9 @@ test('gallery → viewer → info → reset', async ({ page, isMobile }) => {
   const dialog = page.getByRole('dialog')
   await expect(dialog).toBeVisible()
   await expect(dialog.getByRole('heading', { name: 'Stairs design' })).toBeVisible()
+  // Stairs is on the dark Showroom stage, but the Info overlay keeps the light reading style.
+  await expect(page.locator('.viewer')).toHaveAttribute('data-theme', 'dark')
+  expect(await dialog.evaluate((d) => getComputedStyle(d).backgroundColor)).toBe('rgb(255, 255, 255)')
   await dialog.getByRole('button', { name: 'Close' }).click()
   await expect(dialog).toBeHidden()
   expect(await orbit(page)).toBe(moved)

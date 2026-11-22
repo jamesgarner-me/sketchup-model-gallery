@@ -6,6 +6,7 @@ export interface ValidatableEntry {
   thumbnail?: unknown
   order?: unknown
   notes?: unknown
+  stage?: unknown
 }
 
 const REQUIRED_STRINGS = ['id', 'title', 'description', 'glb', 'thumbnail'] as const
@@ -18,6 +19,7 @@ const REQUIRED_STRINGS = ['id', 'title', 'description', 'glb', 'thumbnail'] as c
 export function validateCatalog(
   entries: ValidatableEntry[],
   fileExists: (publicPath: string) => boolean,
+  stageNames: readonly string[] = ['neutral'],
 ): string[] {
   const errors: string[] = []
   const seen = new Set<string>()
@@ -41,6 +43,9 @@ export function validateCatalog(
     }
     if (typeof entry.thumbnail === 'string' && entry.thumbnail && !fileExists(entry.thumbnail)) {
       errors.push(`${label}: thumbnail file not found: ${entry.thumbnail}`)
+    }
+    if (entry.stage !== undefined && (typeof entry.stage !== 'string' || !stageNames.includes(entry.stage))) {
+      errors.push(`${label}: unknown stage "${String(entry.stage)}" (known: ${stageNames.join(', ')})`)
     }
   })
 
