@@ -1,5 +1,10 @@
 import { expect, test, type Page } from '@playwright/test'
 
+// Wait for the Model itself to finish loading. Checking that the loading bar is hidden is not
+// enough: right after navigation the bar may not exist yet, which counts as hidden.
+const modelLoaded = (page: Page, timeout = 90_000) =>
+  page.waitForFunction(() => (document.querySelector('model-viewer') as unknown as { loaded?: boolean } | null)?.loaded === true, null, { timeout })
+
 const orbit = (page: Page) =>
   page.evaluate(() => {
     const el = document.querySelector('model-viewer') as unknown as { getCameraOrbit(): { theta: number; phi: number; radius: number } }
@@ -20,7 +25,8 @@ test('gallery → viewer → info → reset', async ({ page, isMobile }) => {
 
   await card.click()
   await expect(page).toHaveURL(/\/models\/stairs$/)
-  await expect(page.locator('#loading')).toBeHidden({ timeout: 60_000 })
+  await modelLoaded(page)
+  await expect(page.locator('#loading')).toBeHidden()
   await page.waitForTimeout(1_000)
   const initial = await orbit(page)
   // On a cold load the Stage lighting can finish after 'load', and rotation starts on first render,
@@ -86,13 +92,15 @@ test('unknown model shows not found', async ({ page }) => {
 test('direct link survives refresh', async ({ page }) => {
   await page.goto('/models/stairs')
   await page.reload()
-  await expect(page.locator('#loading')).toBeHidden({ timeout: 60_000 })
+  await modelLoaded(page)
+  await expect(page.locator('#loading')).toBeHidden()
   await expect(page).toHaveTitle(/Stairs design/)
 })
 
 test('close zoom and non-metallic materials', async ({ page }) => {
   await page.goto('/models/bastings-garden')
-  await expect(page.locator('#loading')).toBeHidden({ timeout: 90_000 })
+  await modelLoaded(page)
+  await expect(page.locator('#loading')).toBeHidden()
   const result = await page.evaluate(async () => {
     const el = document.querySelector('model-viewer') as unknown as {
       cameraOrbit: string
