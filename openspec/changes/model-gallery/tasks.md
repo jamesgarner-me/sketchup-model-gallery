@@ -16,5 +16,5 @@
 ## 3. Verify
 
 - [x] 3.1 Run unit tests, smoke test and `npm run build`
-- [ ] 3.2 Deploy and run the principal journeys against the hosted site (direct link, refresh, Back from Viewer to Gallery)
+- [x] 3.2 Deploy and run the principal journeys against the hosted site (direct link, refresh, Back from Viewer to Gallery)
 - [ ] 3.3 Manual check on iPhone: Gallery layout portrait and landscape, tap card, back to Gallery
