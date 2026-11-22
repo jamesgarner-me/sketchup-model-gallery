@@ -7,7 +7,7 @@ Visitors need to inspect a Model in 3D and recover when lost. Second step after 
 - Minimal Catalog and build-time validation.
 - `/models/<id>` Viewer: gestures, Initial framing, Reset view, loading, load-failure and not-found states.
 - Persistent controls, portrait and landscape layout.
-- Hosting and public-content requirements.
+- Hosting and public-content requirements (hosting itself is already in place; only the requirement is specified here).
 
 ## Capabilities
 
@@ -22,5 +22,4 @@ None.
 ## Impact
 
 - `src/models.json`, `scripts/validate-catalog.ts`, viewer page code, Vitest.
-- Depends on `validate-sketchup-export`.
-- Note: the draft specs reflect pre-validation assumptions; revise them after the export findings.
+- Builds on completed `validate-sketchup-export`: the scaffold, Vercel deploy, GitHub connection and `/models/:id` rewrite already exist, and the export was validated on an iPhone 15 Pro (see `docs/export-findings.md`).
