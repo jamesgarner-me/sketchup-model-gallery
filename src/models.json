@@ -8,5 +8,16 @@
     "order": 1,
     "stage": "showroom",
     "autoOrbit": true
+  },
+  {
+    "id": "bastings-garden",
+    "title": "Bastings Garden",
+    "description": "Front garden design, revision A.",
+    "glb": "/models/bastings-garden.glb",
+    "thumbnail": "/thumbnails/bastings-garden.webp",
+    "order": 2,
+    "camera": {
+      "orbit": "-30deg 62deg 48m"
+    }
   }
 ]
