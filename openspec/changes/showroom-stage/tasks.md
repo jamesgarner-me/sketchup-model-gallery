@@ -20,5 +20,5 @@
 
 - [x] 4.1 Tune lights, exposure and tone mapping with headless screenshots
 - [x] 4.2 Confirm Neutral Models do not request the HDR (temporary neutral entry) and that the build fails on an unknown Stage
-- [ ] 4.3 Run unit tests, smoke tests and build; deploy and check the hosted site
+- [x] 4.3 Run unit tests, smoke tests and build; deploy and check the hosted site
 - [ ] 4.4 Manual check on iPhone: look, legibility of controls, Info still light
