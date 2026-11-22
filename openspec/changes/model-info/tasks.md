@@ -26,4 +26,4 @@
 - [x] 5.1 Run unit tests and `npm run build`
 - [x] 5.2 Browser script: orbit, open Info, close, camera unchanged; Back closes overlay then leaves page; fallback with no Notes
 - [ ] 5.3 Manual check on iPhone (portrait and landscape): open, scroll long Notes, close, Back
-- [ ] 5.4 Deploy and confirm Info works on the hosted site
+- [x] 5.4 Deploy and confirm Info works on the hosted site
