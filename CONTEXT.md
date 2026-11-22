@@ -63,3 +63,7 @@ _Avoid_: Tag, part, SketchUp layer
 **Viewpoint**:
 A fixed eye position, taken from a saved SketchUp Scene in a Model's export, that visitors jump to and look around from without moving. Every saved Scene in the export is a Viewpoint.
 _Avoid_: Scene, saved view, camera, bookmark
+
+**Explode**:
+Pulling a Model's parts apart, by a visitor-controlled amount, so its inside can be inspected; the camera still moves freely at any amount. Parts are the Model's top-level SketchUp groups and, optionally, the groups inside them.
+_Avoid_: Expand, blow up, disassemble

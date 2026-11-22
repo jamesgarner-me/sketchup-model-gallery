@@ -27,6 +27,17 @@ model-viewer { background: var(--bg); --poster-color: transparent; }
 .state h2, .state p { margin: 0; }
 .state-actions { display: flex; gap: var(--pad); flex-wrap: wrap; justify-content: center; }
 
+/* Explode spike: finger-sized slider plus mode toggle, above the main controls. */
+.explode-row { display: flex; align-items: center; gap: var(--pad); width: min(360px, 100%); }
+.explode-row[hidden] { display: none; }
+#explode-slider { flex: 1; min-width: 0; height: 44px; margin: 0; background: transparent; touch-action: none; -webkit-appearance: none; appearance: none; }
+#explode-slider::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: rgba(0,0,0,.2); }
+#explode-slider::-moz-range-track { height: 6px; border-radius: 3px; background: rgba(0,0,0,.2); }
+#explode-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 32px; height: 32px; margin-top: -13px; border-radius: 50%;
+  background: var(--accent); border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35); }
+#explode-slider::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); border: 3px solid #fff; }
+#explode-mode { min-width: 96px; }
+
 /* Viewpoints drawer: non-modal, slides in from the right on every screen size. */
 .drawer { position: absolute; top: 0; right: 0; bottom: 0; z-index: 3; width: min(360px, 85vw); display: flex; flex-direction: column;
   background: #fff; color: var(--fg); box-shadow: -4px 0 24px rgba(0,0,0,.18);
@@ -98,4 +109,8 @@ dialog.info::backdrop { background: #fff; }
 .viewer[data-theme="dark"] .layer-row input { accent-color: #8ab4ff; }
 .viewer[data-theme="dark"] .drawer-foot { border-top-color: rgba(255,255,255,.12); }
 .viewer[data-theme="dark"] .viewpoint-row[aria-pressed="true"] { border-color: #8ab4ff; background: rgba(138,180,255,.14); }
+.viewer[data-theme="dark"] #explode-slider::-webkit-slider-runnable-track { background: rgba(255,255,255,.25); }
+.viewer[data-theme="dark"] #explode-slider::-moz-range-track { background: rgba(255,255,255,.25); }
+.viewer[data-theme="dark"] #explode-slider::-webkit-slider-thumb { background: #8ab4ff; border-color: #16161a; }
+.viewer[data-theme="dark"] #explode-slider::-moz-range-thumb { background: #8ab4ff; border-color: #16161a; }
 .viewer[data-theme="dark"] .state { background: #0c0c0e; color: #ececf0; z-index: 4; }

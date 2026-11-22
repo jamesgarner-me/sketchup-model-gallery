@@ -9,6 +9,8 @@ import { srgbToLinear } from '../colour'
 import { parseModelId } from './path'
 import { setupViewpoints } from './viewpoints'
 import { setupLayers } from './layers'
+import { explodeSpikeEnabled } from '../explode'
+import { setupExplode } from './explode'
 import viewpoints from 'virtual:viewpoints'
 import '../base.css'
 import './viewer.css'
@@ -133,6 +135,8 @@ function start(entry: CatalogEntry) {
   }
 
   retryBtn.addEventListener('click', () => load(`${entry.glb}?retry=${Date.now()}`))
+
+  if (explodeSpikeEnabled(entry.id, location.search)) setupExplode(el)
 
   const viewpointMode = setupViewpoints(el, viewpoints[entry.id] ?? [], { onEnter: () => stopOrbit() })
   setupLayers(el, entry.layers)
