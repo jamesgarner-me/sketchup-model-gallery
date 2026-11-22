@@ -23,7 +23,14 @@ test('gallery → viewer → info → reset', async ({ page, isMobile }) => {
   await expect(page.locator('#loading')).toBeHidden({ timeout: 60_000 })
   await page.waitForTimeout(1_000)
   const initial = await orbit(page)
-  expect(await page.evaluate(() => (document.querySelector('model-viewer') as unknown as { turntableRotation: number }).turntableRotation), 'auto-orbit running').not.toBe(0)
+  // On a cold load the Stage lighting can finish after 'load', and rotation starts on first render,
+  // so wait for the orbit to begin rather than checking after a fixed pause.
+  await expect
+    .poll(() => page.evaluate(() => (document.querySelector('model-viewer') as unknown as { turntableRotation: number }).turntableRotation), {
+      timeout: 10_000,
+      message: 'auto-orbit running',
+    })
+    .not.toBe(0)
 
   // Move the camera (desktop drag; on touch emulation use a programmatic goal).
   if (isMobile) {
