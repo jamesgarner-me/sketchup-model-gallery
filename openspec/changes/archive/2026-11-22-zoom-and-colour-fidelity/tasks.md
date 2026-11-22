@@ -16,4 +16,4 @@
 - [x] 3.2 Smoke-test step: zoom Bastings Garden below 1 m from the pivot; a material reports metallic 0; run unit, smoke tests and build
 - [x] 3.3 Update README (`make:env` now writes both lighting images)
 - [x] 3.4 Deploy and run smoke tests on the hosted site
-- [ ] 3.5 Manual check on iPhone: zoom close after tapping a point, colours compared with SketchUp
+- [x] 3.5 Manual check on iPhone: zoom close after tapping a point, colours compared with SketchUp
