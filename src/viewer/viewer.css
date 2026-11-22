@@ -25,6 +25,22 @@ model-viewer { background: var(--bg); --poster-color: transparent; }
 .state h2, .state p { margin: 0; }
 .state-actions { display: flex; gap: var(--pad); flex-wrap: wrap; justify-content: center; }
 
+/* Viewpoints drawer: non-modal, slides in from the right on every screen size. */
+.drawer { position: absolute; top: 0; right: 0; bottom: 0; z-index: 3; width: min(360px, 85vw); display: flex; flex-direction: column;
+  background: #fff; color: var(--fg); box-shadow: -4px 0 24px rgba(0,0,0,.18);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) 0;
+  transform: translateX(100%); transition: transform .2s ease-out; }
+.drawer.open { transform: none; }
+.drawer[hidden] { display: none; }
+.drawer-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--pad); padding: var(--pad); }
+.drawer-bar h2 { margin: 0; font-size: 1.1rem; }
+.drawer-list { list-style: none; margin: 0; padding: 0 var(--pad) var(--pad); overflow-y: auto; overscroll-behavior: contain; }
+.viewpoint-row { display: block; width: 100%; min-height: 44px; padding: 10px 12px; margin: 0 0 4px; border: 1px solid transparent; border-radius: 10px;
+  background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.viewpoint-row:hover { background: rgba(0,0,0,.05); }
+.viewpoint-row[aria-pressed="true"] { border-color: var(--accent); background: rgba(11,87,208,.08); font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .drawer { transition: none; } }
+
 /* Info overlay */
 dialog.info { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0;
   border: 0; background: #fff; color: var(--fg); }
@@ -61,4 +77,7 @@ dialog.info::backdrop { background: #fff; }
 .viewer[data-theme="dark"] :focus-visible { outline-color: #8ab4ff; }
 .viewer[data-theme="dark"] .loading { background: rgba(255, 255, 255, .1); }
 .viewer[data-theme="dark"] .loading-fill { background: #8ab4ff; }
+.viewer[data-theme="dark"] .drawer { background: #16161a; color: #ececf0; box-shadow: -4px 0 24px rgba(0,0,0,.6); }
+.viewer[data-theme="dark"] .viewpoint-row:hover { background: rgba(255,255,255,.08); }
+.viewer[data-theme="dark"] .viewpoint-row[aria-pressed="true"] { border-color: #8ab4ff; background: rgba(138,180,255,.14); }
 .viewer[data-theme="dark"] .state { background: #0c0c0e; color: #ececf0; z-index: 4; }

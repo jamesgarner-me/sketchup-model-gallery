@@ -6,6 +6,8 @@ import { getNotesHtml } from '../notes'
 import { getStage } from '../stages'
 import { resolveAutoOrbit } from '../autoOrbit'
 import { parseModelId } from './path'
+import { setupViewpoints } from './viewpoints'
+import viewpoints from 'virtual:viewpoints'
 import '../base.css'
 import './viewer.css'
 
@@ -123,8 +125,12 @@ function start(entry: CatalogEntry) {
 
   retryBtn.addEventListener('click', () => load(`${entry.glb}?retry=${Date.now()}`))
 
-  resetBtn.addEventListener('click', () => {
+  const viewpointMode = setupViewpoints(el, viewpoints[entry.id] ?? [], { onEnter: () => stopOrbit() })
+
+  resetBtn.addEventListener('click', async () => {
     if (!framing) return
+    // Leaving a Viewpoint restores free camera controls before the usual glide back.
+    await viewpointMode.exit()
     if (orbitSpeed !== undefined) {
       // Pause during the glide back, undo the turntable turn, then restart once settled.
       stopOrbit()

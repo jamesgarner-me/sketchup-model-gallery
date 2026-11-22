@@ -1,0 +1,149 @@
+## ADDED Requirements
+
+### Requirement: Viewpoints button and drawer
+On a Model with at least one Viewpoint, the Viewer SHALL show a Viewpoints button in the controls row. Activating it SHALL open a drawer that slides in from the right on all screen sizes, up to about 85% of the viewport width on narrow screens. The drawer SHALL contain a heading, a close button and one entry per Viewpoint, labelled with the Scene name exactly as named in SketchUp and listed in SketchUp's Scene order. Entries SHALL have finger-sized touch targets. The current Viewpoint, if any, SHALL be marked as selected. Escape and the close button SHALL close the drawer and return focus to the Viewpoints button. On a Model with no Viewpoints, the button SHALL NOT be shown. Opening the drawer SHALL NOT pause Auto-orbit or move the camera.
+
+#### Scenario: Button shown with Viewpoints
+- **WHEN** a Model with one or more Viewpoints is displayed
+- **THEN** the Viewpoints button is visible beside the other controls
+
+#### Scenario: Button hidden without Viewpoints
+- **WHEN** a Model whose export contains no saved Scenes is displayed
+- **THEN** no Viewpoints button is shown
+
+#### Scenario: Drawer lists Viewpoints in SketchUp order
+- **WHEN** the visitor opens the drawer on a Model whose export has Scenes "Street", "Seat" and "Verandah" in that order
+- **THEN** the drawer lists "Street", "Seat" and "Verandah" in that order
+
+#### Scenario: Close with Escape
+- **WHEN** the drawer is open and the visitor presses Escape
+- **THEN** the drawer closes and focus returns to the Viewpoints button
+
+#### Scenario: Current Viewpoint marked
+- **WHEN** the visitor is in a Viewpoint and opens the drawer
+- **THEN** that Viewpoint's entry is marked as selected
+
+### Requirement: Entering a Viewpoint
+Choosing a Viewpoint in the drawer SHALL move the camera instantly, without a glide, to that Scene's eye position, looking in that Scene's direction, with a fixed field of view of about 45°. It SHALL close the drawer. Entering a Viewpoint SHALL stop Auto-orbit. Choosing another Viewpoint while in one SHALL move straight to the new one.
+
+#### Scenario: Jump to Viewpoint
+- **WHEN** the visitor chooses a Viewpoint
+- **THEN** the camera is immediately at that Scene's eye position looking in its direction, and the drawer is closed
+
+#### Scenario: Switch Viewpoints
+- **WHEN** the visitor is in one Viewpoint and chooses another
+- **THEN** the camera moves straight to the second Viewpoint
+
+#### Scenario: Auto-orbit stops
+- **WHEN** the visitor chooses a Viewpoint on a Model that is auto-orbiting
+- **THEN** the rotation stops and does not resume while in the Viewpoint
+
+### Requirement: Look around only in a Viewpoint
+While in a Viewpoint, the eye position SHALL stay fixed. Pan, zoom and tap-to-set-pivot SHALL be disabled. One-finger drag, mouse drag and the arrow keys SHALL turn the view in "grab the scene" fashion: dragging left turns the view to the right, as in Street View. The view SHALL turn a full 360° horizontally and SHALL be limited to about 60° above and below level. Geometry close to the eye SHALL render without being clipped away, even though the camera is inside the Model's bounds.
+
+#### Scenario: Drag looks around
+- **WHEN** the visitor drags left in a Viewpoint
+- **THEN** the view turns to the right and the eye position does not change
+
+#### Scenario: Pan and zoom do nothing
+- **WHEN** the visitor pinches, uses the mouse wheel, right-drags or two-finger drags in a Viewpoint
+- **THEN** the eye position and field of view do not change
+
+#### Scenario: Tap does not move pivot
+- **WHEN** the visitor taps a point on the Model in a Viewpoint
+- **THEN** the camera does not move
+
+#### Scenario: Full turn
+- **WHEN** the visitor keeps dragging horizontally in a Viewpoint
+- **THEN** the view turns continuously through 360°
+
+#### Scenario: Vertical limit
+- **WHEN** the visitor keeps dragging vertically in a Viewpoint
+- **THEN** the view stops turning at about 60° above or below level
+
+#### Scenario: Nearby geometry visible
+- **WHEN** a Viewpoint's eye is about 1 m from a wall or plant
+- **THEN** that geometry renders fully, without clipping
+
+### Requirement: Leaving a Viewpoint
+Reset view SHALL be the only way to leave a Viewpoint. It SHALL restore orbit, pan, zoom and tap-to-set-pivot, the Model's field of view and Initial framing, and SHALL then behave as Reset view does elsewhere, including restarting Auto-orbit where enabled.
+
+#### Scenario: Reset leaves Viewpoint
+- **WHEN** the visitor is in a Viewpoint and activates Reset view
+- **THEN** the camera returns to Initial framing and orbit, pan and zoom work again
+
+#### Scenario: Reset restarts Auto-orbit from a Viewpoint
+- **WHEN** the visitor leaves a Viewpoint with Reset view on a Model with Auto-orbit enabled
+- **THEN** once the camera settles the Model starts orbiting again
+
+## MODIFIED Requirements
+
+### Requirement: Camera gestures
+Outside a Viewpoint, the Viewer SHALL support orbit, zoom and pan. On touch: one-finger drag orbits, pinch zooms, two-finger drag pans. On desktop: left-drag orbits, right-drag or modifier-drag pans, wheel zooms. Keyboard camera controls SHALL remain available. Inside a Viewpoint, gestures SHALL follow the look-around-only behaviour instead.
+
+#### Scenario: Touch orbit
+- **WHEN** a visitor drags one finger on the Model
+- **THEN** the camera orbits
+
+#### Scenario: Pinch zoom and two-finger pan
+- **WHEN** a visitor pinches or drags with two fingers
+- **THEN** the camera zooms or pans respectively
+
+#### Scenario: Viewer does not scroll page
+- **WHEN** a visitor gestures on the Viewer
+- **THEN** the page does not scroll or navigate
+
+### Requirement: Tap to set pivot
+Outside a Viewpoint, tapping or clicking a point on the Model without dragging SHALL make that point the pivot that orbit and zoom centre on. Tapping empty background SHALL NOT change the pivot. Reset view SHALL restore the original pivot. Inside a Viewpoint, tapping SHALL NOT change the pivot or move the camera.
+
+#### Scenario: Tap then zoom
+- **WHEN** the visitor taps a point on the Model and then zooms in
+- **THEN** the camera moves toward the tapped point
+
+#### Scenario: Reset restores pivot
+- **WHEN** the visitor has tapped a new pivot and activates Reset view
+- **THEN** orbiting centres on the original pivot again
+
+### Requirement: Reset view
+The Viewer SHALL show a persistent Reset view button that, on a single tap or click, returns the camera to the Initial framing with full camera controls, leaving any Viewpoint. It SHALL work after any gesture sequence, including when the Model is offscreen, and MUST NOT alter the Model.
+
+#### Scenario: Recover after panning away
+- **WHEN** a visitor pans until the Model is offscreen and activates Reset view
+- **THEN** the camera returns to Initial framing
+
+#### Scenario: Recover after over-zoom
+- **WHEN** a visitor zooms far in or out and activates Reset view
+- **THEN** the camera returns to Initial framing
+
+#### Scenario: Repeatable
+- **WHEN** Reset view is used repeatedly after different gestures
+- **THEN** each use reaches the same Initial framing
+
+### Requirement: Persistent controls and layout
+Reset view, Info, the Viewpoints button (when the Model has Viewpoints) and a back-to-Gallery link SHALL remain reachable over the Viewer in portrait and landscape, with touch targets sized for fingers, visible keyboard focus, and clearance from device safe areas. The Viewer SHALL show the Model title. It SHALL NOT show on-screen control instructions; gesture controls are expected to be intuitive.
+
+#### Scenario: Landscape controls
+- **WHEN** the device is in landscape
+- **THEN** Reset view, Info, Viewpoints (where shown) and back remain visible and tappable
+
+### Requirement: Controls match the Stage
+On a dark Stage, the Viewer's back link, title, Reset view, Info button, Viewpoints button and drawer, loading indicator and load-failure screen SHALL use a dark style that stays legible. The Info overlay and the "Model not found" screen SHALL keep the light style.
+
+#### Scenario: Dark controls
+- **WHEN** a Model on the Showroom stage is displayed
+- **THEN** the controls are dark-styled and legible against the background
+
+#### Scenario: Info stays light
+- **WHEN** Info is opened on a Showroom-stage Model
+- **THEN** the overlay uses the light reading style
+
+#### Scenario: Dark drawer
+- **WHEN** the Viewpoints drawer is opened on a Showroom-stage Model
+- **THEN** the drawer is dark-styled and legible
+
+### Requirement: Known accessibility gap
+The Viewer MUST NOT claim WCAG conformance. Reset view and Viewpoints are the only camera buttons, and single-pointer zoom/pan alternatives are not provided in this version.
+
+#### Scenario: No conformance claim
+- **WHEN** site copy or docs describe accessibility
+- **THEN** they make no WCAG conformance claim

@@ -35,9 +35,18 @@
       <footer class="controls" id="controls">
         <div class="controls-row">
           <button class="btn" id="reset" type="button">Reset view</button>
+          <button class="btn" id="viewpoints-btn" type="button" aria-expanded="false" aria-controls="viewpoints" hidden>Viewpoints</button>
           <span id="info-slot"><button class="btn" id="info-btn" type="button" aria-haspopup="dialog">Info</button></span>
         </div>
       </footer>
+
+      <aside id="viewpoints" class="drawer" aria-labelledby="viewpoints-title" hidden>
+        <div class="drawer-bar">
+          <h2 id="viewpoints-title">Viewpoints</h2>
+          <button class="btn" id="viewpoints-close" type="button">Close</button>
+        </div>
+        <ul id="viewpoints-list" class="drawer-list"></ul>
+      </aside>
     </div>
     <dialog id="info" class="info" aria-labelledby="info-title">
       <div class="info-scroll">

@@ -21,7 +21,7 @@ The interactive 3D screen for one Model.
 _Avoid_: Player, scene, canvas
 
 **Reset view**:
-The single camera button; returns the camera to the Model's initial framing.
+The button that returns the camera to the Model's initial framing with full camera controls, leaving any Viewpoint.
 _Avoid_: Recenter, home, reset camera
 
 **Initial framing**:
@@ -59,3 +59,7 @@ _Avoid_: Auto-rotate, spin, turntable mode
 **Layer**:
 A named top-level SketchUp group in a Model's export that visitors can show or hide. Only groups listed for the Model in the Catalog are Layers.
 _Avoid_: Tag, part, SketchUp layer
+
+**Viewpoint**:
+A fixed eye position, taken from a saved SketchUp Scene in a Model's export, that visitors jump to and look around from without moving. Every saved Scene in the export is a Viewpoint.
+_Avoid_: Scene, saved view, camera, bookmark

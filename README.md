@@ -27,6 +27,15 @@ Built with Vite, TypeScript and Google's [`<model-viewer>`](https://modelviewer.
 7. **Validate:** `npm run build`. The build fails with a clear message on a duplicate ID, a missing GLB or thumbnail, an unknown stage, or an invalid `autoOrbit`.
 8. **Publish:** commit and push to `main`. Vercel deploys automatically; the model is live at `/models/<id>`.
 
+### Viewpoints
+
+Every saved **Scene** in the SketchUp model becomes a Viewpoint: a fixed eye position visitors can jump to from the **Viewpoints** button and look around from by dragging. No catalog fields are needed.
+
+- **Add or change one:** save, rename or reorder Scenes in SketchUp, re-export the GLB, and rebuild. The drawer uses the Scene names and Scene order exactly as in SketchUp.
+- **Ignored:** `Active View`, which is just the camera position at export time.
+- **Field of view:** SketchUp doesn't export it, so every Viewpoint uses 45°.
+- The build log lists the Viewpoints found for each model (`[plugin viewpoints] …`). A model with no saved Scenes shows no Viewpoints button.
+
 ## Catalog fields (`src/models.json`)
 
 | Field | Required | Description |
@@ -84,7 +93,8 @@ src/
   models.json            The catalog
   content/               Notes, one Markdown file per model
   gallery/               Gallery page
-  viewer/                Viewer page: camera, Reset view, Info overlay
+  viewer/                Viewer page: camera, Reset view, Info overlay, Viewpoints drawer
+  viewpoints.ts          Reads saved Scenes from a GLB (used at build time)
   stages.ts              Stage presets (neutral, showroom)
   autoOrbit.ts           Auto-orbit settings
   markdown.ts, notes.ts  Notes rendering (at build time)
@@ -125,4 +135,5 @@ Reference material:
 - **Camera controls are gestures plus Reset view only.** Touch users who can't do multi-finger gestures have no single-pointer zoom or pan. No WCAG conformance is claimed. See [ADR 0001](docs/adr/0001-accept-reset-only-camera-controls.md).
 - **Showroom lights are image-based.** They light the model and show in reflections, but cast no visible beams or hard spotlight shadows. See [ADR 0002](docs/adr/0002-image-based-lighting-for-stages.md).
 - **The stairs export uses a deprecated glTF material extension** (`KHR_materials_pbrSpecularGlossiness`). It works today; re-export if a library upgrade breaks it. See [export findings](docs/export-findings.md).
+- **Viewpoints rely on how the SketchUp exporter writes Scenes**: empty nodes beside the top-level groups. An empty top-level group would also show up as a Viewpoint. Look-around reuses `<model-viewer>`'s orbit controls around the eye. See [ADR 0004](docs/adr/0004-look-around-by-orbiting-the-eye-point.md).
 - **Model files are public.** Anyone can download a GLB from the live site.

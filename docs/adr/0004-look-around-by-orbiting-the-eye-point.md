@@ -1,0 +1,3 @@
+# Look around by orbiting the eye point
+
+In a Viewpoint the visitor can look around but not move. We get this from `<model-viewer>`'s own orbit controls rather than writing first-person controls. The camera target is placed at the Scene's eye position, the orbit radius is pinned to a near-zero value, and pan and zoom are disabled, so dragging turns the view on the spot. Custom controls would mean replacing `<model-viewer>`'s camera handling, its touch, mouse and keyboard input, and its accessibility, for one mode. The cost is that we depend on the orbit behaving well at a tiny radius: near-plane clipping, pitch limits, and drag direction that comes out as "grab the scene". Revisit if that breaks or if Viewpoints ever need movement.
