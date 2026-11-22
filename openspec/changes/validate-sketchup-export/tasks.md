@@ -17,6 +17,6 @@
 
 ## 4. Phone validation and findings
 
-- [ ] 4.1 Test on a real phone: orbit, pinch zoom, two-finger pan, load time, responsiveness
-- [ ] 4.2 Write `docs/export-findings.md` with sizes, load times, visual notes, device and proposed performance targets and phone floor
-- [ ] 4.3 Decide whether optimisation is needed; record the decision and any follow-up
+- [x] 4.1 Test on a real phone: orbit, pinch zoom, two-finger pan, load time, responsiveness
+- [x] 4.2 Write `docs/export-findings.md` with sizes, load times, visual notes, device and proposed performance targets and phone floor
+- [x] 4.3 Decide whether optimisation is needed; record the decision and any follow-up
