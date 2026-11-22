@@ -1,8 +1,10 @@
 import '@google/model-viewer'
 import type { ModelViewerElement } from '@google/model-viewer'
 import { findModel, type CatalogEntry } from '../catalog'
+import { siteName } from '../config'
 import { getNotesHtml } from '../notes'
 import { parseModelId } from './path'
+import '../base.css'
 import './viewer.css'
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T
@@ -34,7 +36,7 @@ function showNotFound() {
 }
 
 function start(entry: CatalogEntry) {
-  document.title = entry.title
+  document.title = `${entry.title} · ${siteName}`
   titleEl.textContent = entry.title
 
   const el = document.createElement('model-viewer') as ModelViewerElement

@@ -9,9 +9,11 @@
     "preview": "vite preview",
     "validate": "tsx scripts/validate-catalog.ts",
     "prebuild": "npm run validate",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@types/node": "^26.6.6",
     "playwright": "^1.65.1",
     "tsx": "^4.23.15",

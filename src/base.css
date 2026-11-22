@@ -1,0 +1,10 @@
+:root { color-scheme: light; --bg: #eceff1; --fg: #1a1d1f; --muted: #5f6b73; --accent: #0b57d0; --pad: 12px; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 16px;
+  border: 1px solid rgba(0,0,0,.2); border-radius: 10px; background: #fff; color: var(--fg); font: inherit; font-weight: 600;
+  text-decoration: none; cursor: pointer; }
+.btn:hover { background: #f5f7f8; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }

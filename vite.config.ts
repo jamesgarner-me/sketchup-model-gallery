@@ -2,14 +2,18 @@ import { resolve } from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import { renderNotes } from './src/markdown.ts'
 
-// Dev-only mirror of the vercel.json rewrite: /models/:id -> /model.html
+// Dev/preview mirror of the vercel.json rewrite: /models/:id -> /model.html
+const rewriteModels = (req: { url?: string }, _res: unknown, next: () => void) => {
+  if (req.url && /^\/models\/[^/.]+\/?(\?.*)?$/.test(req.url)) req.url = '/model.html'
+  next()
+}
 const modelsRewrite = (): Plugin => ({
   name: 'models-rewrite',
   configureServer(server) {
-    server.middlewares.use((req, _res, next) => {
-      if (req.url && /^\/models\/[^/.]+\/?(\?.*)?$/.test(req.url)) req.url = '/model.html'
-      next()
-    })
+    server.middlewares.use(rewriteModels)
+  },
+  configurePreviewServer(server) {
+    server.middlewares.use(rewriteModels)
   },
 })
 

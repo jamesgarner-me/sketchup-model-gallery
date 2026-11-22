@@ -1,7 +1,4 @@
-:root { color-scheme: light; --bg: #eceff1; --fg: #1a1d1f; --accent: #0b57d0; --pad: 12px; }
-* { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; overscroll-behavior: none; background: var(--bg); color: var(--fg);
-  font: 16px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+html, body { height: 100%; overscroll-behavior: none; }
 .viewer { position: fixed; inset: 0; }
 .stage, model-viewer { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; }
 model-viewer { background: var(--bg); --poster-color: transparent; }
@@ -17,12 +14,6 @@ model-viewer { background: var(--bg); --poster-color: transparent; }
   pointer-events: none; }
 .controls > * { pointer-events: auto; }
 .controls-row { display: flex; gap: var(--pad); }
-
-.btn { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 16px;
-  border: 1px solid rgba(0,0,0,.2); border-radius: 10px; background: #fff; color: var(--fg); font: inherit; font-weight: 600;
-  text-decoration: none; cursor: pointer; }
-.btn:hover { background: #f5f7f8; }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
 .loading { position: absolute; left: 0; right: 0; top: 0; height: 4px; background: rgba(0,0,0,.08); z-index: 5; }
 .loading[hidden] { display: none; }
