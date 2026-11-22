@@ -1,0 +1,3 @@
+# Toggle Layers via model-viewer internals
+
+Layers are shown and hidden by setting visibility on named groups in `<model-viewer>`'s internal three.js scene, reached through its private `scene` symbol. `<model-viewer>` has no public API for part visibility (its scene-graph API covers materials and variants only), and replacing it with a custom three.js viewer would mean rebuilding camera controls, framing, lighting and loading that already work. The cost is reliance on library internals: access is isolated in one module, fails with a clear error if the symbol or scene shape changes, and is covered by a test that runs on every upgrade. Revisit if `<model-viewer>` adds a public node-visibility API or if internals break.

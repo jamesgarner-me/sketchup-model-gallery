@@ -55,3 +55,7 @@ _Avoid_: Dark mode, night mode, dark background
 **Auto-orbit**:
 An optional slow turntable rotation a Model performs when its Viewer opens, until the visitor first takes control.
 _Avoid_: Auto-rotate, spin, turntable mode
+
+**Layer**:
+A named top-level SketchUp group in a Model's export that visitors can show or hide. Only groups listed for the Model in the Catalog are Layers.
+_Avoid_: Tag, part, SketchUp layer
