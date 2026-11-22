@@ -10,7 +10,14 @@ export interface Stage {
 }
 
 export const STAGES = {
-  neutral: { theme: 'light', exposure: 1, shadowIntensity: 0.6, shadowSoftness: 1, toneMapping: 'neutral' },
+  neutral: {
+    theme: 'light',
+    environmentImage: '/environments/daylight.hdr',
+    exposure: 1.2,
+    shadowIntensity: 0.5,
+    shadowSoftness: 1,
+    toneMapping: 'linear',
+  },
   showroom: {
     theme: 'dark',
     environmentImage: '/environments/showroom.hdr',

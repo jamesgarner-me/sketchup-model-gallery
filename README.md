@@ -39,7 +39,7 @@ Built with Vite, TypeScript and Google's [`<model-viewer>`](https://modelviewer.
 | `order` | Yes | Gallery position; lower numbers come first. |
 | `notes` | No | Notes filename in `src/content/`. Defaults to `<id>.md`. |
 | `camera` | No | Initial framing when automatic framing isn't right: `{ "orbit": "30deg 70deg auto", "target": "auto auto auto", "fieldOfView": "30deg" }` (any subset). |
-| `stage` | No | Background and lighting: `"neutral"` (default, light) or `"showroom"` (dark room with several lights). |
+| `stage` | No | Background and lighting: `"neutral"` (default: light background, daylight with a sun direction) or `"showroom"` (dark room with several lights). |
 | `autoOrbit` | No | Slow turntable rotation on load: `true` (18°/s) or `{ "degreesPerSecond": 10 }` (negative reverses). Stops on the visitor's first touch; Reset view restarts it. Off when the device prefers reduced motion. |
 
 Example with every optional field (illustrative; the real stairs entry only sets `stage` and `autoOrbit`):
@@ -72,7 +72,7 @@ Requires Node.js 22.
 | `npm test` | Unit tests (Vitest). |
 | `npm run test:e2e` | Playwright smoke tests on desktop and phone sizes. First time: `npx playwright install chromium`. Run against the live site with `BASE_URL=https://sketchup-model-gallery.vercel.app npm run test:e2e`. |
 | `npm run validate` | Catalog validation only. |
-| `npm run make:env` | Regenerate the Showroom lighting image (`public/environments/showroom.hdr`) after editing the light list in `scripts/make-showroom-env.ts`. |
+| `npm run make:env` | Regenerate the Stage lighting images (`public/environments/daylight.hdr` for Neutral, `showroom.hdr` for Showroom) after editing the light sets in `scripts/make-environments.ts`. |
 
 The site name lives in `src/config.ts`.
 
@@ -92,8 +92,8 @@ src/
 public/
   models/                GLB files
   thumbnails/            Gallery images
-  environments/          Generated Showroom lighting
-scripts/                 Catalog validation and Showroom lighting generator
+  environments/          Generated Stage lighting (daylight, showroom)
+scripts/                 Catalog validation and Stage lighting generator
 tests/                   Playwright smoke tests
 vercel.json              Rewrite /models/:id to the Viewer page
 ```

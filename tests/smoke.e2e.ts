@@ -82,3 +82,26 @@ test('direct link survives refresh', async ({ page }) => {
   await expect(page.locator('#loading')).toBeHidden({ timeout: 60_000 })
   await expect(page).toHaveTitle(/Stairs design/)
 })
+
+test('close zoom and non-metallic materials', async ({ page }) => {
+  await page.goto('/models/bastings-garden')
+  await expect(page.locator('#loading')).toBeHidden({ timeout: 90_000 })
+  const result = await page.evaluate(async () => {
+    const el = document.querySelector('model-viewer') as unknown as {
+      cameraOrbit: string
+      jumpCameraToGoal(): void
+      getCameraOrbit(): { radius: number }
+      model: { materials: { pbrMetallicRoughness: { metallicFactor: number } }[] }
+    }
+    // Ask for a very close camera; the library clamps to its minimum radius.
+    el.cameraOrbit = 'auto auto 0.05m'
+    el.jumpCameraToGoal()
+    await new Promise((r) => setTimeout(r, 500))
+    return {
+      radius: el.getCameraOrbit().radius,
+      allNonMetallic: el.model.materials.every((m) => m.pbrMetallicRoughness.metallicFactor === 0),
+    }
+  })
+  expect(result.radius, 'camera can get within 1 m of the pivot').toBeLessThan(1)
+  expect(result.allNonMetallic).toBe(true)
+})

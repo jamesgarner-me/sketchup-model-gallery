@@ -45,6 +45,9 @@ function start(entry: CatalogEntry) {
   el.setAttribute('alt', entry.title)
   el.setAttribute('camera-controls', '')
   el.setAttribute('touch-action', 'none')
+  // Let visitors zoom right up to surfaces (library default stops at 2.2x the model's bounding
+  // radius). Tapping a point without dragging makes it the pivot, so they zoom into what they tap.
+  el.setAttribute('min-camera-orbit', 'auto auto 0.1m')
 
   // Stage: background, lighting and control theme for this Model.
   const preset = getStage(entry.stage)
@@ -96,6 +99,9 @@ function start(entry: CatalogEntry) {
   el.addEventListener('progress', (e) => setProgress((e as unknown as CustomEvent<{ totalProgress: number }>).detail.totalProgress))
 
   el.addEventListener('load', () => {
+    // SketchUp exports (SimLab) carry a 50% metallic fallback on every material, which three.js
+    // uses because it ignores the older specular-glossiness data. Treat all materials as non-metallic.
+    for (const material of el.model?.materials ?? []) material.pbrMetallicRoughness.setMetallicFactor(0)
     const o = el.getCameraOrbit()
     const t = el.getCameraTarget()
     framing = { orbit: [o.theta, o.phi, o.radius], target: [t.x, t.y, t.z], fov: el.getFieldOfView() }
