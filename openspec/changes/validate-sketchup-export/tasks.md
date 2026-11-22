@@ -8,7 +8,7 @@
 ## 2. Bare viewer with one real model
 
 - [x] 2.1 Place the owner's GLB in `public/models/` and render it in `model.html` with camera controls and neutral background
-- [ ] 2.2 Confirm geometry, orientation, materials and textures render acceptably on desktop
+- [x] 2.2 Confirm geometry, orientation, materials and textures render acceptably on desktop
 
 ## 3. Deploy
 
