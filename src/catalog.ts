@@ -18,7 +18,7 @@ export interface CatalogEntry {
   /** Public URL path, e.g. /thumbnails/stairs.webp */
   thumbnail: string
   order: number
-  /** Path to Markdown Notes (optional) */
+  /** Notes filename inside src/content (optional; defaults to `<id>.md`) */
   notes?: string
   camera?: CameraSettings
 }

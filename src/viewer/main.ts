@@ -1,6 +1,7 @@
 import '@google/model-viewer'
 import type { ModelViewerElement } from '@google/model-viewer'
 import { findModel, type CatalogEntry } from '../catalog'
+import { getNotesHtml } from '../notes'
 import { parseModelId } from './path'
 import './viewer.css'
 
@@ -14,6 +15,9 @@ const notFoundBox = $('notfound')
 const controls = $('controls')
 const titleEl = $('title')
 const resetBtn = $<HTMLButtonElement>('reset')
+const infoBtn = $<HTMLButtonElement>('info-btn')
+const infoDialog = $<HTMLDialogElement>('info')
+const infoClose = $<HTMLButtonElement>('info-close')
 const retryBtn = $<HTMLButtonElement>('retry')
 
 /** Full-model framing captured once per page load (or taken from the catalog). */
@@ -93,6 +97,53 @@ function start(entry: CatalogEntry) {
 
   stage.appendChild(el)
   load(entry.glb)
+  setupInfo(entry)
+}
+
+/**
+ * Info overlay: a native modal <dialog> (focus trap, inert background, focus restore, Escape).
+ * The viewer stays mounted underneath, so camera state is preserved. Opening pushes a history
+ * entry so Back closes the overlay first; every close path goes through history.back().
+ */
+function setupInfo(entry: CatalogEntry) {
+  $('info-title').textContent = entry.title
+  $('info-desc').textContent = entry.description
+  const notesEl = $('info-notes')
+  const notes = getNotesHtml(entry)
+  if (notes) {
+    notesEl.innerHTML = notes
+    notesEl.hidden = false
+  }
+
+  let owned = false // true while the top history entry belongs to the open overlay
+
+  const open = () => {
+    if (!infoDialog.open) infoDialog.showModal()
+    infoDialog.querySelector('.info-scroll')!.scrollTop = 0
+  }
+  infoBtn.addEventListener('click', () => {
+    open()
+    history.pushState({ info: true }, '')
+    owned = true
+  })
+  const requestClose = () => {
+    if (owned) history.back()
+    else infoDialog.close()
+  }
+  infoClose.addEventListener('click', requestClose)
+  infoDialog.addEventListener('cancel', (e) => {
+    e.preventDefault()
+    requestClose()
+  })
+  window.addEventListener('popstate', (e) => {
+    if ((e.state as { info?: boolean } | null)?.info) {
+      open()
+      owned = true
+    } else if (infoDialog.open) {
+      owned = false
+      infoDialog.close()
+    }
+  })
 }
 
 const id = parseModelId(location.pathname)

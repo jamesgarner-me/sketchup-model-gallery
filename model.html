@@ -35,10 +35,22 @@
       <footer class="controls" id="controls">
         <div class="controls-row">
           <button class="btn" id="reset" type="button">Reset view</button>
-          <span id="info-slot"></span>
+          <span id="info-slot"><button class="btn" id="info-btn" type="button" aria-haspopup="dialog">Info</button></span>
         </div>
       </footer>
     </div>
+    <dialog id="info" class="info" aria-labelledby="info-title">
+      <div class="info-scroll">
+        <div class="info-bar">
+          <button class="btn" id="info-close" type="button" autofocus>Close</button>
+        </div>
+        <article class="info-inner">
+          <h2 id="info-title"></h2>
+          <p class="info-desc" id="info-desc"></p>
+          <section id="info-notes" class="prose" hidden></section>
+        </article>
+      </div>
+    </dialog>
     <script type="module" src="/src/viewer/main.ts"></script>
   </body>
 </html>
