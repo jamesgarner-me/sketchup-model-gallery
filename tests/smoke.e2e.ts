@@ -97,7 +97,7 @@ test('direct link survives refresh', async ({ page }) => {
   await expect(page).toHaveTitle(/Stairs design/)
 })
 
-test('close zoom and non-metallic materials', async ({ page }) => {
+test('close zoom, non-metallic materials and sRGB colours', async ({ page }) => {
   await page.goto('/models/bastings-garden')
   await modelLoaded(page)
   await expect(page.locator('#loading')).toBeHidden()
@@ -106,17 +106,25 @@ test('close zoom and non-metallic materials', async ({ page }) => {
       cameraOrbit: string
       jumpCameraToGoal(): void
       getCameraOrbit(): { radius: number }
-      model: { materials: { pbrMetallicRoughness: { metallicFactor: number } }[] }
+      model: { materials: { name: string; pbrMetallicRoughness: { metallicFactor: number; baseColorFactor: number[] } }[] }
     }
     // Ask for a very close camera; the library clamps to its minimum radius.
     el.cameraOrbit = 'auto auto 0.05m'
     el.jumpCameraToGoal()
     await new Promise((r) => setTimeout(r, 500))
+    const colour = (name: string) => el.model.materials.find((m) => m.name === name)!.pbrMetallicRoughness.baseColorFactor
     return {
       radius: el.getCameraOrbit().radius,
       allNonMetallic: el.model.materials.every((m) => m.pbrMetallicRoughness.metallicFactor === 0),
+      battens: colour('07 • Black stained battens'),
+      textured: colour('02 • Sawn bluestone | ashlar'),
     }
   })
   expect(result.radius, 'camera can get within 1 m of the pivot').toBeLessThan(1)
   expect(result.allNonMetallic).toBe(true)
+  // Exported sRGB colours are converted to linear: battens 0.184 (#2F302D) → about 0.029.
+  expect(result.battens[0]).toBeCloseTo(0.029, 2)
+  expect(result.battens[3]).toBe(1)
+  // Textured materials (factor 1) are unchanged.
+  expect(result.textured.slice(0, 3)).toEqual([1, 1, 1])
 })

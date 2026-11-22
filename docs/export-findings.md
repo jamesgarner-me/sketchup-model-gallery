@@ -35,6 +35,11 @@ Geometry is not the cost; the PNG textures are almost the whole file.
 
 ## Risks and follow-ups
 
+- **Material fallbacks need correcting at load.** The SimLab exporter writes a `pbrMetallicRoughness` fallback next to each spec-gloss material, and three.js uses it. Two values are wrong:
+  - `metallicFactor: 0.5` on every material. The Viewer sets it to 0.
+  - `baseColorFactor` on plain-coloured materials holds the SketchUp sRGB value divided by 255. glTF treats that as linear, so colours render washed out (for example, #2F302D battens appear about 47% grey). The Viewer converts each factor from sRGB to linear. Textured materials have factor 1 and are unaffected.
+
+  If a different exporter is ever used that writes correct linear factors, its colours would turn too dark, so add a per-Model opt-out then.
 - `KHR_materials_pbrSpecularGlossiness` is a deprecated glTF extension. It works today in `<model-viewer>`; watch it on library upgrades and re-export if it breaks.
 - Test an older iPhone, Android Chrome and a throttled connection during `model-gallery` verification.
 - The deployment URL is public; any GLB placed in `public/` is downloadable by anyone (accepted in the PRD).

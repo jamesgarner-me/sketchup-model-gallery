@@ -5,6 +5,7 @@ import { siteName } from '../config'
 import { getNotesHtml } from '../notes'
 import { getStage } from '../stages'
 import { resolveAutoOrbit } from '../autoOrbit'
+import { srgbToLinear } from '../colour'
 import { parseModelId } from './path'
 import { setupViewpoints } from './viewpoints'
 import viewpoints from 'virtual:viewpoints'
@@ -103,7 +104,14 @@ function start(entry: CatalogEntry) {
   el.addEventListener('load', () => {
     // SketchUp exports (SimLab) carry a 50% metallic fallback on every material, which three.js
     // uses because it ignores the older specular-glossiness data. Treat all materials as non-metallic.
-    for (const material of el.model?.materials ?? []) material.pbrMetallicRoughness.setMetallicFactor(0)
+    // The same exporter writes sRGB colour values (RGB / 255) into baseColorFactor, which glTF defines
+    // as linear, so plain colours render washed out. Convert them; alpha and textured (1) are unaffected.
+    for (const material of el.model?.materials ?? []) {
+      const pbr = material.pbrMetallicRoughness
+      pbr.setMetallicFactor(0)
+      const [r, g, b, a] = pbr.baseColorFactor
+      pbr.setBaseColorFactor([srgbToLinear(r), srgbToLinear(g), srgbToLinear(b), a])
+    }
     const o = el.getCameraOrbit()
     const t = el.getCameraTarget()
     framing = { orbit: [o.theta, o.phi, o.radius], target: [t.x, t.y, t.z], fov: el.getFieldOfView() }
