@@ -23,4 +23,4 @@
 - [x] 3.1 Browser script: orbits on load; drag stops it permanently; Reset returns to Initial framing with zero turntable rotation (superseded for Reset by 2b.2); Info pauses and resumes; reduced motion stays still; neutral Model does not rotate
 - [x] 3.2 Update smoke test for the orbiting stairs; run unit, smoke tests and build
 - [x] 3.3 Deploy and run smoke tests on the hosted site
-- [ ] 3.4 Manual check on iPhone
+- [x] 3.4 Manual check on iPhone
