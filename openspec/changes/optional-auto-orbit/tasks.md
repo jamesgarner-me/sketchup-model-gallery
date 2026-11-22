@@ -16,7 +16,7 @@
 
 - [x] 2b.1 Reset view on an Auto-orbit Model: pause, reset turntable, reframe, then restart the orbit when the reset timer fires; skip the restart if the visitor interacts first; reduced motion stays still
 - [x] 2b.2 Browser checks: Reset after a drag restarts the orbit from Initial framing; Reset while orbiting continues orbiting; touch after Reset stops it again; reduced-motion Reset stays still
-- [ ] 2b.3 Update the smoke test (orbit restarts after Reset), rerun unit and smoke tests, deploy and rerun on the hosted site
+- [x] 2b.3 Update the smoke test (orbit restarts after Reset), rerun unit and smoke tests, deploy and rerun on the hosted site
 
 ## 3. Verify
 
