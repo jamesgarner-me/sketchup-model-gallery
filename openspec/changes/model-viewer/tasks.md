@@ -18,7 +18,7 @@
 
 - [x] 3.1 Initial framing from catalog `camera` or captured auto-framing after first `load`
 - [x] 3.2 Reset view button: set absolute camera goals with ~400 ms glide and `jumpCameraToGoal()` fallback
-- [ ] 3.3 Verify Reset recovers after panning offscreen, over-zoom, and orientation change; repeatable
+- [x] 3.3 Verify Reset recovers after panning offscreen, over-zoom, and orientation change; repeatable
 
 ## 4. Controls and layout
 
@@ -29,5 +29,5 @@
 ## 5. Verify
 
 - [x] 5.1 Run unit tests and `npm run build` (validation runs in prebuild)
-- [ ] 5.2 Manual check on iPhone: orbit, pinch, two-finger pan, Reset, load-failure and not-found states, portrait and landscape
+- [x] 5.2 Manual check on iPhone: orbit, pinch, two-finger pan, Reset, load-failure and not-found states, portrait and landscape
 - [ ] 5.3 Keyboard check of Reset and back link; confirm `/models/stairs` direct link and refresh on the deployed site
