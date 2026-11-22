@@ -23,10 +23,13 @@ None.
 - Catalog type and validation (`src/catalog.ts`, `src/validateCatalog.ts`), viewer logic (`src/viewer/main.ts`), `src/models.json`.
 - Likely uses `<model-viewer>`'s built-in auto-rotate support; confirm during design.
 
-## Open Questions (resolve when this is planned, ideally via grilling)
+## Decisions (from grilling)
 
-- Should the orbit stop permanently on first touch/drag, or resume after a delay?
-- What does Reset view do while a Model has auto-orbit: return to Initial framing and stay still, or restart the orbit?
-- Speed and direction: one global default, or configurable per Model?
-- Respect `prefers-reduced-motion` by disabling the orbit?
-- Does it apply only on first load, or also after returning from Info?
+- Orbit stops for the rest of the visit on the first visitor touch, drag or zoom.
+- Reset view returns to Initial framing (undoing the turntable turn) and stays still.
+- Optional per-Model speed in degrees per second, default 18°/s; negative reverses.
+- Disabled when the device prefers reduced motion.
+- Paused while Info is open; resumes on close if the visitor has not taken control.
+- Starts as soon as the Model loads.
+- The library's "hand" interaction prompt is hidden on orbiting Models.
+- Catalog accepts `"autoOrbit": true` or `"autoOrbit": { "degreesPerSecond": n }`. Stairs uses `true`.

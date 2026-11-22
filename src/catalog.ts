@@ -1,3 +1,4 @@
+import type { AutoOrbitSetting } from './autoOrbit'
 import models from './models.json'
 
 export interface CameraSettings {
@@ -23,6 +24,8 @@ export interface CatalogEntry {
   camera?: CameraSettings
   /** Stage name from src/stages.ts (optional; defaults to neutral) */
   stage?: string
+  /** Optional slow orbit on load: true (default speed) or { degreesPerSecond } */
+  autoOrbit?: AutoOrbitSetting
 }
 
 export const catalog: CatalogEntry[] = (models as CatalogEntry[])

@@ -37,6 +37,16 @@ describe('validateCatalog', () => {
     expect(errs[0]).toContain('"a"')
     expect(errs[0]).toContain('showrom')
   })
+  it('accepts valid autoOrbit values', () => {
+    expect(validateCatalog([{ ...good, autoOrbit: true }], all)).toEqual([])
+    expect(validateCatalog([{ ...good, autoOrbit: { degreesPerSecond: 12 } }], all)).toEqual([])
+  })
+  it('fails on an invalid autoOrbit, naming the entry', () => {
+    const errs = validateCatalog([{ ...good, autoOrbit: { degreesPerSecond: 0 } }], all)
+    expect(errs).toHaveLength(1)
+    expect(errs[0]).toContain('"a"')
+    expect(errs[0]).toContain('autoOrbit')
+  })
   it('does not fail when notes path points at a missing file', () => {
     expect(validateCatalog([{ ...good, notes: '/content/a.md' }], (p) => p !== '/content/a.md')).toEqual([])
   })

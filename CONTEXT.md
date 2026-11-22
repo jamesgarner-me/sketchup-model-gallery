@@ -51,3 +51,7 @@ _Avoid_: Default background, light mode
 **Showroom stage**:
 A Stage that shows the Model as if on display in a dark room lit by several lights.
 _Avoid_: Dark mode, night mode, dark background
+
+**Auto-orbit**:
+An optional slow turntable rotation a Model performs when its Viewer opens, until the visitor first takes control.
+_Avoid_: Auto-rotate, spin, turntable mode

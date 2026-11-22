@@ -23,6 +23,7 @@ test('gallery → viewer → info → reset', async ({ page, isMobile }) => {
   await expect(page.locator('#loading')).toBeHidden({ timeout: 60_000 })
   await page.waitForTimeout(1_000)
   const initial = await orbit(page)
+  expect(await page.evaluate(() => (document.querySelector('model-viewer') as unknown as { turntableRotation: number }).turntableRotation), 'auto-orbit running').not.toBe(0)
 
   // Move the camera (desktop drag; on touch emulation use a programmatic goal).
   if (isMobile) {
@@ -60,6 +61,11 @@ test('gallery → viewer → info → reset', async ({ page, isMobile }) => {
   // Reset view returns to the initial framing.
   await page.getByRole('button', { name: 'Reset view' }).click()
   await expect.poll(() => orbit(page), { timeout: 3_000 }).toBe(initial)
+  // Stairs has Auto-orbit; Reset also undoes the turntable turn and leaves it still.
+  const turntable = () => page.evaluate(() => (document.querySelector('model-viewer') as unknown as { turntableRotation: number }).turntableRotation)
+  expect(await turntable()).toBe(0)
+  await page.waitForTimeout(800)
+  expect(await turntable()).toBe(0)
 
   // Back to the Gallery.
   await page.getByRole('link', { name: '← Gallery' }).click()

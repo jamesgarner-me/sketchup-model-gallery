@@ -6,6 +6,7 @@
     "glb": "/models/stairs-james-design-v1-backup.glb",
     "thumbnail": "/thumbnails/stairs.webp",
     "order": 1,
-    "stage": "showroom"
+    "stage": "showroom",
+    "autoOrbit": true
   }
 ]

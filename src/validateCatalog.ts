@@ -1,3 +1,5 @@
+import { isValidAutoOrbit } from './autoOrbit'
+
 export interface ValidatableEntry {
   id?: unknown
   title?: unknown
@@ -7,6 +9,7 @@ export interface ValidatableEntry {
   order?: unknown
   notes?: unknown
   stage?: unknown
+  autoOrbit?: unknown
 }
 
 const REQUIRED_STRINGS = ['id', 'title', 'description', 'glb', 'thumbnail'] as const
@@ -46,6 +49,9 @@ export function validateCatalog(
     }
     if (entry.stage !== undefined && (typeof entry.stage !== 'string' || !stageNames.includes(entry.stage))) {
       errors.push(`${label}: unknown stage "${String(entry.stage)}" (known: ${stageNames.join(', ')})`)
+    }
+    if (entry.autoOrbit !== undefined && !isValidAutoOrbit(entry.autoOrbit)) {
+      errors.push(`${label}: invalid autoOrbit (use true, false or { "degreesPerSecond": <non-zero number> })`)
     }
   })
 

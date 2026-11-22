@@ -4,6 +4,7 @@ import { findModel, type CatalogEntry } from '../catalog'
 import { siteName } from '../config'
 import { getNotesHtml } from '../notes'
 import { getStage } from '../stages'
+import { resolveAutoOrbit } from '../autoOrbit'
 import { parseModelId } from './path'
 import '../base.css'
 import './viewer.css'
@@ -59,6 +60,25 @@ function start(entry: CatalogEntry) {
   if (entry.camera?.target) el.setAttribute('camera-target', entry.camera.target)
   if (entry.camera?.fieldOfView) el.setAttribute('field-of-view', entry.camera.fieldOfView)
 
+  // Auto-orbit: slow turntable rotation from load until the visitor first takes control.
+  const orbitSpeed = resolveAutoOrbit(entry.autoOrbit, window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  let orbitStopped = orbitSpeed === undefined
+  if (orbitSpeed !== undefined) {
+    el.setAttribute('auto-rotate', '')
+    el.setAttribute('rotation-per-second', `${orbitSpeed}deg`)
+    // Start straight away; we switch auto-rotate off ourselves on first interaction, so the
+    // library's resume-after-delay never applies.
+    el.setAttribute('auto-rotate-delay', '0')
+    el.setAttribute('interaction-prompt', 'none')
+  }
+  const stopOrbit = () => {
+    orbitStopped = true
+    el.autoRotate = false
+  }
+  el.addEventListener('camera-change', (e) => {
+    if (!orbitStopped && (e as CustomEvent<{ source: string }>).detail.source === 'user-interaction') stopOrbit()
+  })
+
   let framing: Framing | undefined
   let flip = false
   let jumpTimer: number | undefined
@@ -95,6 +115,10 @@ function start(entry: CatalogEntry) {
 
   resetBtn.addEventListener('click', () => {
     if (!framing) return
+    if (orbitSpeed !== undefined) {
+      stopOrbit()
+      el.resetTurntableRotation()
+    }
     const { orbit, target, fov } = framing
     // model-viewer ignores a goal equal to the last one it was given even if the user has since
     // moved the camera, so alternate by an imperceptible radius nudge to guarantee a new goal.
@@ -109,7 +133,14 @@ function start(entry: CatalogEntry) {
 
   stage.appendChild(el)
   load(entry.glb)
-  setupInfo(entry)
+  setupInfo(entry, {
+    onOpen: () => {
+      if (!orbitStopped) el.autoRotate = false
+    },
+    onClose: () => {
+      if (!orbitStopped) el.autoRotate = true
+    },
+  })
 }
 
 /**
@@ -117,7 +148,7 @@ function start(entry: CatalogEntry) {
  * The viewer stays mounted underneath, so camera state is preserved. Opening pushes a history
  * entry so Back closes the overlay first; every close path goes through history.back().
  */
-function setupInfo(entry: CatalogEntry) {
+function setupInfo(entry: CatalogEntry, hooks: { onOpen(): void; onClose(): void }) {
   $('info-title').textContent = entry.title
   $('info-desc').textContent = entry.description
   const notesEl = $('info-notes')
@@ -130,7 +161,10 @@ function setupInfo(entry: CatalogEntry) {
   let owned = false // true while the top history entry belongs to the open overlay
 
   const open = () => {
-    if (!infoDialog.open) infoDialog.showModal()
+    if (!infoDialog.open) {
+      infoDialog.showModal()
+      hooks.onOpen()
+    }
     infoDialog.querySelector('.info-scroll')!.scrollTop = 0
   }
   infoBtn.addEventListener('click', () => {
@@ -142,6 +176,7 @@ function setupInfo(entry: CatalogEntry) {
     if (owned) history.back()
     else infoDialog.close()
   }
+  infoDialog.addEventListener('close', () => hooks.onClose())
   infoClose.addEventListener('click', requestClose)
   infoDialog.addEventListener('cancel', (e) => {
     e.preventDefault()
