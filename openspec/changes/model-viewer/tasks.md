@@ -30,4 +30,4 @@
 
 - [x] 5.1 Run unit tests and `npm run build` (validation runs in prebuild)
 - [x] 5.2 Manual check on iPhone: orbit, pinch, two-finger pan, Reset, load-failure and not-found states, portrait and landscape
-- [ ] 5.3 Keyboard check of Reset and back link; confirm `/models/stairs` direct link and refresh on the deployed site
+- [x] 5.3 Keyboard check of Reset and back link; confirm `/models/stairs` direct link and refresh on the deployed site
