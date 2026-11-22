@@ -7,5 +7,5 @@
 ## 2. Verify
 
 - [x] 2.1 Screenshots on light and dark Stages, phone and desktop; keyboard focus visible
-- [ ] 2.2 Run unit and smoke tests and build; deploy and run smoke tests on the hosted site
+- [x] 2.2 Run unit and smoke tests and build; deploy and run smoke tests on the hosted site
 - [ ] 2.3 Manual check on iPhone
