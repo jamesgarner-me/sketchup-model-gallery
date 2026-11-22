@@ -15,7 +15,6 @@ const controls = $('controls')
 const titleEl = $('title')
 const resetBtn = $<HTMLButtonElement>('reset')
 const retryBtn = $<HTMLButtonElement>('retry')
-const hint = $('hint')
 
 /** Full-model framing captured once per page load (or taken from the catalog). */
 interface Framing { orbit: [number, number, number]; target: [number, number, number]; fov: number }
@@ -33,9 +32,6 @@ function showNotFound() {
 function start(entry: CatalogEntry) {
   document.title = entry.title
   titleEl.textContent = entry.title
-  hint.textContent = window.matchMedia('(pointer: coarse)').matches
-    ? 'Drag to rotate · Pinch to zoom · Two fingers to pan'
-    : 'Drag to rotate · Scroll to zoom · Right-drag to pan'
 
   const el = document.createElement('model-viewer') as ModelViewerElement
   el.setAttribute('alt', entry.title)

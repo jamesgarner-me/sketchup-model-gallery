@@ -17,8 +17,6 @@ model-viewer { background: var(--bg); --poster-color: transparent; }
   pointer-events: none; }
 .controls > * { pointer-events: auto; }
 .controls-row { display: flex; gap: var(--pad); }
-.hint { margin: 0; font-size: .85rem; opacity: .75; text-align: center; background: rgba(255,255,255,.7); padding: 2px 10px; border-radius: 999px; }
-@media (max-height: 480px) { .hint { display: none; } }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 16px;
   border: 1px solid rgba(0,0,0,.2); border-radius: 10px; background: #fff; color: var(--fg); font: inherit; font-weight: 600;

@@ -94,7 +94,7 @@ Search, filtering, categories, and pagination have not been requested. A small c
 - Support orbit, pan, and zoom.
 - Display the model title and a way back to the gallery.
 - Keep Reset view and Info available over the viewer.
-- Provide concise instructions for the device's controls.
+- Show no on-screen control instructions; gestures are expected to be intuitive (decided after validation on a real phone).
 - Show loading feedback and a readable error if loading fails.
 - Give unknown model IDs a clear unavailable-model state with a route back to the gallery.
 

@@ -62,7 +62,7 @@ Reset view SHALL glide back over roughly 400 ms and SHALL jump instantly if the 
 - **THEN** the camera is set to Initial framing immediately
 
 ### Requirement: Persistent controls and layout
-Reset view, Info and a back-to-Gallery link SHALL remain reachable over the Viewer in portrait and landscape, with touch targets sized for fingers, visible keyboard focus, and clearance from device safe areas. The Viewer SHALL show the Model title and brief control instructions.
+Reset view, Info and a back-to-Gallery link SHALL remain reachable over the Viewer in portrait and landscape, with touch targets sized for fingers, visible keyboard focus, and clearance from device safe areas. The Viewer SHALL show the Model title. It SHALL NOT show on-screen control instructions; gesture controls are expected to be intuitive.
 
 #### Scenario: Landscape controls
 - **WHEN** the device is in landscape
