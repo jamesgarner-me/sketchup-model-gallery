@@ -14,7 +14,7 @@ On a dark Stage, the Viewer's back link, title, Reset view, Info button, Viewpoi
 ## ADDED Requirements
 
 ### Requirement: Layers control
-A Model with Layers configured SHALL show a Layers button beside Reset view and Info. Activating it SHALL open a panel listing the Model's Layers in Catalog order, each with its label and a checkbox reflecting current visibility, plus a "Restore defaults" action. The panel SHALL appear as a bottom sheet on narrow screens and a side panel on wide screens, SHALL leave the Model visible and interactive around it, and SHALL be closable by its close button, by Escape, and by activating the Layers button again. Models without Layers SHALL NOT show the Layers button.
+A Model with Layers configured SHALL show a Layers button beside Reset view (and Viewpoints, where shown). Activating it SHALL open a panel listing the Model's Layers in Catalog order, each with its label and a checkbox reflecting current visibility, plus a "Restore defaults" action. The panel SHALL appear as a bottom sheet on narrow screens and a side panel on wide screens, SHALL leave the Model visible and interactive around it, and SHALL be closable by its close button, by Escape, and by activating the Layers button again. Models without Layers SHALL NOT show the Layers button.
 
 #### Scenario: Open the panel
 - **WHEN** the visitor activates Layers on a Model with Layers

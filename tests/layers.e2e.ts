@@ -61,7 +61,8 @@ test('Layers: defaults, toggle, restore, reset keeps Layers, panel behaviour', a
   if (vp.width < 640) {
     expect(box.height).toBeLessThanOrEqual(vp.height / 2 + 1)
     // The 3D view shrinks to the area above the sheet so the Model is framed there.
-    await expect.poll(async () => Math.round((await mv.boundingBox())!.height)).toBe(Math.round(box.y))
+    const sheetTop = await panel.evaluate((p) => (p as HTMLElement).offsetTop) // resting position, ignoring the slide-in
+    await expect.poll(async () => Math.round((await mv.boundingBox())!.height)).toBe(sheetTop)
   } else {
     expect(box.width).toBeLessThanOrEqual(361)
     expect((await mv.boundingBox())!.height).toBe(vp.height)
