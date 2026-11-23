@@ -14,9 +14,9 @@ interface Placed { part: ScenePart; step: Vec3; level: 'group' | 'sub' }
 export function setupExplode(el: ModelViewerElement): { reset(): void } {
   const row = document.getElementById('explode') as HTMLElement
   const slider = document.getElementById('explode-slider') as HTMLInputElement
-  const modeBtn = document.getElementById('explode-mode') as HTMLButtonElement
 
-  let mode: ExplodeMode = 'groups'
+  // Nested only: the Groups/Nested toggle is switched off (see model.html). Groups mode stays in the maths.
+  const mode: ExplodeMode = 'nested'
   let access: SceneAccess | undefined
   let groups: ScenePart[] = []
   let all: ScenePart[] = []
@@ -66,12 +66,14 @@ export function setupExplode(el: ModelViewerElement): { reset(): void } {
     access.requestRender()
   })
   slider.addEventListener('input', apply)
-  modeBtn.addEventListener('click', () => {
-    mode = mode === 'groups' ? 'nested' : 'groups'
-    modeBtn.textContent = mode === 'groups' ? 'Groups' : 'Nested'
-    modeBtn.setAttribute('aria-label', `Explode mode: ${modeBtn.textContent}. Switch mode`)
-    apply()
-  })
+  // Mode toggle switched off (Nested only):
+  // const modeBtn = document.getElementById('explode-mode') as HTMLButtonElement
+  // modeBtn.addEventListener('click', () => {
+  //   mode = mode === 'groups' ? 'nested' : 'groups'
+  //   modeBtn.textContent = mode === 'groups' ? 'Groups' : 'Nested'
+  //   modeBtn.setAttribute('aria-label', `Explode mode: ${modeBtn.textContent}. Switch mode`)
+  //   apply()
+  // })
   return {
     /** Reset view: reassemble (slider back to the far left). */
     reset() {

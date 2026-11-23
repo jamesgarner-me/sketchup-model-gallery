@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: Explode spike
-For the spike only, the stairs Model's Viewer SHALL show an Explode slider when its URL has the `explode` query flag, and SHALL NOT show it otherwise or on any other Model. Moving the slider right SHALL pull the Model's visible top-level groups apart in proportion to its position, radially from the centre of the visible groups, and moving it back SHALL reassemble them. Groups hidden with Layers SHALL NOT move. When only one top-level group is visible, both modes SHALL spread that group's own parts instead. A mode toggle SHALL switch between Groups (visible top-level groups only) and Nested (top-level groups, then the groups inside them). The slider SHALL NOT move the camera, and all camera gestures SHALL keep working at any slider position.
+For the spike only, the stairs Model's Viewer SHALL show an Explode slider when its URL has the `explode` query flag, and SHALL NOT show it otherwise or on any other Model. Moving the slider right SHALL pull the Model's visible top-level groups apart in proportion to its position, radially from the centre of the visible groups, and moving it back SHALL reassemble them. Groups hidden with Layers SHALL NOT move. When only one top-level group is visible, the slider SHALL spread that group's own parts instead. The explode SHALL be nested: the top-level groups separate over the first half of the slider, then the groups inside them over the second half. There SHALL be no mode toggle. The slider SHALL NOT move the camera, and all camera gestures SHALL keep working at any slider position.
 
 #### Scenario: Hidden by default
 - **WHEN** a visitor opens the stairs Model without the `explode` flag, or any other Model
@@ -23,9 +23,9 @@ For the spike only, the stairs Model's Viewer SHALL show an Explode slider when 
 - **WHEN** the Model is exploded and the visitor activates Reset view
 - **THEN** the camera returns to Initial framing, the slider returns to the far left and the Model is assembled, with every Layer at its default visibility
 
-#### Scenario: Mode toggle
-- **WHEN** the visitor switches between Groups and Nested
-- **THEN** the parts move to the positions the new mode gives for the current slider position
+#### Scenario: Nested explode
+- **WHEN** the visitor drags the slider from the far left to the far right
+- **THEN** the top-level groups separate first, then the groups inside them spread out, and no mode toggle is shown
 
 #### Scenario: Only visible groups explode
 - **WHEN** some Layers are hidden and the visitor drags the slider right
@@ -36,7 +36,7 @@ For the spike only, the stairs Model's Viewer SHALL show an Explode slider when 
 - **THEN** the visible groups are re-spread straight away for the current slider position, newly hidden groups return to their original places, and the camera does not move
 
 #### Scenario: Explode within a single group
-- **WHEN** only one top-level group is visible and the visitor drags the slider right, in either mode
+- **WHEN** only one top-level group is visible and the visitor drags the slider right
 - **THEN** that group's own parts move apart around its centre
 
 #### Scenario: Layers and slider together on a phone

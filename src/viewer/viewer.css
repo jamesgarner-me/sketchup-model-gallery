@@ -27,7 +27,7 @@ model-viewer { background: var(--bg); --poster-color: transparent; }
 .state h2, .state p { margin: 0; }
 .state-actions { display: flex; gap: var(--pad); flex-wrap: wrap; justify-content: center; }
 
-/* Explode spike: finger-sized slider plus mode toggle, above the main controls. */
+/* Explode spike: finger-sized slider above the main controls. */
 .explode-row { display: flex; align-items: center; gap: var(--pad); width: min(360px, 100%); }
 .explode-row[hidden] { display: none; }
 #explode-slider { flex: 1; min-width: 0; height: 44px; margin: 0; background: transparent; touch-action: none; -webkit-appearance: none; appearance: none; }
@@ -36,7 +36,7 @@ model-viewer { background: var(--bg); --poster-color: transparent; }
 #explode-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 32px; height: 32px; margin-top: -13px; border-radius: 50%;
   background: var(--accent); border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35); }
 #explode-slider::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); border: 3px solid #fff; }
-#explode-mode { min-width: 96px; }
+/* #explode-mode { min-width: 96px; } (mode toggle switched off; Nested only) */
 
 /* Viewpoints drawer: non-modal, slides in from the right on every screen size. */
 .drawer { position: absolute; top: 0; right: 0; bottom: 0; z-index: 3; width: min(360px, 85vw); display: flex; flex-direction: column;

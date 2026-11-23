@@ -46,9 +46,8 @@ test('Explode spike: slider moves parts, not the camera; camera stays free', asy
   expect(Math.hypot(...exploded.map((v, i) => v - rest[i]))).toBeGreaterThan(0.1)
   expect(await cam(page)).toEqual(camBefore)
 
-  // Nested mode at full slider also spreads the groups inside AllStairs.
-  await page.locator('#explode-mode').click()
-  await expect(page.locator('#explode-mode')).toHaveText('Nested')
+  // Nested (the only mode) at full slider also spreads the groups inside AllStairs; no mode toggle.
+  await expect(page.locator('#explode-mode')).toHaveCount(0)
   const nestedWinders = await nodePos(page, 'Winders')
   const nestedStairs = await nodePos(page, 'AllStairs')
   expect(Math.hypot(...nestedWinders.map((v, i) => v - restWinders[i]))).toBeGreaterThan(0.01)
@@ -112,7 +111,7 @@ test('Explode spike: only visible Layers explode, and Layers changes re-spread s
   await panel.getByRole('checkbox', { name: 'All stairs' }).click()
   ;(await nodePos(page, 'AllStairs')).forEach((v, i) => expect(v).toBeCloseTo(rest.AllStairs[i], 6))
 
-  // Only All stairs visible: its own parts spread (Groups mode), the group itself stays put.
+  // Only All stairs visible: its own parts spread, the group itself stays put.
   const boxes = panel.getByRole('checkbox')
   for (let i = 0; i < (await boxes.count()); i++) {
     const box = boxes.nth(i)

@@ -7,10 +7,8 @@ Build-detail Models such as the stairs hide their construction: framing, stringe
 - A spike-only **Explode slider** on the stairs Model, shown only when the Viewer URL has `?explode` (e.g. `/models/stairs?explode`). Visitors without the flag see no change.
 - Dragging the slider right pulls the **visible** top-level groups apart, radially from the centre of what is visible, up to about 0.75 × its bounding radius; far left is assembled. Groups hidden with Layers stay put.
 - Showing or hiding a Layer (or Restore defaults) while exploded re-spreads the visible groups straight away for the current slider position.
-- With a single group visible, both modes spread that group's own parts, so hiding all Layers but one explodes within it.
-- A toggle switches between two modes so both can be judged:
-  - **Groups:** the visible top-level SketchUp groups move as solid blocks.
-  - **Nested:** groups separate over the first half of the slider, then the groups inside each one spread out over the second half.
+- With a single group visible, its own parts spread, so hiding all Layers but one explodes within it.
+- **Nested** is the only mode: groups separate over the first half of the slider, then the groups inside each one spread out over the second half. (A Groups/Nested toggle was tried; Groups mode, which moves only the top-level groups, was switched off on 2026-11-23 and its toggle commented out.)
 - The camera stays fully free at any slider position (orbit, zoom, pan, tap to set pivot). The slider never moves the camera. Auto-orbit keeps turning while the slider is dragged. Reset view also restores the starting Layers (on every Model, a change to shipped Layers behaviour) and reassembles the Model (slider back to 0). The slider works inside Viewpoints.
 - Outcome: after an iPhone check the owner decides to productise (a follow-up change with a Catalog field and proper specs), tweak, or drop. Findings are recorded in `design.md`.
 - Deferred: canonical Model kinds. Candidate names are **Site design** (gardens, landscapes, house sites) and **Build detail** (stairs, joinery, framing).
