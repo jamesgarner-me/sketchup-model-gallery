@@ -5,9 +5,11 @@ Build-detail Models such as the stairs hide their construction: framing, stringe
 ## What Changes
 
 - A spike-only **Explode slider** on the stairs Model, shown only when the Viewer URL has `?explode` (e.g. `/models/stairs?explode`). Visitors without the flag see no change.
-- Dragging the slider right pulls the parts apart, radially from the Model's centre, up to about 0.75 × the Model's bounding radius; far left is assembled.
+- Dragging the slider right pulls the **visible** top-level groups apart, radially from the centre of what is visible, up to about 0.75 × its bounding radius; far left is assembled. Groups hidden with Layers stay put.
+- Showing or hiding a Layer (or Restore defaults) while exploded re-spreads the visible groups straight away for the current slider position.
+- With a single group visible, both modes spread that group's own parts, so hiding all Layers but one explodes within it.
 - A toggle switches between two modes so both can be judged:
-  - **Groups:** the 12 top-level SketchUp groups move as solid blocks.
+  - **Groups:** the visible top-level SketchUp groups move as solid blocks.
   - **Nested:** groups separate over the first half of the slider, then the groups inside each one spread out over the second half.
 - The camera stays fully free at any slider position (orbit, zoom, pan, tap to set pivot). The slider never moves the camera. Auto-orbit keeps turning while the slider is dragged. Reset view stays camera-only and leaves the explode amount as is. The slider works inside Viewpoints.
 - Outcome: after an iPhone check the owner decides to productise (a follow-up change with a Catalog field and proper specs), tweak, or drop. Findings are recorded in `design.md`.
@@ -20,10 +22,12 @@ Build-detail Models such as the stairs hide their construction: framing, stringe
 None.
 
 ### Modified Capabilities
-- `model-viewer`: a flag-gated Explode slider on the stairs Model for the spike.
+- `model-viewer`: a flag-gated Explode slider on the stairs Model for the spike, acting on visible Layers only.
 
 ## Impact
 
-- New `src/explode.ts` (pure offset maths, unit-tested) and `src/viewer/explode.ts` (finds the parts in `<model-viewer>`'s internal three.js scene, applies offsets, slider UI). The scene access follows ADR 0003; the planned Layers change can reuse it.
+- New `src/explode.ts` (pure offset maths, unit-tested) and `src/viewer/explode.ts` (slider UI, applies offsets). Internal scene access goes through the shared `src/viewer/sceneAccess.ts` from Layers (ADR 0003), extended for positions and bounds.
+- On phones the Layers bottom sheet sits above the whole bottom controls area, including the explode row, so both can be used together.
+- The branch is rebased onto `main` (Layers, Info top right, new stairs export) before building.
 - `model.html`, `src/viewer/main.ts`, `src/viewer/viewer.css`, a Playwright test.
 - No Catalog or build changes. All spike code is either promoted by the follow-up change or deleted.
