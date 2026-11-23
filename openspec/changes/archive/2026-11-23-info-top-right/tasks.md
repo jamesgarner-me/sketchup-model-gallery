@@ -9,4 +9,4 @@
 - [x] 2.1 Screenshots on Neutral and Showroom stages, portrait and landscape, including a long title; confirm Info stands out
 - [x] 2.2 Run unit and all e2e tests and the build
 - [x] 2.3 Deploy and run e2e tests on the hosted site
-- [ ] 2.4 Manual check on iPhone: Info is easy to notice and tap
+- [x] 2.4 Manual check on iPhone: Info is easy to notice and tap
