@@ -9,7 +9,6 @@ import { srgbToLinear } from '../colour'
 import { parseModelId } from './path'
 import { setupViewpoints } from './viewpoints'
 import { setupLayers } from './layers'
-import { explodeEnabled } from '../explode'
 import { setupExplode } from './explode'
 import viewpoints from 'virtual:viewpoints'
 import '../base.css'
@@ -136,7 +135,7 @@ function start(entry: CatalogEntry) {
 
   retryBtn.addEventListener('click', () => load(`${entry.glb}?retry=${Date.now()}`))
 
-  const explode = explodeEnabled(entry.id) ? setupExplode(el) : undefined
+  const explode = entry.explode ? setupExplode(el) : undefined
 
   const viewpointMode = setupViewpoints(el, viewpoints[entry.id] ?? [], { onEnter: () => stopOrbit() })
   const layers = setupLayers(el, entry.layers)

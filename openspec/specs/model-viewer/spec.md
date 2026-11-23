@@ -353,11 +353,11 @@ When the Model loads, each Layer SHALL start in its configured default visibilit
 - **THEN** the orbit continues
 
 ### Requirement: Explode slider
-The stairs Model's Viewer SHALL show an Explode slider by default, with no URL flag, and SHALL NOT show it on any other Model. Moving the slider right SHALL pull the Model's visible top-level groups apart in proportion to its position, radially from the centre of the visible groups, and moving it back SHALL reassemble them. Groups hidden with Layers SHALL NOT move. When only one top-level group is visible, the slider SHALL spread that group's own parts instead. The explode SHALL be nested: the top-level groups separate over the first half of the slider, then the groups inside them over the second half. There SHALL be no mode toggle. The slider SHALL NOT move the camera, and all camera gestures SHALL keep working at any slider position.
+A Model's Viewer SHALL show an Explode slider when the Model's Catalog entry sets `explode` to true (currently the stairs), with no URL flag, and SHALL NOT show it otherwise. Moving the slider right SHALL pull the Model's visible top-level groups apart in proportion to its position, radially from the centre of the visible groups, and moving it back SHALL reassemble them. Groups hidden with Layers SHALL NOT move. When only one top-level group is visible, the slider SHALL spread that group's own parts instead. The explode SHALL be nested: the top-level groups separate over the first half of the slider, then the groups inside them over the second half. There SHALL be no mode toggle. The slider SHALL NOT move the camera, and all camera gestures SHALL keep working at any slider position.
 
-#### Scenario: Shown on the stairs only
-- **WHEN** a visitor opens the stairs Model
-- **THEN** the Explode slider is shown at the far left and the Model is assembled; on any other Model no slider is shown
+#### Scenario: Shown where the Catalog turns it on
+- **WHEN** a visitor opens a Model whose Catalog entry sets `explode` to true, such as the stairs
+- **THEN** the Explode slider is shown at the far left and the Model is assembled; on a Model without it no slider is shown
 
 #### Scenario: Explode and reassemble
 - **WHEN** the visitor drags the slider right and then back to the far left

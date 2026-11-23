@@ -37,6 +37,13 @@ describe('validateCatalog', () => {
     expect(errs[0]).toContain('"a"')
     expect(errs[0]).toContain('showrom')
   })
+  it('accepts explode true or false and rejects anything else', () => {
+    expect(validateCatalog([{ ...good, explode: true }], all)).toEqual([])
+    expect(validateCatalog([{ ...good, explode: false }], all)).toEqual([])
+    const errs = validateCatalog([{ ...good, explode: 'yes' }], all)
+    expect(errs).toHaveLength(1)
+    expect(errs[0]).toContain('explode')
+  })
   it('accepts valid autoOrbit values', () => {
     expect(validateCatalog([{ ...good, autoOrbit: true }], all)).toEqual([])
     expect(validateCatalog([{ ...good, autoOrbit: { degreesPerSecond: 12 } }], all)).toEqual([])
