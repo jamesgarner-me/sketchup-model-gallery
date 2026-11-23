@@ -19,9 +19,9 @@ For the spike only, the stairs Model's Viewer SHALL show an Explode slider when 
 - **WHEN** the visitor drags the slider
 - **THEN** the camera does not move and Auto-orbit, if running, keeps turning
 
-#### Scenario: Reset view keeps the explode amount
+#### Scenario: Reset view reassembles
 - **WHEN** the Model is exploded and the visitor activates Reset view
-- **THEN** the camera returns to Initial framing and the parts stay where the slider puts them
+- **THEN** the camera returns to Initial framing, the slider returns to the far left and the Model is assembled, with every Layer at its default visibility
 
 #### Scenario: Mode toggle
 - **WHEN** the visitor switches between Groups and Nested
@@ -42,3 +42,53 @@ For the spike only, the stairs Model's Viewer SHALL show an Explode slider when 
 #### Scenario: Layers and slider together on a phone
 - **WHEN** the Layers panel is open as a bottom sheet on a narrow screen
 - **THEN** the Explode slider stays visible and usable below it
+
+### Requirement: Layer visibility and Reset
+When the Model loads, each Layer SHALL start in its configured default visibility (visible unless configured otherwise). Toggling a Layer's checkbox SHALL immediately show or hide that group and everything inside it. "Restore defaults" SHALL return every Layer to its default visibility. Changing Layers SHALL NOT move the camera, change Initial framing, or start or stop Auto-orbit, and Reset view SHALL return every Layer to its default visibility. Layer visibility SHALL NOT be stored in the URL and SHALL return to defaults on page reload.
+
+#### Scenario: Defaults on load
+- **WHEN** Bastings Garden loads
+- **THEN** Layers 01–09 are visible and the "Existing landing comparison" and "Roof-loaded 4×4 clearance" Layers are hidden
+
+#### Scenario: Toggle a Layer
+- **WHEN** the visitor unchecks a visible Layer
+- **THEN** that group disappears from the Model and the camera does not move
+
+#### Scenario: Restore defaults
+- **WHEN** the visitor has changed several Layers and activates "Restore defaults"
+- **THEN** every Layer returns to its default visibility
+
+#### Scenario: Reset view restores Layers
+- **WHEN** the visitor hides a Layer and then activates Reset view
+- **THEN** the camera returns to Initial framing and the Layer is shown again
+
+#### Scenario: Orbit unaffected
+- **WHEN** a Model with Auto-orbit is orbiting and the visitor toggles a Layer
+- **THEN** the orbit continues
+
+## MODIFIED Requirements
+
+### Requirement: Reset view
+The Viewer SHALL show a persistent Reset view button that, on a single tap or click, returns the camera to the Initial framing with full camera controls, leaving any Viewpoint, returns every Layer to its default visibility, and reassembles an exploded Model. It SHALL work after any gesture sequence, including when the Model is offscreen, and MUST NOT otherwise alter the Model.
+
+#### Scenario: Recover after panning away
+- **WHEN** a visitor pans until the Model is offscreen and activates Reset view
+- **THEN** the camera returns to Initial framing
+
+#### Scenario: Recover after over-zoom
+- **WHEN** a visitor zooms far in or out and activates Reset view
+- **THEN** the camera returns to Initial framing
+
+#### Scenario: Repeatable
+- **WHEN** Reset view is used repeatedly after different gestures
+- **THEN** each use reaches the same Initial framing
+
+#### Scenario: Reset restores starting Layers
+- **WHEN** the visitor has shown or hidden Layers and activates Reset view
+- **THEN** every Layer returns to its default visibility, as on load
+
+## REMOVED Requirements
+
+### Requirement: Layer visibility
+**Reason**: Reset view now restores default Layers; replaced by "Layer visibility and Reset".
+**Migration**: None; same behaviour except Reset view.

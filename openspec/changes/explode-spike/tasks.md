@@ -19,4 +19,5 @@
 - [x] 3.4 Hidden groups stay at rest; Layers visibility changes and Restore defaults re-apply the current slider value immediately
 - [x] 3.5 Phone layout: Layers bottom sheet sits above the whole controls footer, including the explode row
 - [x] 3.6 Playwright: only visible groups move; toggling a Layer while exploded re-spreads and returns hidden ones to rest; single visible group spreads its parts; slider usable with the Layers sheet open on Pixel 7; camera unchanged
+- [x] 3.8 Reset view restores default Layers on every Model and reassembles (slider to 0); update the Layers and Explode e2e tests and README
 - [ ] 3.7 Run unit and all e2e tests and the build; iPhone check at `/models/stairs?explode` with Layers; record findings and the decision

@@ -41,7 +41,7 @@ Every saved **Scene** in the SketchUp model becomes a Viewpoint: a fixed eye pos
 A Layer is a top-level SketchUp group that visitors can show or hide from the **Layers** button. Unlike Viewpoints, Layers are opt-in: list them in the catalog's `layers` field (see below), in the order the panel should show them.
 
 - **`group`** is the group name exactly as exported, spacing included (e.g. `"01  Street, crossover and driveway"` has two spaces). If a name doesn't match, the build fails and lists the model's top-level groups.
-- Layers start at their `visible` setting on every load. Visitors' changes aren't kept in the URL, and Reset view doesn't change them.
+- Layers start at their `visible` setting on every load, and Reset view puts them back to it. Visitors' changes aren't kept in the URL.
 - Models without `layers` show no Layers button.
 
 ## Catalog fields (`src/models.json`)

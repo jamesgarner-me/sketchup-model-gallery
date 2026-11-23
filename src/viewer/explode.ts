@@ -11,7 +11,7 @@ interface Placed { part: ScenePart; step: Vec3; level: 'group' | 'sub' }
  * Scene access goes through sceneAccess (ADR 0003). The plan (which parts move, which way) is rebuilt
  * whenever Layers change visibility; the slider only scales it.
  */
-export function setupExplode(el: ModelViewerElement) {
+export function setupExplode(el: ModelViewerElement): { reset(): void } {
   const row = document.getElementById('explode') as HTMLElement
   const slider = document.getElementById('explode-slider') as HTMLInputElement
   const modeBtn = document.getElementById('explode-mode') as HTMLButtonElement
@@ -72,4 +72,11 @@ export function setupExplode(el: ModelViewerElement) {
     modeBtn.setAttribute('aria-label', `Explode mode: ${modeBtn.textContent}. Switch mode`)
     apply()
   })
+  return {
+    /** Reset view: reassemble (slider back to the far left). */
+    reset() {
+      slider.value = '0'
+      apply()
+    },
+  }
 }

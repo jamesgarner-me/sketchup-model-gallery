@@ -12,9 +12,9 @@ export const LAYERS_CHANGE_EVENT = 'layers-change'
  * (ADR 0003). Visibility starts at the Catalog defaults on every load and is never kept in the URL;
  * it does not touch the camera or Auto-orbit.
  */
-export function setupLayers(el: ModelViewerElement, settings: LayerSetting[] | undefined) {
+export function setupLayers(el: ModelViewerElement, settings: LayerSetting[] | undefined): { restoreDefaults(): void } {
   const layers = resolveLayers(settings)
-  if (!layers.length) return
+  if (!layers.length) return { restoreDefaults() {} }
 
   const btn = document.getElementById('layers-btn') as HTMLButtonElement
   const panel = document.getElementById('layers') as HTMLElement
@@ -128,4 +128,6 @@ export function setupLayers(el: ModelViewerElement, settings: LayerSetting[] | u
     close()
     btn.focus()
   })
+  // Reset view restores the starting Layers (no-op until the Model has loaded).
+  return { restoreDefaults: () => groups.length && applyDefaults() }
 }

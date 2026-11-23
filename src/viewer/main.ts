@@ -136,15 +136,18 @@ function start(entry: CatalogEntry) {
 
   retryBtn.addEventListener('click', () => load(`${entry.glb}?retry=${Date.now()}`))
 
-  if (explodeSpikeEnabled(entry.id, location.search)) setupExplode(el)
+  const explode = explodeSpikeEnabled(entry.id, location.search) ? setupExplode(el) : undefined
 
   const viewpointMode = setupViewpoints(el, viewpoints[entry.id] ?? [], { onEnter: () => stopOrbit() })
-  setupLayers(el, entry.layers)
+  const layers = setupLayers(el, entry.layers)
 
   resetBtn.addEventListener('click', async () => {
     if (!framing) return
     // Leaving a Viewpoint restores free camera controls before the usual glide back.
     await viewpointMode.exit()
+    // Back to the starting state: assembled, with the starting Layers.
+    explode?.reset()
+    layers.restoreDefaults()
     if (orbitSpeed !== undefined) {
       // Pause during the glide back, undo the turntable turn, then restart once settled.
       stopOrbit()

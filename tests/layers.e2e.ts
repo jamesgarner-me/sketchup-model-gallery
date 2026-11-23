@@ -29,7 +29,7 @@ const PLANTING = '09__Proposed_spring_planting'
 const LANDING = '10__Existing_landing_comparison_•_toggle'
 const CLEARANCE = '11__Roof-loaded_4×4_clearance_•_toggle'
 
-test('Layers: defaults, toggle, restore, reset keeps Layers, panel behaviour', async ({ page }) => {
+test('Layers: defaults, toggle, restore, reset restores Layers, panel behaviour', async ({ page }) => {
   // Loads the large Bastings Garden Model twice (the reload check) under software rendering.
   test.setTimeout(240_000)
   const errors: string[] = []
@@ -113,12 +113,17 @@ test('Layers: defaults, toggle, restore, reset keeps Layers, panel behaviour', a
   await expect(page.getByRole('complementary', { name: 'Viewpoints' })).toBeHidden()
   await expect(panel).toBeVisible()
 
-  // Reset view keeps Layers.
+  // Reset view restores the starting Layers.
   await panel.getByRole('checkbox', { name: 'Proposed spring planting' }).click()
+  await panel.getByRole('checkbox', { name: 'Roof-loaded 4×4 clearance' }).click()
+  expect(await groupVisibility(page, [PLANTING, CLEARANCE])).toEqual({ [PLANTING]: false, [CLEARANCE]: true })
   await page.keyboard.press('Escape')
   await page.getByRole('button', { name: 'Reset view' }).click()
-  await page.waitForTimeout(800)
-  expect(await groupVisibility(page, [PLANTING])).toEqual({ [PLANTING]: false })
+  expect(await groupVisibility(page, [PLANTING, CLEARANCE])).toEqual({ [PLANTING]: true, [CLEARANCE]: false })
+  await btn.click()
+  await expect(panel.getByRole('checkbox', { name: 'Proposed spring planting' })).toBeChecked()
+  await expect(panel.getByRole('checkbox', { name: 'Roof-loaded 4×4 clearance' })).not.toBeChecked()
+  await page.keyboard.press('Escape')
 
   // Orbit unaffected: with auto-rotate running, toggling a Layer leaves it running.
   await page.evaluate(() => {

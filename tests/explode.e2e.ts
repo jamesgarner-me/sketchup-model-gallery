@@ -61,13 +61,17 @@ test('Explode spike: slider moves parts, not the camera; camera stays free', asy
   await page.mouse.up()
   await expect.poll(async () => (await cam(page))[0]).not.toBeCloseTo(camBefore[0], 2)
 
-  // Reset view moves the camera only; the parts stay exploded.
-  await page.getByRole('button', { name: 'Reset view' }).click()
-  await expect.poll(async () => (await cam(page))[0], { timeout: 5_000 }).toBeCloseTo(camBefore[0], 2)
-  expect(await nodePos(page, 'AllStairs')).toEqual(nestedStairs)
-
   // Back to 0 reassembles exactly.
   await slider.fill('0')
+  ;(await nodePos(page, 'AllStairs')).forEach((v, i) => expect(v).toBeCloseTo(rest[i], 6))
+  ;(await nodePos(page, 'Winders')).forEach((v, i) => expect(v).toBeCloseTo(restWinders[i], 6))
+
+  // Reset view returns the camera and reassembles: slider to the far left, parts at rest.
+  await slider.fill('1000')
+  expect(await nodePos(page, 'AllStairs')).toEqual(nestedStairs)
+  await page.getByRole('button', { name: 'Reset view' }).click()
+  await expect.poll(async () => (await cam(page))[0], { timeout: 5_000 }).toBeCloseTo(camBefore[0], 2)
+  await expect(slider).toHaveValue('0')
   ;(await nodePos(page, 'AllStairs')).forEach((v, i) => expect(v).toBeCloseTo(rest[i], 6))
   ;(await nodePos(page, 'Winders')).forEach((v, i) => expect(v).toBeCloseTo(restWinders[i], 6))
 })
@@ -126,4 +130,18 @@ test('Explode spike: only visible Layers explode, and Layers changes re-spread s
 
   // None of this moved the camera.
   expect(await cam(page)).toEqual(camBefore)
+
+  // Reset view: starting Layers back (Wall left hidden again) and assembled.
+  await panel.getByRole('checkbox', { name: 'Wall left' }).click()
+  await expect.poll(() => moved('WallLeft')).toBe(true)
+  await page.keyboard.press('Escape')
+  await page.getByRole('button', { name: 'Reset view' }).click()
+  await expect(slider).toHaveValue('0')
+  for (const n of names) expect(await moved(n)).toBe(false)
+  const wallVisible = await page.evaluate(() => {
+    const el = document.querySelector('model-viewer') as unknown as Record<symbol, { model: { getObjectByName(n: string): { visible: boolean } } }>
+    const sym = Object.getOwnPropertySymbols(el).find((s) => s.description === 'scene')!
+    return el[sym].model.getObjectByName('WallLeft').visible
+  })
+  expect(wallVisible).toBe(false)
 })

@@ -11,7 +11,7 @@ Build-detail Models such as the stairs hide their construction: framing, stringe
 - A toggle switches between two modes so both can be judged:
   - **Groups:** the visible top-level SketchUp groups move as solid blocks.
   - **Nested:** groups separate over the first half of the slider, then the groups inside each one spread out over the second half.
-- The camera stays fully free at any slider position (orbit, zoom, pan, tap to set pivot). The slider never moves the camera. Auto-orbit keeps turning while the slider is dragged. Reset view stays camera-only and leaves the explode amount as is. The slider works inside Viewpoints.
+- The camera stays fully free at any slider position (orbit, zoom, pan, tap to set pivot). The slider never moves the camera. Auto-orbit keeps turning while the slider is dragged. Reset view also restores the starting Layers (on every Model, a change to shipped Layers behaviour) and reassembles the Model (slider back to 0). The slider works inside Viewpoints.
 - Outcome: after an iPhone check the owner decides to productise (a follow-up change with a Catalog field and proper specs), tweak, or drop. Findings are recorded in `design.md`.
 - Deferred: canonical Model kinds. Candidate names are **Site design** (gardens, landscapes, house sites) and **Build detail** (stairs, joinery, framing).
 
@@ -22,7 +22,7 @@ Build-detail Models such as the stairs hide their construction: framing, stringe
 None.
 
 ### Modified Capabilities
-- `model-viewer`: a flag-gated Explode slider on the stairs Model for the spike, acting on visible Layers only.
+- `model-viewer`: a flag-gated Explode slider on the stairs Model for the spike, acting on visible Layers only; Reset view restores default Layers (all Models) and reassembles.
 
 ## Impact
 
