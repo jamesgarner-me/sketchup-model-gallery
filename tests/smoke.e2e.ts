@@ -128,3 +128,19 @@ test('close zoom, non-metallic materials and sRGB colours', async ({ page }) => 
   // Textured materials (factor 1) are unchanged.
   expect(result.textured.slice(0, 3)).toEqual([1, 1, 1])
 })
+
+test('Info is an icon button at the top right, opposite home', async ({ page }) => {
+  await page.goto('/models/bastings-garden')
+  const info = page.getByRole('button', { name: 'Info' })
+  await expect(info).toBeVisible()
+  await expect(info).toHaveText('')
+  const vp = page.viewportSize()!
+  const box = (await info.boundingBox())!
+  const home = (await page.getByRole('link', { name: 'Gallery' }).boundingBox())!
+  expect(box.x + box.width).toBeGreaterThan(vp.width - 40)
+  expect(box.y).toBeLessThan(vp.height / 4)
+  expect(Math.abs(box.y - home.y)).toBeLessThan(4)
+  expect(box.width).toBeGreaterThanOrEqual(44)
+  // Not in the bottom controls row any more.
+  await expect(page.locator('#controls').getByRole('button', { name: 'Info' })).toHaveCount(0)
+})

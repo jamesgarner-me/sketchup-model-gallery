@@ -7,7 +7,7 @@ model-viewer { background: var(--bg); --poster-color: transparent; }
   padding: calc(var(--pad) + env(safe-area-inset-top)) calc(var(--pad) + env(safe-area-inset-right)) var(--pad) calc(var(--pad) + env(safe-area-inset-left));
   pointer-events: none; }
 .topbar > * { pointer-events: auto; }
-.topbar h1 { margin: 0; font-size: 1.1rem; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.topbar h1 { flex: 1; margin: 0; font-size: 1.1rem; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .controls { position: absolute; bottom: 0; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 8px;
   padding: var(--pad) calc(var(--pad) + env(safe-area-inset-right)) calc(var(--pad) + env(safe-area-inset-bottom)) calc(var(--pad) + env(safe-area-inset-left));
@@ -74,6 +74,8 @@ dialog.info::backdrop { background: #fff; }
 .viewer[data-theme="dark"] .topbar, .viewer[data-theme="dark"] .controls { z-index: 2; }
 .viewer[data-theme="dark"] .btn { background: rgba(28, 28, 32, .82); color: #ececf0; border-color: rgba(255, 255, 255, .18); }
 .viewer[data-theme="dark"] .btn:hover { background: rgba(48, 48, 54, .9); }
+.viewer[data-theme="dark"] .btn-accent { background: #8ab4ff; color: #0c0c0e; border-color: transparent; box-shadow: 0 2px 10px rgba(138, 180, 255, .35); }
+.viewer[data-theme="dark"] .btn-accent:hover { background: #a6c6ff; }
 .viewer[data-theme="dark"] :focus-visible { outline-color: #8ab4ff; }
 .viewer[data-theme="dark"] .loading { background: rgba(255, 255, 255, .1); }
 .viewer[data-theme="dark"] .loading-fill { background: #8ab4ff; }
