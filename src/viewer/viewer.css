@@ -58,8 +58,9 @@ model-viewer { background: var(--bg); --poster-color: transparent; }
 .layer-row:hover { background: rgba(0,0,0,.05); }
 .layer-row input { width: 20px; height: 20px; margin: 0; flex: none; accent-color: var(--accent); }
 @media (max-width: 639px) {
-  /* Sits just above the controls row (44px buttons + padding) so Reset view, Layers etc. stay reachable. */
-  .layers-panel { top: auto; left: 0; bottom: calc(44px + 2 * var(--pad) + env(safe-area-inset-bottom)); width: 100%; max-height: 50%;
+  /* Sits just above the controls area (measured into --controls-h; fallback is one 44px row plus padding)
+     so Reset view, Layers and any Explode slider stay reachable. */
+  .layers-panel { top: auto; left: 0; bottom: var(--controls-h, calc(44px + 2 * var(--pad) + env(safe-area-inset-bottom))); width: 100%; max-height: 50%;
     border-radius: 16px; padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
     box-shadow: 0 -4px 24px rgba(0,0,0,.18); transform: translateY(calc(100% + 80px)); }
   .layers-panel.open { transform: none; }

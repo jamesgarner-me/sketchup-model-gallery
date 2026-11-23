@@ -13,10 +13,10 @@
 
 ## 3. Visible Layers (after model-layers)
 
-- [ ] 3.1 Rebase `explode-spike` onto `main`; resolve conflicts in `model.html`, `main.ts`, `viewer.css`, `CONTEXT.md`; all tests and the build pass
-- [ ] 3.2 Move scene access into `sceneAccess.ts` (top-level groups, sub-parts, positions, world bounds, render); remove the spike's own lookup
-- [ ] 3.3 `src/explode.ts`: C and R from visible groups only; single-visible-group case uses its parts; unit tests
-- [ ] 3.4 Hidden groups stay at rest; Layers visibility changes and Restore defaults re-apply the current slider value immediately
-- [ ] 3.5 Phone layout: Layers bottom sheet sits above the whole controls footer, including the explode row
-- [ ] 3.6 Playwright: only visible groups move; toggling a Layer while exploded re-spreads and returns hidden ones to rest; single visible group spreads its parts; slider usable with the Layers sheet open on Pixel 7; camera unchanged
+- [x] 3.1 Rebase `explode-spike` onto `main`; resolve conflicts in `model.html`, `main.ts`, `viewer.css`, `CONTEXT.md`; all tests and the build pass
+- [x] 3.2 Move scene access into `sceneAccess.ts` (top-level groups, sub-parts, positions, world bounds, render); remove the spike's own lookup
+- [x] 3.3 `src/explode.ts`: C and R from visible groups only; single-visible-group case uses its parts; unit tests
+- [x] 3.4 Hidden groups stay at rest; Layers visibility changes and Restore defaults re-apply the current slider value immediately
+- [x] 3.5 Phone layout: Layers bottom sheet sits above the whole controls footer, including the explode row
+- [x] 3.6 Playwright: only visible groups move; toggling a Layer while exploded re-spreads and returns hidden ones to rest; single visible group spreads its parts; slider usable with the Layers sheet open on Pixel 7; camera unchanged
 - [ ] 3.7 Run unit and all e2e tests and the build; iPhone check at `/models/stairs?explode` with Layers; record findings and the decision

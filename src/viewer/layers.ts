@@ -4,6 +4,8 @@ import { getSceneAccess, type SceneObject } from './sceneAccess'
 
 /** Fired on document when a side panel opens, so the other one closes (one at a time). */
 export const PANEL_OPEN_EVENT = 'viewer-panel-open'
+/** Fired on the <model-viewer> element after Layers change what is visible (including on load). */
+export const LAYERS_CHANGE_EVENT = 'layers-change'
 
 /**
  * Layers: a non-modal panel of checkboxes showing and hiding the Model's top-level SketchUp groups
@@ -44,9 +46,13 @@ export function setupLayers(el: ModelViewerElement, settings: LayerSetting[] | u
     const g = groups[i]
     if (g) g.visible = visible
   }
+  const changed = () => {
+    render()
+    el.dispatchEvent(new CustomEvent(LAYERS_CHANGE_EVENT))
+  }
   function applyDefaults() {
     layers.forEach((l, i) => setVisible(i, l.visible))
-    render()
+    changed()
   }
 
   el.addEventListener('load', () => {
@@ -69,7 +75,7 @@ export function setupLayers(el: ModelViewerElement, settings: LayerSetting[] | u
     }
   })
 
-  list.addEventListener('change', () => render())
+  list.addEventListener('change', changed)
   restoreBtn.addEventListener('click', applyDefaults)
 
   // On narrow screens the panel is a bottom sheet: shrink the 3D view to the area above it so the
@@ -81,6 +87,12 @@ export function setupLayers(el: ModelViewerElement, settings: LayerSetting[] | u
     if (panel.hidden || !narrow.matches) stage.style.removeProperty('height')
     else stage.style.height = `${panel.offsetTop}px`
   }
+  // The sheet sits above the whole controls area (which can include more than one row), measured live.
+  const controls = document.getElementById('controls') as HTMLElement
+  new ResizeObserver(() => {
+    panel.style.setProperty('--controls-h', `${controls.offsetHeight}px`)
+    fitStage()
+  }).observe(controls)
   new ResizeObserver(fitStage).observe(panel)
   narrow.addEventListener('change', fitStage)
   window.addEventListener('resize', fitStage)

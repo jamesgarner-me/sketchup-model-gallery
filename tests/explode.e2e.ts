@@ -71,3 +71,59 @@ test('Explode spike: slider moves parts, not the camera; camera stays free', asy
   ;(await nodePos(page, 'AllStairs')).forEach((v, i) => expect(v).toBeCloseTo(rest[i], 6))
   ;(await nodePos(page, 'Winders')).forEach((v, i) => expect(v).toBeCloseTo(restWinders[i], 6))
 })
+
+const dist = (a: number[], b: number[]) => Math.hypot(...a.map((v, i) => v - b[i]))
+
+test('Explode spike: only visible Layers explode, and Layers changes re-spread straight away', async ({ page }) => {
+  test.setTimeout(120_000)
+  await page.goto('/models/stairs?explode')
+  await modelLoaded(page)
+  const slider = page.locator('#explode-slider')
+  const names = ['WallLeft', 'AllStairs', 'Winders', 'Baluster']
+  const rest = Object.fromEntries(await Promise.all(names.map(async (n) => [n, await nodePos(page, n)] as const)))
+  const moved = async (n: string) => dist(await nodePos(page, n), rest[n]) > 0.01
+  const camBefore = await cam(page)
+
+  // Wall left starts hidden (Catalog default), so it stays put; visible groups move.
+  await slider.fill('1000')
+  expect(await moved('WallLeft')).toBe(false)
+  expect(await moved('AllStairs')).toBe(true)
+
+  await page.getByRole('button', { name: 'Layers' }).click()
+  const panel = page.getByRole('region', { name: 'Layers' })
+  await expect(panel).toBeVisible()
+
+  // Phone: the Layers sheet sits above the slider, which stays usable.
+  if (page.viewportSize()!.width < 640) {
+    const sheetBottom = await panel.evaluate((p) => (p as HTMLElement).offsetTop + (p as HTMLElement).offsetHeight)
+    const sliderBox = (await slider.boundingBox())!
+    expect(sheetBottom).toBeLessThanOrEqual(Math.ceil(sliderBox.y))
+    const hit = await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.id, { x: sliderBox.x + sliderBox.width / 2, y: sliderBox.y + sliderBox.height / 2 })
+    expect(hit).toBe('explode-slider')
+  }
+
+  // Showing a Layer while exploded spreads it at once; hiding one puts it back at rest.
+  await panel.getByRole('checkbox', { name: 'Wall left' }).click()
+  await expect.poll(() => moved('WallLeft')).toBe(true)
+  await panel.getByRole('checkbox', { name: 'All stairs' }).click()
+  ;(await nodePos(page, 'AllStairs')).forEach((v, i) => expect(v).toBeCloseTo(rest.AllStairs[i], 6))
+
+  // Only All stairs visible: its own parts spread (Groups mode), the group itself stays put.
+  const boxes = panel.getByRole('checkbox')
+  for (let i = 0; i < (await boxes.count()); i++) {
+    const box = boxes.nth(i)
+    const want = (await box.locator('xpath=..').innerText()).trim() === 'All stairs'
+    if ((await box.isChecked()) !== want) await box.click()
+  }
+  expect(await moved('AllStairs')).toBe(false)
+  expect(await moved('Winders')).toBe(true)
+  expect(await moved('Baluster')).toBe(false)
+
+  // Restore defaults re-spreads for the current slider position.
+  await panel.getByRole('button', { name: 'Restore defaults' }).click()
+  expect(await moved('WallLeft')).toBe(false)
+  expect(await moved('AllStairs')).toBe(true)
+
+  // None of this moved the camera.
+  expect(await cam(page)).toEqual(camBefore)
+})
