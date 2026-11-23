@@ -1,17 +1,16 @@
-/** Explode spike: pure maths. See openspec/changes/explode-spike/design.md. */
+/** Explode: pure maths. See openspec/changes/archive/2026-11-23-explode-spike/design.md. */
 
 export type Vec3 = [number, number, number]
 export type ExplodeMode = 'groups' | 'nested'
 
-/** Models the spike is enabled on, with the `?explode` URL flag. */
-export const EXPLODE_SPIKE_MODELS = ['stairs']
+/** Models that show the Explode slider. */
+export const EXPLODE_MODELS = ['stairs']
 /** Top-level reach at full slider, as a fraction of the Model's bounding radius. */
 export const GROUP_REACH = 0.75
 /** Nested mode: extra reach of the groups inside each top-level group. */
 export const SUB_REACH = 0.35
 
-export const explodeSpikeEnabled = (modelId: string, search: string) =>
-  EXPLODE_SPIKE_MODELS.includes(modelId) && new URLSearchParams(search).has('explode')
+export const explodeEnabled = (modelId: string) => EXPLODE_MODELS.includes(modelId)
 
 /** Unit direction from `origin` to `point`; straight up when they coincide. */
 export function directionFrom(point: Vec3, origin: Vec3): Vec3 {

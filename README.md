@@ -36,6 +36,10 @@ Every saved **Scene** in the SketchUp model becomes a Viewpoint: a fixed eye pos
 - **Field of view:** SketchUp doesn't export it, so every Viewpoint uses 45°.
 - The build log lists the Viewpoints found for each model (`[plugin viewpoints] …`). A model with no saved Scenes shows no Viewpoints button.
 
+### Explode
+
+The stairs Model shows an **Explode** slider above the controls. Dragging it right pulls the visible Layers apart (top-level groups first, then the groups inside them) so the inside can be inspected; hidden Layers stay put, and with one Layer visible its own parts spread. Reset view reassembles. It's on for the Models listed in `EXPLODE_MODELS` in `src/explode.ts` (only `stairs` for now).
+
 ### Layers
 
 A Layer is a top-level SketchUp group that visitors can show or hide from the **Layers** button. Unlike Viewpoints, Layers are opt-in: list them in the catalog's `layers` field (see below), in the order the panel should show them.

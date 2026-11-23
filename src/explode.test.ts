@@ -1,11 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { directionFrom, explodeDistances, explodePlan, explodeSpikeEnabled, offsetPosition, type Box, type Vec3 } from './explode'
+import { directionFrom, explodeDistances, explodePlan, explodeEnabled, offsetPosition, type Box, type Vec3 } from './explode'
 
-describe('explodeSpikeEnabled', () => {
-  it('needs the stairs and the flag', () => {
-    expect(explodeSpikeEnabled('stairs', '?explode')).toBe(true)
-    expect(explodeSpikeEnabled('stairs', '')).toBe(false)
-    expect(explodeSpikeEnabled('bastings-garden', '?explode')).toBe(false)
+describe('explodeEnabled', () => {
+  it('is on for the stairs only, with no URL flag', () => {
+    expect(explodeEnabled('stairs')).toBe(true)
+    expect(explodeEnabled('bastings-garden')).toBe(false)
   })
 })
 

@@ -27,7 +27,7 @@ model-viewer { background: var(--bg); --poster-color: transparent; }
 .state h2, .state p { margin: 0; }
 .state-actions { display: flex; gap: var(--pad); flex-wrap: wrap; justify-content: center; }
 
-/* Explode spike: finger-sized slider above the main controls. */
+/* Explode: finger-sized slider above the main controls. */
 .explode-row { display: flex; align-items: center; gap: var(--pad); width: min(360px, 100%); }
 .explode-row[hidden] { display: none; }
 #explode-slider { flex: 1; min-width: 0; height: 44px; margin: 0; background: transparent; touch-action: none; -webkit-appearance: none; appearance: none; }

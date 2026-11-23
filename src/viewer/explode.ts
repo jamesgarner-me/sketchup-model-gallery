@@ -7,7 +7,7 @@ import { getSceneAccess, type SceneAccess, type ScenePart } from './sceneAccess'
 interface Placed { part: ScenePart; step: Vec3; level: 'group' | 'sub' }
 
 /**
- * Explode spike: shows the slider and mode toggle and moves the Model's visible top-level groups apart.
+ * Explode: shows the slider and moves the Model's visible top-level groups apart.
  * Scene access goes through sceneAccess (ADR 0003). The plan (which parts move, which way) is rebuilt
  * whenever Layers change visibility; the slider only scales it.
  */

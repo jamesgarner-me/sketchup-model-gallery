@@ -22,17 +22,17 @@ const cam = (page: Page) =>
     return [o.theta, o.phi, o.radius]
   })
 
-test('Explode slider is hidden without the flag and on other Models', async ({ page }) => {
+test('Explode slider shows on the stairs by default and not on other Models', async ({ page }) => {
   await page.goto('/models/stairs')
   await modelLoaded(page)
-  await expect(page.locator('#explode')).toBeHidden()
-  await page.goto('/models/bastings-garden?explode')
+  await expect(page.locator('#explode')).toBeVisible()
+  await page.goto('/models/bastings-garden')
   await modelLoaded(page)
   await expect(page.locator('#explode')).toBeHidden()
 })
 
-test('Explode spike: slider moves parts, not the camera; camera stays free', async ({ page }) => {
-  await page.goto('/models/stairs?explode')
+test('Explode: slider moves parts, not the camera; camera stays free', async ({ page }) => {
+  await page.goto('/models/stairs')
   await modelLoaded(page)
   const slider = page.locator('#explode-slider')
   await expect(slider).toBeVisible()
@@ -77,9 +77,9 @@ test('Explode spike: slider moves parts, not the camera; camera stays free', asy
 
 const dist = (a: number[], b: number[]) => Math.hypot(...a.map((v, i) => v - b[i]))
 
-test('Explode spike: only visible Layers explode, and Layers changes re-spread straight away', async ({ page }) => {
+test('Explode: only visible Layers explode, and Layers changes re-spread straight away', async ({ page }) => {
   test.setTimeout(120_000)
-  await page.goto('/models/stairs?explode')
+  await page.goto('/models/stairs')
   await modelLoaded(page)
   const slider = page.locator('#explode-slider')
   const names = ['Walls', 'StairsUpperFlight', 'UpperTreads', 'Baluster']
