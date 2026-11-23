@@ -59,7 +59,7 @@ A Layer is a top-level SketchUp group that visitors can show or hide from the **
 | `thumbnail` | Yes | Path under `public/`, e.g. `/thumbnails/garden-shed.webp`. |
 | `order` | Yes | Gallery position; lower numbers come first. |
 | `notes` | No | Notes filename in `src/content/`. Defaults to `<id>.md`. |
-| `camera` | No | Initial framing when automatic framing isn't right: `{ "orbit": "30deg 70deg auto", "target": "auto auto auto", "fieldOfView": "30deg" }` (any subset). |
+| `camera` | No | Initial framing when automatic framing isn't right: `{ "orbit": "30deg 70deg auto", "target": "auto auto auto", "fieldOfView": "30deg" }` (any subset). By default the Model is lifted 10% of the viewport height above centre; setting `target` opts out of the lift. |
 | `stage` | No | Background and lighting: `"neutral"` (default: light background, daylight with a sun direction) or `"showroom"` (dark room with several lights). |
 | `autoOrbit` | No | Slow turntable rotation on load: `true` (18°/s) or `{ "degreesPerSecond": 10 }` (negative reverses). Stops on the visitor's first touch; Reset view restarts it. Off when the device prefers reduced motion. |
 | `layers` | No | Top-level SketchUp groups visitors can show or hide, in panel order: `[{ "group": "<exact group name>", "label": "<panel text>", "visible": false }]`. `label` defaults to the group name and `visible` to `true`. |

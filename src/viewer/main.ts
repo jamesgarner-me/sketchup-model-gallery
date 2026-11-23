@@ -34,6 +34,8 @@ const retryBtn = $<HTMLButtonElement>('retry')
 interface Framing { orbit: [number, number, number]; target: [number, number, number]; fov: number }
 
 const RESET_FALLBACK_MS = 600
+/** Initial framing puts the Model this fraction of the viewport height above centre. */
+const INITIAL_LIFT = 0.1
 
 function showNotFound() {
   document.title = 'Model not found'
@@ -117,7 +119,19 @@ function start(entry: CatalogEntry) {
     }
     const o = el.getCameraOrbit()
     const t = el.getCameraTarget()
-    framing = { orbit: [o.theta, o.phi, o.radius], target: [t.x, t.y, t.z], fov: el.getFieldOfView() }
+    const fov = el.getFieldOfView()
+    let target: [number, number, number] = [t.x, t.y, t.z]
+    if (!entry.camera?.target) {
+      // Lift the Model: lower the pivot so the Model sits INITIAL_LIFT of the viewport height higher.
+      // A viewport-height fraction is 2·radius·tan(fov/2) in world units at the pivot; dividing by
+      // sin(phi) allows for the camera looking down, which foreshortens a vertical shift.
+      const worldHeight = 2 * o.radius * Math.tan((fov * Math.PI) / 360)
+      target = [t.x, t.y - (INITIAL_LIFT * worldHeight) / Math.sin(o.phi), t.z]
+      // An explicit target also stops model-viewer re-centring (and so un-lifting) on resize.
+      el.cameraTarget = `${target[0]}m ${target[1]}m ${target[2]}m`
+      el.jumpCameraToGoal()
+    }
+    framing = { orbit: [o.theta, o.phi, o.radius], target, fov }
     loading.hidden = true
     errorBox.hidden = true
   })
