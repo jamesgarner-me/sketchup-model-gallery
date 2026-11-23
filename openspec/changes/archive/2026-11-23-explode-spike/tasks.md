@@ -8,8 +8,8 @@
 
 - [x] 2.1 Playwright: no slider without the flag or on Bastings Garden; with the flag, moving the slider moves parts and back to 0 restores them; the slider doesn't change the camera orbit; camera orbit still changes by drag at full explode; Reset view keeps the explode amount
 - [x] 2.2 Run unit and all e2e tests and the build
-- [ ] 2.3 Deploy and run e2e tests on the hosted site
-- [ ] 2.4 iPhone check at `/models/stairs?explode`: record findings and the decision (productise, tweak or drop) in `design.md`
+- [x] 2.3 Deploy and run e2e tests on the hosted site
+- [x] 2.4 iPhone check at `/models/stairs?explode`: record findings and the decision (productise, tweak or drop) in `design.md`
 
 ## 3. Visible Layers (after model-layers)
 
@@ -21,4 +21,4 @@
 - [x] 3.6 Playwright: only visible groups move; toggling a Layer while exploded re-spreads and returns hidden ones to rest; single visible group spreads its parts; slider usable with the Layers sheet open on Pixel 7; camera unchanged
 - [x] 3.8 Reset view restores default Layers on every Model and reassembles (slider to 0); update the Layers and Explode e2e tests and README
 - [x] 3.9 Nested only: comment out the Groups/Nested toggle (HTML, CSS, code); update e2e tests and plan
-- [ ] 3.7 Run unit and all e2e tests and the build; iPhone check at `/models/stairs?explode` with Layers; record findings and the decision
+- [x] 3.7 Run unit and all e2e tests and the build; iPhone check at `/models/stairs?explode` with Layers; record findings and the decision

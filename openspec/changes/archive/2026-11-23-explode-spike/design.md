@@ -42,4 +42,6 @@ The stairs GLB (SimLab SketchUp export; re-exported 2026-11-23 12:17) has 8 empt
 - Wanted next: explode relative to visible groups, i.e. only the groups currently shown, or within a chosen Layer or group. Depends on the parallel `model-layers` change (show and hide top-level groups).
 - 2026-11-23: Nested only. The Groups/Nested toggle is commented out (HTML and code kept); Groups-mode maths stays for the single-group case.
 - Reset view now also restores starting Layers and reassembles (owner request).
-- Status: `model-layers` merged to `main` on 2026-11-23. Plan updated for visible-only explode (decisions 2a–2c, 5); next is rebase and build. The spike branch `explode-spike` is kept, not deployed.
+- Status: `model-layers` merged to `main` on 2026-11-23; spike rebuilt for visible-only explode (decisions 2a–2c, 5) and re-checked against the new stairs export (11 groups).
+- Decision, 2026-11-23: owner finished the spike as is. It ships on `main` behind `?explode` on the stairs only (Nested mode). Productising (Catalog field, no URL flag, other Models, Model kinds) is a separate follow-up change.
+- Deployed 2026-11-23; all 26 e2e tests pass on the hosted site.
