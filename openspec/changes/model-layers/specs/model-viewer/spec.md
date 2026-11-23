@@ -1,7 +1,7 @@
 ## MODIFIED Requirements
 
 ### Requirement: Controls match the Stage
-On a dark Stage, the Viewer's back link, title, Reset view, Info button, Layers button and panel, loading indicator and load-failure screen SHALL use a dark style that stays legible. The Info overlay and the "Model not found" screen SHALL keep the light style.
+On a dark Stage, the Viewer's back link, title, Reset view, Info button, Viewpoints button and drawer, Layers button and panel, loading indicator and load-failure screen SHALL use a dark style that stays legible. The Info overlay and the "Model not found" screen SHALL keep the light style.
 
 #### Scenario: Dark controls
 - **WHEN** a Model on the Showroom stage is displayed

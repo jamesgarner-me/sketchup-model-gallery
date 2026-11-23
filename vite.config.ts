@@ -1,8 +1,9 @@
-import { closeSync, openSync, readFileSync, readSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import { renderNotes } from './src/markdown.ts'
-import { extractViewpoints, readGlbJson, type Viewpoint } from './src/viewpoints.ts'
+import { extractViewpoints, type Viewpoint } from './src/viewpoints.ts'
+import { readGlbFileJson } from './scripts/glb.ts'
 
 // Dev/preview mirror of the vercel.json rewrite: /models/:id -> /model.html
 const rewriteModels = (req: { url?: string }, _res: unknown, next: () => void) => {
@@ -29,21 +30,6 @@ const notesMarkdown = (): Plugin => ({
   },
 })
 
-// Reads only the GLB header and JSON chunk, not the binary geometry.
-function readGlbHead(path: string): Uint8Array {
-  const fd = openSync(path, 'r')
-  try {
-    const header = new Uint8Array(20)
-    readSync(fd, header, 0, 20, 0)
-    const jsonLength = new DataView(header.buffer).getUint32(12, true)
-    const bytes = new Uint8Array(20 + jsonLength)
-    readSync(fd, bytes, 0, bytes.length, 0)
-    return bytes
-  } finally {
-    closeSync(fd)
-  }
-}
-
 // Viewpoints (saved SketchUp Scenes) for every Catalog Model, extracted from the GLBs at build time.
 const VIEWPOINTS_ID = 'virtual:viewpoints'
 const viewpoints = (): Plugin => ({
@@ -59,7 +45,7 @@ const viewpoints = (): Plugin => ({
     for (const e of entries) {
       const glbPath = resolve(root, 'public', e.glb.replace(/^\//, ''))
       this.addWatchFile(glbPath)
-      byId[e.id] = extractViewpoints(readGlbJson(readGlbHead(glbPath)))
+      byId[e.id] = extractViewpoints(readGlbFileJson(glbPath))
       const names = byId[e.id].map((v) => v.name)
       this.info(`${e.id}: ${names.length} Viewpoint${names.length === 1 ? '' : 's'}${names.length ? ` (${names.join(', ')})` : ''}`)
     }

@@ -7,7 +7,21 @@
     "thumbnail": "/thumbnails/stairs.webp",
     "order": 1,
     "stage": "showroom",
-    "autoOrbit": true
+    "autoOrbit": true,
+    "layers": [
+      { "group": "WallLeft", "label": "Wall left", "visible": false },
+      { "group": "CentreNewel", "label": "Centre newel" },
+      { "group": "WallBack", "label": "Wall back", "visible": false },
+      { "group": "WallRight", "label": "Wall right", "visible": false },
+      { "group": "WallUnder", "label": "Wall under", "visible": false },
+      { "group": "LowerStringers", "label": "Lower stringers" },
+      { "group": "WallOnLowerStairs", "label": "Wall on lower stairs" },
+      { "group": "AllStairs", "label": "All stairs" },
+      { "group": "UpperStringers", "label": "Upper stringers" },
+      { "group": "PlasterSheeting", "label": "Plaster sheeting", "visible": false },
+      { "group": "UpperFloorWall", "label": "Upper floor wall" },
+      { "group": "Baluster", "label": "Baluster" }
+    ]
   },
   {
     "id": "bastings-garden",
@@ -18,6 +32,19 @@
     "order": 2,
     "camera": {
       "orbit": "-30deg 62deg 48m"
-    }
+    },
+    "layers": [
+      { "group": "01  Street, crossover and driveway", "label": "Street, crossover and driveway" },
+      { "group": "02  Retained walls and boundary fences", "label": "Retained walls and boundary fences" },
+      { "group": "03  Entry flights and adjoining landings", "label": "Entry flights and adjoining landings" },
+      { "group": "04  Garden terraces, timber seat and bowl", "label": "Garden terraces, timber seat and bowl" },
+      { "group": "05  Pergola, arbor, wire rail and bin store", "label": "Pergola, arbor, wire rail and bin store" },
+      { "group": "06  Existing house and verandah", "label": "Existing house and verandah" },
+      { "group": "07  White Audi Q3", "label": "White Audi Q3" },
+      { "group": "08  Retained street hedge and side climber", "label": "Retained street hedge and side climber" },
+      { "group": "09  Proposed spring planting", "label": "Proposed spring planting" },
+      { "group": "10  Existing landing comparison • toggle", "label": "Existing landing comparison", "visible": false },
+      { "group": "11  Roof-loaded 4×4 clearance • toggle", "label": "Roof-loaded 4×4 clearance", "visible": false }
+    ]
   }
 ]

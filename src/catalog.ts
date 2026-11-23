@@ -1,4 +1,5 @@
 import type { AutoOrbitSetting } from './autoOrbit'
+import type { LayerSetting } from './layers'
 import models from './models.json'
 
 export interface CameraSettings {
@@ -26,6 +27,8 @@ export interface CatalogEntry {
   stage?: string
   /** Optional slow orbit on load: true (default speed) or { degreesPerSecond } */
   autoOrbit?: AutoOrbitSetting
+  /** Optional top-level SketchUp groups visitors can show or hide, in panel order */
+  layers?: LayerSetting[]
 }
 
 export const catalog: CatalogEntry[] = (models as CatalogEntry[])

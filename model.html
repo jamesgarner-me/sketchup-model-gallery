@@ -41,6 +41,7 @@
         <div class="controls-row">
           <button class="btn" id="reset" type="button">Reset view</button>
           <button class="btn" id="viewpoints-btn" type="button" aria-expanded="false" aria-controls="viewpoints" hidden>Viewpoints</button>
+          <button class="btn" id="layers-btn" type="button" aria-expanded="false" aria-controls="layers" hidden>Layers</button>
           <span id="info-slot"><button class="btn" id="info-btn" type="button" aria-haspopup="dialog">Info</button></span>
         </div>
       </footer>
@@ -52,6 +53,15 @@
         </div>
         <ul id="viewpoints-list" class="drawer-list"></ul>
       </aside>
+
+      <section id="layers" class="drawer layers-panel" aria-labelledby="layers-title" hidden>
+        <div class="drawer-bar">
+          <h2 id="layers-title">Layers</h2>
+          <button class="btn" id="layers-close" type="button">Close</button>
+        </div>
+        <ul id="layers-list" class="drawer-list"></ul>
+        <div class="drawer-foot"><button class="btn" id="layers-restore" type="button">Restore defaults</button></div>
+      </section>
     </div>
     <dialog id="info" class="info" aria-labelledby="info-title">
       <div class="info-scroll">

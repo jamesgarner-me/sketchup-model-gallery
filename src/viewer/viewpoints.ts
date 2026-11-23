@@ -1,5 +1,6 @@
 import type { ModelViewerElement } from '@google/model-viewer'
 import { viewpointCamera, type Viewpoint } from '../viewpoints'
+import { PANEL_OPEN_EVENT } from './layers'
 
 /** Field of view inside a Viewpoint; SketchUp does not export one. */
 const VIEWPOINT_FOV = '45deg'
@@ -101,6 +102,7 @@ export function setupViewpoints(el: ModelViewerElement, viewpoints: Viewpoint[],
   }
 
   function open() {
+    document.dispatchEvent(new CustomEvent(PANEL_OPEN_EVENT, { detail: 'viewpoints' }))
     drawer.hidden = false
     // Next frame so the slide-in transition runs from the hidden position.
     requestAnimationFrame(() => drawer.classList.add('open'))
@@ -119,6 +121,9 @@ export function setupViewpoints(el: ModelViewerElement, viewpoints: Viewpoint[],
     closeBtn.addEventListener('click', () => {
       close()
       btn.focus()
+    })
+    document.addEventListener(PANEL_OPEN_EVENT, (e) => {
+      if ((e as CustomEvent<string>).detail !== 'viewpoints') close()
     })
     // Non-modal, so Escape works wherever focus is (but leaves an open Info dialog to handle its own).
     document.addEventListener('keydown', (e) => {

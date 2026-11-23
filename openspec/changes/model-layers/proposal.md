@@ -8,7 +8,7 @@ SketchUp designs are organised into top-level groups (for example existing house
 - A **Layers** button beside Reset view and Info, shown only on Models with Layers, opening a checkbox panel (bottom sheet on phones, side panel on desktop) with "Restore defaults".
 - Toggling a Layer shows or hides that group immediately; it does not move the camera, change Initial framing or affect Auto-orbit. Reset view stays camera-only. Layer state is not kept in the URL.
 - Build fails when a configured Layer name is not a top-level group in that Model's GLB.
-- Bastings Garden gets all eleven groups as Layers: 01–09 on by default, 10 ("Existing landing comparison") and 11 ("Roof-loaded 4×4 clearance") off. Stairs gets none.
+- Bastings Garden gets all eleven groups as Layers: 01–09 on by default, 10 ("Existing landing comparison") and 11 ("Roof-loaded 4×4 clearance") off. Stairs gets all twelve of its groups, labelled from their names; the four walls and plaster sheeting start hidden.
 - Implementation reaches `<model-viewer>`'s internal three.js scene (ADR 0003).
 
 ## Capabilities

@@ -24,7 +24,7 @@ Built with Vite, TypeScript and Google's [`<model-viewer>`](https://modelviewer.
    }
    ```
 6. **Check it locally:** `npm run dev`, then open http://localhost:5173/ and http://localhost:5173/models/garden-shed.
-7. **Validate:** `npm run build`. The build fails with a clear message on a duplicate ID, a missing GLB or thumbnail, an unknown stage, or an invalid `autoOrbit`.
+7. **Validate:** `npm run build`. The build fails with a clear message on a duplicate ID, a missing GLB or thumbnail, an unknown stage, an invalid `autoOrbit`, or a Layer that isn't a top-level group in the GLB.
 8. **Publish:** commit and push to `main`. Vercel deploys automatically; the model is live at `/models/<id>`.
 
 ### Viewpoints
@@ -35,6 +35,14 @@ Every saved **Scene** in the SketchUp model becomes a Viewpoint: a fixed eye pos
 - **Ignored:** `Active View`, which is just the camera position at export time.
 - **Field of view:** SketchUp doesn't export it, so every Viewpoint uses 45°.
 - The build log lists the Viewpoints found for each model (`[plugin viewpoints] …`). A model with no saved Scenes shows no Viewpoints button.
+
+### Layers
+
+A Layer is a top-level SketchUp group that visitors can show or hide from the **Layers** button. Unlike Viewpoints, Layers are opt-in: list them in the catalog's `layers` field (see below), in the order the panel should show them.
+
+- **`group`** is the group name exactly as exported, spacing included (e.g. `"01  Street, crossover and driveway"` has two spaces). If a name doesn't match, the build fails and lists the model's top-level groups.
+- Layers start at their `visible` setting on every load. Visitors' changes aren't kept in the URL, and Reset view doesn't change them.
+- Models without `layers` show no Layers button.
 
 ## Catalog fields (`src/models.json`)
 
@@ -50,8 +58,9 @@ Every saved **Scene** in the SketchUp model becomes a Viewpoint: a fixed eye pos
 | `camera` | No | Initial framing when automatic framing isn't right: `{ "orbit": "30deg 70deg auto", "target": "auto auto auto", "fieldOfView": "30deg" }` (any subset). |
 | `stage` | No | Background and lighting: `"neutral"` (default: light background, daylight with a sun direction) or `"showroom"` (dark room with several lights). |
 | `autoOrbit` | No | Slow turntable rotation on load: `true` (18°/s) or `{ "degreesPerSecond": 10 }` (negative reverses). Stops on the visitor's first touch; Reset view restarts it. Off when the device prefers reduced motion. |
+| `layers` | No | Top-level SketchUp groups visitors can show or hide, in panel order: `[{ "group": "<exact group name>", "label": "<panel text>", "visible": false }]`. `label` defaults to the group name and `visible` to `true`. |
 
-Example with every optional field (illustrative; the real stairs entry only sets `stage` and `autoOrbit`):
+Example with every optional field (illustrative; the real stairs entry sets `stage`, `autoOrbit` and all twelve groups as `layers`):
 
 ```json
 {
@@ -64,7 +73,11 @@ Example with every optional field (illustrative; the real stairs entry only sets
   "notes": "stairs.md",
   "camera": { "orbit": "0deg 75deg auto" },
   "stage": "showroom",
-  "autoOrbit": true
+  "autoOrbit": true,
+  "layers": [
+    { "group": "AllStairs", "label": "Stairs" },
+    { "group": "PlasterSheeting", "label": "Plaster sheeting", "visible": false }
+  ]
 }
 ```
 
@@ -93,8 +106,9 @@ src/
   models.json            The catalog
   content/               Notes, one Markdown file per model
   gallery/               Gallery page
-  viewer/                Viewer page: camera, Reset view, Info overlay, Viewpoints drawer
+  viewer/                Viewer page: camera, Reset view, Info overlay, Viewpoints drawer, Layers panel
   viewpoints.ts          Reads saved Scenes from a GLB (used at build time)
+  layers.ts              Layer settings and top-level group names
   stages.ts              Stage presets (neutral, showroom)
   autoOrbit.ts           Auto-orbit settings
   markdown.ts, notes.ts  Notes rendering (at build time)
@@ -136,4 +150,5 @@ Reference material:
 - **Showroom lights are image-based.** They light the model and show in reflections, but cast no visible beams or hard spotlight shadows. See [ADR 0002](docs/adr/0002-image-based-lighting-for-stages.md).
 - **The stairs export uses a deprecated glTF material extension** (`KHR_materials_pbrSpecularGlossiness`). It works today; re-export if a library upgrade breaks it. See [export findings](docs/export-findings.md).
 - **Viewpoints rely on how the SketchUp exporter writes Scenes**: empty nodes beside the top-level groups. An empty top-level group would also show up as a Viewpoint. Look-around reuses `<model-viewer>`'s orbit controls around the eye. See [ADR 0004](docs/adr/0004-look-around-by-orbiting-the-eye-point.md).
+- **Layers reach into `<model-viewer>`'s internal three.js scene**, because the library has no public API for showing or hiding parts. If an upgrade changes those internals, the Layers button is hidden (the model still works) and the smoke test fails. Any future GLB compression must keep top-level group names. See [ADR 0003](docs/adr/0003-toggle-layers-via-model-viewer-internals.md).
 - **Model files are public.** Anyone can download a GLB from the live site.

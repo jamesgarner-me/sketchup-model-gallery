@@ -10,6 +10,7 @@ export interface ValidatableEntry {
   notes?: unknown
   stage?: unknown
   autoOrbit?: unknown
+  layers?: unknown
 }
 
 const REQUIRED_STRINGS = ['id', 'title', 'description', 'glb', 'thumbnail'] as const
@@ -17,12 +18,14 @@ const REQUIRED_STRINGS = ['id', 'title', 'description', 'glb', 'thumbnail'] as c
 /**
  * Returns a list of human-readable errors; empty means valid.
  * `fileExists` receives a public URL path (e.g. "/models/a.glb").
- * Missing Notes never produce an error.
+ * Missing Notes never produce an error. `groupsFor` lists the top-level group names in an entry's GLB
+ * (only called when the entry has Layers and its GLB exists).
  */
 export function validateCatalog(
   entries: ValidatableEntry[],
   fileExists: (publicPath: string) => boolean,
   stageNames: readonly string[] = ['neutral'],
+  groupsFor: (entry: ValidatableEntry) => readonly string[] = () => [],
 ): string[] {
   const errors: string[] = []
   const seen = new Set<string>()
@@ -53,7 +56,37 @@ export function validateCatalog(
     if (entry.autoOrbit !== undefined && !isValidAutoOrbit(entry.autoOrbit)) {
       errors.push(`${label}: invalid autoOrbit (use true, false or { "degreesPerSecond": <non-zero number> })`)
     }
+    if (entry.layers !== undefined) validateLayers(entry, label, fileExists, groupsFor, errors)
   })
 
   return errors
+}
+
+function validateLayers(
+  entry: ValidatableEntry,
+  label: string,
+  fileExists: (publicPath: string) => boolean,
+  groupsFor: (entry: ValidatableEntry) => readonly string[],
+  errors: string[],
+) {
+  if (!Array.isArray(entry.layers)) {
+    errors.push(`${label}: layers must be a list of { "group": <name>, "label"?: <text>, "visible"?: <boolean> }`)
+    return
+  }
+  const canCheckGlb = typeof entry.glb === 'string' && entry.glb !== '' && fileExists(entry.glb)
+  const groups = canCheckGlb ? groupsFor(entry) : undefined
+  const seen = new Set<string>()
+  entry.layers.forEach((layer: unknown, i) => {
+    const l = layer as { group?: unknown; label?: unknown; visible?: unknown } | null
+    if (!l || typeof l !== 'object' || typeof l.group !== 'string' || l.group === '' ||
+        (l.label !== undefined && typeof l.label !== 'string') || (l.visible !== undefined && typeof l.visible !== 'boolean')) {
+      errors.push(`${label}: Layer #${i + 1} is malformed (needs "group" text; "label" text and "visible" true/false are optional)`)
+      return
+    }
+    if (seen.has(l.group)) errors.push(`${label}: duplicate Layer "${l.group}"`)
+    seen.add(l.group)
+    if (groups && !groups.includes(l.group)) {
+      errors.push(`${label}: Layer "${l.group}" is not a top-level group in ${String(entry.glb)} (groups: ${groups.map((g) => `"${g}"`).join(', ')})`)
+    }
+  })
 }

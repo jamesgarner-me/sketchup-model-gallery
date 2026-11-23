@@ -13,7 +13,9 @@ model-viewer { background: var(--bg); --poster-color: transparent; }
   padding: var(--pad) calc(var(--pad) + env(safe-area-inset-right)) calc(var(--pad) + env(safe-area-inset-bottom)) calc(var(--pad) + env(safe-area-inset-left));
   pointer-events: none; }
 .controls > * { pointer-events: auto; }
-.controls-row { display: flex; gap: var(--pad); }
+.controls-row { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--pad); }
+/* Four buttons (Reset view, Viewpoints, Layers, Info) must fit one row on a ~360px phone. */
+@media (max-width: 479px) { .controls-row { gap: 6px; } .controls-row .btn { padding: 0 10px; } }
 
 .loading { position: absolute; left: 0; right: 0; top: 0; height: 4px; background: rgba(0,0,0,.08); z-index: 5; }
 .loading[hidden] { display: none; }
@@ -39,6 +41,18 @@ model-viewer { background: var(--bg); --poster-color: transparent; }
   background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .viewpoint-row:hover { background: rgba(0,0,0,.05); }
 .viewpoint-row[aria-pressed="true"] { border-color: var(--accent); background: rgba(11,87,208,.08); font-weight: 600; }
+.drawer-foot { padding: 8px var(--pad) var(--pad); border-top: 1px solid rgba(0,0,0,.08); }
+/* Layers: checkbox rows; right-side panel on wide screens, bottom sheet (max half height) on narrow ones. */
+.layer-row { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 6px 12px; margin: 0 0 2px; border-radius: 10px; cursor: pointer; }
+.layer-row:hover { background: rgba(0,0,0,.05); }
+.layer-row input { width: 20px; height: 20px; margin: 0; flex: none; accent-color: var(--accent); }
+@media (max-width: 639px) {
+  /* Sits just above the controls row (44px buttons + padding) so Reset view, Layers etc. stay reachable. */
+  .layers-panel { top: auto; left: 0; bottom: calc(44px + 2 * var(--pad) + env(safe-area-inset-bottom)); width: 100%; max-height: 50%;
+    border-radius: 16px; padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
+    box-shadow: 0 -4px 24px rgba(0,0,0,.18); transform: translateY(calc(100% + 80px)); }
+  .layers-panel.open { transform: none; }
+}
 @media (prefers-reduced-motion: reduce) { .drawer { transition: none; } }
 
 /* Info overlay */
@@ -78,6 +92,8 @@ dialog.info::backdrop { background: #fff; }
 .viewer[data-theme="dark"] .loading { background: rgba(255, 255, 255, .1); }
 .viewer[data-theme="dark"] .loading-fill { background: #8ab4ff; }
 .viewer[data-theme="dark"] .drawer { background: #16161a; color: #ececf0; box-shadow: -4px 0 24px rgba(0,0,0,.6); }
-.viewer[data-theme="dark"] .viewpoint-row:hover { background: rgba(255,255,255,.08); }
+.viewer[data-theme="dark"] .viewpoint-row:hover, .viewer[data-theme="dark"] .layer-row:hover { background: rgba(255,255,255,.08); }
+.viewer[data-theme="dark"] .layer-row input { accent-color: #8ab4ff; }
+.viewer[data-theme="dark"] .drawer-foot { border-top-color: rgba(255,255,255,.12); }
 .viewer[data-theme="dark"] .viewpoint-row[aria-pressed="true"] { border-color: #8ab4ff; background: rgba(138,180,255,.14); }
 .viewer[data-theme="dark"] .state { background: #0c0c0e; color: #ececf0; z-index: 4; }

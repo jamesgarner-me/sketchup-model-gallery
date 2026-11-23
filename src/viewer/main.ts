@@ -8,6 +8,7 @@ import { resolveAutoOrbit } from '../autoOrbit'
 import { srgbToLinear } from '../colour'
 import { parseModelId } from './path'
 import { setupViewpoints } from './viewpoints'
+import { setupLayers } from './layers'
 import viewpoints from 'virtual:viewpoints'
 import '../base.css'
 import './viewer.css'
@@ -134,6 +135,7 @@ function start(entry: CatalogEntry) {
   retryBtn.addEventListener('click', () => load(`${entry.glb}?retry=${Date.now()}`))
 
   const viewpointMode = setupViewpoints(el, viewpoints[entry.id] ?? [], { onEnter: () => stopOrbit() })
+  setupLayers(el, entry.layers)
 
   resetBtn.addEventListener('click', async () => {
     if (!framing) return

@@ -29,3 +29,14 @@ The Viewer (`src/viewer/main.ts`) creates one `<model-viewer>` per page, applies
 - [Future compression merges groups] → build check fails with the Layer name, pointing at the cause.
 - [Group renamed in SketchUp] → build fails naming the Layer; owner updates the Catalog.
 - [Panel covers part of the Model on phones] → bottom sheet capped at half height; the Model stays interactive above it.
+
+## Implementation notes
+
+Added during apply. The plan predates Viewpoints, so these reconcile the two:
+
+- **One side panel at a time.** On wide screens the Layers panel and the Viewpoints drawer both use the right edge. Opening either one closes the other.
+- **Bottom sheet sits above the controls row**, not over it, so Layers (to close), Reset view, Viewpoints and Info stay reachable on phones.
+- **Controls row compacts below 480 px**: smaller gaps and padding, wrapping as a fallback, so four buttons fit on a phone. `.btn[hidden]` is now actually hidden; `.btn`'s `display` was overriding the attribute.
+- **Runtime lookup**: `<model-viewer>` adds its own wrapper objects above the glTF root, so the viewer doesn't replay Decision 2's unwrapping. It takes the shallowest object (breadth-first) whose children include the Layer names. That gives the same top-level groups and still ignores same-named nodes deeper down.
+- **Ground shadow** follows hidden groups (`updateShadow()` + `queueRender()`), checked by screenshot.
+- **Framing above the sheet**: on narrow screens, while the sheet is open, the 3D view shrinks to the area above it. `<model-viewer>` re-fits the Model to the smaller view at the same orbit, so the Model stays in sight. Closing the sheet restores full height.

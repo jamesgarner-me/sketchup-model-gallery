@@ -128,3 +128,27 @@ test('close zoom, non-metallic materials and sRGB colours', async ({ page }) => 
   // Textured materials (factor 1) are unchanged.
   expect(result.textured.slice(0, 3)).toEqual([1, 1, 1])
 })
+
+// Layers reach model-viewer's internal three.js scene (ADR 0003); this fails loudly if a library
+// upgrade changes those internals or three.js's node-name sanitising.
+test('Layers toggle a Bastings Garden group', async ({ page }) => {
+  await page.goto('/models/bastings-garden')
+  await modelLoaded(page)
+  const carVisible = () =>
+    page.evaluate(() => {
+      type O = { name: string; visible: boolean; traverse(f: (o: O) => void): void }
+      const el = document.querySelector('model-viewer')!
+      const sym = Object.getOwnPropertySymbols(el).find((s) => s.description === 'scene')
+      if (!sym) return 'no scene symbol'
+      let v: boolean | string = 'group not found'
+      ;(el as unknown as Record<symbol, O>)[sym].traverse((o) => {
+        if (o.name === '07__White_Audi_Q3' && typeof v === 'string') v = o.visible
+      })
+      return v
+    })
+  await expect(page.getByRole('button', { name: 'Layers' })).toBeVisible()
+  expect(await carVisible()).toBe(true)
+  await page.getByRole('button', { name: 'Layers' }).click()
+  await page.getByRole('checkbox', { name: 'White Audi Q3' }).click()
+  expect(await carVisible()).toBe(false)
+})
