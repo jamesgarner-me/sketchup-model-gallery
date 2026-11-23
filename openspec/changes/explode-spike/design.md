@@ -1,6 +1,6 @@
 ## Context
 
-The stairs GLB (SimLab SketchUp export) has one root assembly node with 20 children: 8 empty Scene nodes (Viewpoints, including Active View) and 12 top-level groups (walls, centre newel, upper and lower stringers, AllStairs, plasterboard, upper floor wall, balusters). AllStairs holds UpperFlight, LowerFlight, Winders and WinderFraming; most other groups hold a few parts. There are 70 meshes. `<model-viewer>` has no public API for moving nodes; ADR 0003 accepts reaching its internal three.js scene through the private `scene` symbol; Layers (now on `main`) does this only in `src/viewer/sceneAccess.ts`. Layers shows and hides the 12 stairs groups; five (four walls and the plaster sheeting) start hidden.
+The stairs GLB (SimLab SketchUp export; re-exported 2026-11-23 12:17) has 8 empty Scene nodes (Viewpoints, including Active View) and 11 top-level groups: CentreNewel, StringersLower, StringersUpper, PlasterSheeting, UpperFloor, Baluster, StairsUpperFlight, StairsLowerFlight, Winders, WinderFraming and Walls (WallLeft, WallBack, WallRight, WallOnLowerStairs). Every group holds 1–13 parts. `<model-viewer>` has no public API for moving nodes; ADR 0003 accepts reaching its internal three.js scene through the private `scene` symbol; Layers (now on `main`) does this only in `src/viewer/sceneAccess.ts`. Layers shows and hides the 11 stairs groups; Walls and Plaster sheeting start hidden.
 
 ## Goals / Non-Goals
 

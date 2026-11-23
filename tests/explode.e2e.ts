@@ -37,20 +37,20 @@ test('Explode spike: slider moves parts, not the camera; camera stays free', asy
   const slider = page.locator('#explode-slider')
   await expect(slider).toBeVisible()
 
-  const rest = await nodePos(page, 'AllStairs')
-  const restWinders = await nodePos(page, 'Winders')
+  const rest = await nodePos(page, 'StairsUpperFlight')
+  const restTreads = await nodePos(page, 'UpperTreads')
   const camBefore = await cam(page)
 
   await slider.fill('1000')
-  const exploded = await nodePos(page, 'AllStairs')
+  const exploded = await nodePos(page, 'StairsUpperFlight')
   expect(Math.hypot(...exploded.map((v, i) => v - rest[i]))).toBeGreaterThan(0.1)
   expect(await cam(page)).toEqual(camBefore)
 
-  // Nested (the only mode) at full slider also spreads the groups inside AllStairs; no mode toggle.
+  // Nested (the only mode) at full slider also spreads the groups inside the upper flight; no mode toggle.
   await expect(page.locator('#explode-mode')).toHaveCount(0)
-  const nestedWinders = await nodePos(page, 'Winders')
-  const nestedStairs = await nodePos(page, 'AllStairs')
-  expect(Math.hypot(...nestedWinders.map((v, i) => v - restWinders[i]))).toBeGreaterThan(0.01)
+  const nestedTreads = await nodePos(page, 'UpperTreads')
+  const nestedFlight = await nodePos(page, 'StairsUpperFlight')
+  expect(Math.hypot(...nestedTreads.map((v, i) => v - restTreads[i]))).toBeGreaterThan(0.01)
 
   // Camera still moves at full explode: drag across the Model.
   const box = (await page.locator('model-viewer').boundingBox())!
@@ -62,17 +62,17 @@ test('Explode spike: slider moves parts, not the camera; camera stays free', asy
 
   // Back to 0 reassembles exactly.
   await slider.fill('0')
-  ;(await nodePos(page, 'AllStairs')).forEach((v, i) => expect(v).toBeCloseTo(rest[i], 6))
-  ;(await nodePos(page, 'Winders')).forEach((v, i) => expect(v).toBeCloseTo(restWinders[i], 6))
+  ;(await nodePos(page, 'StairsUpperFlight')).forEach((v, i) => expect(v).toBeCloseTo(rest[i], 6))
+  ;(await nodePos(page, 'UpperTreads')).forEach((v, i) => expect(v).toBeCloseTo(restTreads[i], 6))
 
   // Reset view returns the camera and reassembles: slider to the far left, parts at rest.
   await slider.fill('1000')
-  expect(await nodePos(page, 'AllStairs')).toEqual(nestedStairs)
+  expect(await nodePos(page, 'StairsUpperFlight')).toEqual(nestedFlight)
   await page.getByRole('button', { name: 'Reset view' }).click()
   await expect.poll(async () => (await cam(page))[0], { timeout: 5_000 }).toBeCloseTo(camBefore[0], 2)
   await expect(slider).toHaveValue('0')
-  ;(await nodePos(page, 'AllStairs')).forEach((v, i) => expect(v).toBeCloseTo(rest[i], 6))
-  ;(await nodePos(page, 'Winders')).forEach((v, i) => expect(v).toBeCloseTo(restWinders[i], 6))
+  ;(await nodePos(page, 'StairsUpperFlight')).forEach((v, i) => expect(v).toBeCloseTo(rest[i], 6))
+  ;(await nodePos(page, 'UpperTreads')).forEach((v, i) => expect(v).toBeCloseTo(restTreads[i], 6))
 })
 
 const dist = (a: number[], b: number[]) => Math.hypot(...a.map((v, i) => v - b[i]))
@@ -82,15 +82,15 @@ test('Explode spike: only visible Layers explode, and Layers changes re-spread s
   await page.goto('/models/stairs?explode')
   await modelLoaded(page)
   const slider = page.locator('#explode-slider')
-  const names = ['WallLeft', 'AllStairs', 'Winders', 'Baluster']
+  const names = ['Walls', 'StairsUpperFlight', 'UpperTreads', 'Baluster']
   const rest = Object.fromEntries(await Promise.all(names.map(async (n) => [n, await nodePos(page, n)] as const)))
   const moved = async (n: string) => dist(await nodePos(page, n), rest[n]) > 0.01
   const camBefore = await cam(page)
 
-  // Wall left starts hidden (Catalog default), so it stays put; visible groups move.
+  // Walls start hidden (Catalog default), so it stays put; visible groups move.
   await slider.fill('1000')
-  expect(await moved('WallLeft')).toBe(false)
-  expect(await moved('AllStairs')).toBe(true)
+  expect(await moved('Walls')).toBe(false)
+  expect(await moved('StairsUpperFlight')).toBe(true)
 
   await page.getByRole('button', { name: 'Layers' }).click()
   const panel = page.getByRole('region', { name: 'Layers' })
@@ -106,33 +106,33 @@ test('Explode spike: only visible Layers explode, and Layers changes re-spread s
   }
 
   // Showing a Layer while exploded spreads it at once; hiding one puts it back at rest.
-  await panel.getByRole('checkbox', { name: 'Wall left' }).click()
-  await expect.poll(() => moved('WallLeft')).toBe(true)
-  await panel.getByRole('checkbox', { name: 'All stairs' }).click()
-  ;(await nodePos(page, 'AllStairs')).forEach((v, i) => expect(v).toBeCloseTo(rest.AllStairs[i], 6))
+  await panel.getByRole('checkbox', { name: 'Walls' }).click()
+  await expect.poll(() => moved('Walls')).toBe(true)
+  await panel.getByRole('checkbox', { name: 'Upper flight' }).click()
+  ;(await nodePos(page, 'StairsUpperFlight')).forEach((v, i) => expect(v).toBeCloseTo(rest.StairsUpperFlight[i], 6))
 
-  // Only All stairs visible: its own parts spread, the group itself stays put.
+  // Only Upper flight visible: its own parts spread, the group itself stays put.
   const boxes = panel.getByRole('checkbox')
   for (let i = 0; i < (await boxes.count()); i++) {
     const box = boxes.nth(i)
-    const want = (await box.locator('xpath=..').innerText()).trim() === 'All stairs'
+    const want = (await box.locator('xpath=..').innerText()).trim() === 'Upper flight'
     if ((await box.isChecked()) !== want) await box.click()
   }
-  expect(await moved('AllStairs')).toBe(false)
-  expect(await moved('Winders')).toBe(true)
+  expect(await moved('StairsUpperFlight')).toBe(false)
+  expect(await moved('UpperTreads')).toBe(true)
   expect(await moved('Baluster')).toBe(false)
 
   // Restore defaults re-spreads for the current slider position.
   await panel.getByRole('button', { name: 'Restore defaults' }).click()
-  expect(await moved('WallLeft')).toBe(false)
-  expect(await moved('AllStairs')).toBe(true)
+  expect(await moved('Walls')).toBe(false)
+  expect(await moved('StairsUpperFlight')).toBe(true)
 
   // None of this moved the camera.
   expect(await cam(page)).toEqual(camBefore)
 
-  // Reset view: starting Layers back (Wall left hidden again) and assembled.
-  await panel.getByRole('checkbox', { name: 'Wall left' }).click()
-  await expect.poll(() => moved('WallLeft')).toBe(true)
+  // Reset view: starting Layers back (Walls hidden again) and assembled.
+  await panel.getByRole('checkbox', { name: 'Walls' }).click()
+  await expect.poll(() => moved('Walls')).toBe(true)
   await page.keyboard.press('Escape')
   await page.getByRole('button', { name: 'Reset view' }).click()
   await expect(slider).toHaveValue('0')
@@ -140,7 +140,7 @@ test('Explode spike: only visible Layers explode, and Layers changes re-spread s
   const wallVisible = await page.evaluate(() => {
     const el = document.querySelector('model-viewer') as unknown as Record<symbol, { model: { getObjectByName(n: string): { visible: boolean } } }>
     const sym = Object.getOwnPropertySymbols(el).find((s) => s.description === 'scene')!
-    return el[sym].model.getObjectByName('WallLeft').visible
+    return el[sym].model.getObjectByName('Walls').visible
   })
   expect(wallVisible).toBe(false)
 })
