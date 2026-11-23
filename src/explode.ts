@@ -3,14 +3,10 @@
 export type Vec3 = [number, number, number]
 export type ExplodeMode = 'groups' | 'nested'
 
-/** Models that show the Explode slider. */
-export const EXPLODE_MODELS = ['stairs']
 /** Top-level reach at full slider, as a fraction of the Model's bounding radius. */
 export const GROUP_REACH = 0.75
 /** Nested mode: extra reach of the groups inside each top-level group. */
 export const SUB_REACH = 0.35
-
-export const explodeEnabled = (modelId: string) => EXPLODE_MODELS.includes(modelId)
 
 /** Unit direction from `origin` to `point`; straight up when they coincide. */
 export function directionFrom(point: Vec3, origin: Vec3): Vec3 {

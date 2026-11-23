@@ -1,12 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { directionFrom, explodeDistances, explodePlan, explodeEnabled, offsetPosition, type Box, type Vec3 } from './explode'
-
-describe('explodeEnabled', () => {
-  it('is on for the stairs only, with no URL flag', () => {
-    expect(explodeEnabled('stairs')).toBe(true)
-    expect(explodeEnabled('bastings-garden')).toBe(false)
-  })
-})
+import { directionFrom, explodeDistances, explodePlan, offsetPosition, type Box, type Vec3 } from './explode'
 
 describe('directionFrom', () => {
   it('is a unit vector away from the origin', () => expect(directionFrom([3, 4, 0], [0, 0, 0])).toEqual([0.6, 0.8, 0]))

@@ -38,7 +38,7 @@ Every saved **Scene** in the SketchUp model becomes a Viewpoint: a fixed eye pos
 
 ### Explode
 
-The stairs Model shows an **Explode** slider above the controls. Dragging it right pulls the visible Layers apart (top-level groups first, then the groups inside them) so the inside can be inspected; hidden Layers stay put, and with one Layer visible its own parts spread. Reset view reassembles. It's on for the Models listed in `EXPLODE_MODELS` in `src/explode.ts` (only `stairs` for now).
+A Model can show an **Explode** slider above the controls. Dragging it right pulls the visible Layers apart (top-level groups first, then the groups inside them) so the inside can be inspected; hidden Layers stay put, and with one Layer visible its own parts spread. Reset view reassembles. Turn it on per Model with `"explode": true` in the catalog; it works best with `layers`.
 
 ### Layers
 
@@ -62,9 +62,10 @@ A Layer is a top-level SketchUp group that visitors can show or hide from the **
 | `camera` | No | Initial framing when automatic framing isn't right: `{ "orbit": "30deg 70deg auto", "target": "auto auto auto", "fieldOfView": "30deg" }` (any subset). By default the Model is lifted 10% of the viewport height above centre; setting `target` opts out of the lift. |
 | `stage` | No | Background and lighting: `"neutral"` (default: light background, daylight with a sun direction) or `"showroom"` (dark room with several lights). |
 | `autoOrbit` | No | Slow turntable rotation on load: `true` (18°/s) or `{ "degreesPerSecond": 10 }` (negative reverses). Stops on the visitor's first touch; Reset view restarts it. Off when the device prefers reduced motion. |
+| `explode` | No | `true` shows the Explode slider for this Model (default off). |
 | `layers` | No | Top-level SketchUp groups visitors can show or hide, in panel order: `[{ "group": "<exact group name>", "label": "<panel text>", "visible": false }]`. `label` defaults to the group name and `visible` to `true`. |
 
-Example with every optional field (illustrative; the real stairs entry sets `stage`, `autoOrbit` and all eleven groups as `layers`):
+Example with every optional field (illustrative; the real stairs entry sets `stage`, `autoOrbit`, `explode` and all eleven groups as `layers`):
 
 ```json
 {
@@ -78,6 +79,7 @@ Example with every optional field (illustrative; the real stairs entry sets `sta
   "camera": { "orbit": "0deg 75deg auto" },
   "stage": "showroom",
   "autoOrbit": true,
+  "explode": true,
   "layers": [
     { "group": "StairsUpperFlight", "label": "Upper flight" },
     { "group": "PlasterSheeting", "label": "Plaster sheeting", "visible": false }

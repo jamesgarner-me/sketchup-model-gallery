@@ -8,6 +8,7 @@
     "order": 1,
     "stage": "showroom",
     "autoOrbit": true,
+    "explode": true,
     "layers": [
       { "group": "CentreNewel", "label": "Centre newel" },
       { "group": "StringersLower", "label": "Lower stringers" },

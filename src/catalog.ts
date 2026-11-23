@@ -29,6 +29,8 @@ export interface CatalogEntry {
   autoOrbit?: AutoOrbitSetting
   /** Optional top-level SketchUp groups visitors can show or hide, in panel order */
   layers?: LayerSetting[]
+  /** Optional Explode slider (pull the visible Layers apart); off unless true */
+  explode?: boolean
 }
 
 export const catalog: CatalogEntry[] = (models as CatalogEntry[])

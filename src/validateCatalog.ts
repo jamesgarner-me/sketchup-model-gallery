@@ -11,6 +11,7 @@ export interface ValidatableEntry {
   stage?: unknown
   autoOrbit?: unknown
   layers?: unknown
+  explode?: unknown
 }
 
 const REQUIRED_STRINGS = ['id', 'title', 'description', 'glb', 'thumbnail'] as const
@@ -55,6 +56,9 @@ export function validateCatalog(
     }
     if (entry.autoOrbit !== undefined && !isValidAutoOrbit(entry.autoOrbit)) {
       errors.push(`${label}: invalid autoOrbit (use true, false or { "degreesPerSecond": <non-zero number> })`)
+    }
+    if (entry.explode !== undefined && typeof entry.explode !== 'boolean') {
+      errors.push(`${label}: explode must be true or false`)
     }
     if (entry.layers !== undefined) validateLayers(entry, label, fileExists, groupsFor, errors)
   })
