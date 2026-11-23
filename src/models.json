@@ -9,18 +9,17 @@
     "stage": "showroom",
     "autoOrbit": true,
     "layers": [
-      { "group": "WallLeft", "label": "Wall left", "visible": false },
       { "group": "CentreNewel", "label": "Centre newel" },
-      { "group": "WallBack", "label": "Wall back", "visible": false },
-      { "group": "WallRight", "label": "Wall right", "visible": false },
-      { "group": "WallUnder", "label": "Wall under", "visible": false },
-      { "group": "LowerStringers", "label": "Lower stringers" },
-      { "group": "WallOnLowerStairs", "label": "Wall on lower stairs" },
-      { "group": "AllStairs", "label": "All stairs" },
-      { "group": "UpperStringers", "label": "Upper stringers" },
+      { "group": "StringersLower", "label": "Lower stringers" },
+      { "group": "StringersUpper", "label": "Upper stringers" },
       { "group": "PlasterSheeting", "label": "Plaster sheeting", "visible": false },
-      { "group": "UpperFloorWall", "label": "Upper floor wall" },
-      { "group": "Baluster", "label": "Baluster" }
+      { "group": "UpperFloor", "label": "Upper floor" },
+      { "group": "Baluster", "label": "Baluster" },
+      { "group": "StairsUpperFlight", "label": "Upper flight" },
+      { "group": "StairsLowerFlight", "label": "Lower flight" },
+      { "group": "Winders", "label": "Winders" },
+      { "group": "WinderFraming", "label": "Winder framing" },
+      { "group": "Walls", "label": "Walls", "visible": false }
     ]
   },
   {

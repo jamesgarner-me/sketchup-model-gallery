@@ -60,7 +60,7 @@ A Layer is a top-level SketchUp group that visitors can show or hide from the **
 | `autoOrbit` | No | Slow turntable rotation on load: `true` (18°/s) or `{ "degreesPerSecond": 10 }` (negative reverses). Stops on the visitor's first touch; Reset view restarts it. Off when the device prefers reduced motion. |
 | `layers` | No | Top-level SketchUp groups visitors can show or hide, in panel order: `[{ "group": "<exact group name>", "label": "<panel text>", "visible": false }]`. `label` defaults to the group name and `visible` to `true`. |
 
-Example with every optional field (illustrative; the real stairs entry sets `stage`, `autoOrbit` and all twelve groups as `layers`):
+Example with every optional field (illustrative; the real stairs entry sets `stage`, `autoOrbit` and all eleven groups as `layers`):
 
 ```json
 {
@@ -75,7 +75,7 @@ Example with every optional field (illustrative; the real stairs entry sets `sta
   "stage": "showroom",
   "autoOrbit": true,
   "layers": [
-    { "group": "AllStairs", "label": "Stairs" },
+    { "group": "StairsUpperFlight", "label": "Upper flight" },
     { "group": "PlasterSheeting", "label": "Plaster sheeting", "visible": false }
   ]
 }
