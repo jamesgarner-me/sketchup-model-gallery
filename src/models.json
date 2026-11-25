@@ -16,6 +16,7 @@
       { "group": "PlasterSheeting", "label": "Plaster sheeting", "visible": false },
       { "group": "UpperFloor", "label": "Upper floor" },
       { "group": "Baluster", "label": "Baluster" },
+      { "group": "Handrail", "label": "Handrail" },
       { "group": "StairsUpperFlight", "label": "Upper flight" },
       { "group": "StairsLowerFlight", "label": "Lower flight" },
       { "group": "Winders", "label": "Winders" },

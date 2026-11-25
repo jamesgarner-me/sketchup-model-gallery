@@ -65,7 +65,7 @@ A Layer is a top-level SketchUp group that visitors can show or hide from the **
 | `explode` | No | `true` shows the Explode slider for this Model (default off). |
 | `layers` | No | Top-level SketchUp groups visitors can show or hide, in panel order: `[{ "group": "<exact group name>", "label": "<panel text>", "visible": false }]`. `label` defaults to the group name and `visible` to `true`. |
 
-Example with every optional field (illustrative; the real stairs entry sets `stage`, `autoOrbit`, `explode` and all eleven groups as `layers`):
+Example with every optional field (illustrative; the real stairs entry sets `stage`, `autoOrbit`, `explode` and all twelve groups as `layers`):
 
 ```json
 {

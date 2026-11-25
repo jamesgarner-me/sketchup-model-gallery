@@ -155,7 +155,7 @@ test('Stairs: toggling a Layer leaves Auto-orbit running', async ({ page }) => {
   await expect.poll(auto).toBe(true)
   await page.getByRole('button', { name: 'Layers' }).click()
   const panel = page.getByRole('region', { name: 'Layers' })
-  await expect(panel.getByRole('checkbox')).toHaveCount(11)
+  await expect(panel.getByRole('checkbox')).toHaveCount(12)
   // Walls and plaster start hidden; showing one reveals it.
   expect(await groupVisibility(page, ['Walls', 'PlasterSheeting'])).toEqual({ Walls: false, PlasterSheeting: false })
   await panel.getByRole('checkbox', { name: 'Walls' }).click()
