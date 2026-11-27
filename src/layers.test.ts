@@ -21,6 +21,20 @@ describe('extractTopLevelGroups', () => {
     const gltf = { scenes: [{ nodes: [0, 1] }], nodes: [{ name: 'A', mesh: 0 }, { name: 'B', children: [2] }, { mesh: 1 }] }
     expect(extractTopLevelGroups(gltf)).toEqual(['A', 'B'])
   })
+  it('unwraps a lone named group beside Viewpoint leaves', () => {
+    const gltf = {
+      scenes: [{ nodes: [0] }],
+      nodes: [
+        { children: [1, 2] },
+        { name: 'Final staircase', children: [3, 4] },
+        { name: 'Scene 1' },
+        { name: 'Finished stair', children: [5] },
+        { name: 'Framing', mesh: 0 },
+        { mesh: 1 },
+      ],
+    }
+    expect(extractTopLevelGroups(gltf)).toEqual(['Finished stair', 'Framing'])
+  })
   it('returns nothing for an empty glTF', () => {
     expect(extractTopLevelGroups({})).toEqual([])
   })

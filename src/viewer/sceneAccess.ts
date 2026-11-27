@@ -124,7 +124,10 @@ export function getSceneAccess(el: HTMLElement): SceneAccess {
       })
       let node = model
       while (node.children.length === 1) node = node.children[0]
-      return node.children.filter(hasGeometry).map(toPart)
+      // As for Layers: a lone group wrapping the whole Model is unwrapped, so its sections are the parts.
+      let parts = node.children.filter(hasGeometry)
+      while (parts.length === 1 && parts[0].children.filter(hasGeometry).length > 1) parts = parts[0].children.filter(hasGeometry)
+      return parts.map(toPart)
     },
     requestRender() {
       scene.updateShadow?.()

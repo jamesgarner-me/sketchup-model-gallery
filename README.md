@@ -42,7 +42,7 @@ A Model can show an **Explode** slider above the controls. Dragging it right pul
 
 ### Layers
 
-A Layer is a top-level SketchUp group that visitors can show or hide from the **Layers** button. Unlike Viewpoints, Layers are opt-in: list them in the catalog's `layers` field (see below), in the order the panel should show them.
+A Layer is a top-level SketchUp group (or, when one group wraps the whole model, one of its sections) that visitors can show or hide from the **Layers** button. Unlike Viewpoints, Layers are opt-in: list them in the catalog's `layers` field (see below), in the order the panel should show them.
 
 - **`group`** is the group name exactly as exported, spacing included (e.g. `"01  Street, crossover and driveway"` has two spaces). If a name doesn't match, the build fails and lists the model's top-level groups.
 - Layers start at their `visible` setting on every load, and Reset view puts them back to it. Visitors' changes aren't kept in the URL.
@@ -65,14 +65,14 @@ A Layer is a top-level SketchUp group that visitors can show or hide from the **
 | `explode` | No | `true` shows the Explode slider for this Model (default off). |
 | `layers` | No | Top-level SketchUp groups visitors can show or hide, in panel order: `[{ "group": "<exact group name>", "label": "<panel text>", "visible": false }]`. `label` defaults to the group name and `visible` to `true`. |
 
-Example with every optional field (illustrative; the real stairs entry sets `stage`, `autoOrbit`, `explode` and all twelve groups as `layers`):
+Example with every optional field (illustrative; the real stairs entry sets `stage`, `autoOrbit`, `explode` and its four main sections as `layers`):
 
 ```json
 {
   "id": "stairs",
   "title": "Stairs design",
   "description": "Staircase design, version 1.",
-  "glb": "/models/stairs-james-design-v1-backup.glb",
+  "glb": "/models/stairs-james-design.glb",
   "thumbnail": "/thumbnails/stairs.webp",
   "order": 1,
   "notes": "stairs.md",
@@ -81,8 +81,8 @@ Example with every optional field (illustrative; the real stairs entry sets `sta
   "autoOrbit": true,
   "explode": true,
   "layers": [
-    { "group": "StairsUpperFlight", "label": "Upper flight" },
-    { "group": "PlasterSheeting", "label": "Plaster sheeting", "visible": false }
+    { "group": "Finished stair | Hardwood", "label": "Finished stair" },
+    { "group": "Floors, walls and linings", "visible": false }
   ]
 }
 ```

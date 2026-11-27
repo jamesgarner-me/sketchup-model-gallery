@@ -3,25 +3,17 @@
     "id": "stairs",
     "title": "Stairs design",
     "description": "Staircase design, version 1.",
-    "glb": "/models/stairs-james-design-v1-backup.glb",
+    "glb": "/models/stairs-james-design.glb",
     "thumbnail": "/thumbnails/stairs.webp",
     "order": 1,
     "stage": "showroom",
     "autoOrbit": true,
     "explode": true,
     "layers": [
-      { "group": "CentreNewel", "label": "Centre newel" },
-      { "group": "StringersLower", "label": "Lower stringers" },
-      { "group": "StringersUpper", "label": "Upper stringers" },
-      { "group": "PlasterSheeting", "label": "Plaster sheeting", "visible": false },
-      { "group": "UpperFloor", "label": "Upper floor" },
-      { "group": "Baluster", "label": "Baluster" },
-      { "group": "Handrail", "label": "Handrail" },
-      { "group": "StairsUpperFlight", "label": "Upper flight" },
-      { "group": "StairsLowerFlight", "label": "Lower flight" },
-      { "group": "Winders", "label": "Winders" },
-      { "group": "WinderFraming", "label": "Winder framing" },
-      { "group": "Walls", "label": "Walls", "visible": false }
+      { "group": "Finished stair | Hardwood", "label": "Finished stair" },
+      { "group": "Structural framing" },
+      { "group": "Balustrade and handrail" },
+      { "group": "Floors, walls and linings", "visible": false }
     ]
   },
   {
