@@ -35,6 +35,20 @@ describe('extractTopLevelGroups', () => {
     }
     expect(extractTopLevelGroups(gltf)).toEqual(['Finished stair', 'Framing'])
   })
+  it('ignores geometry-free sibling groups when unwrapping a lone group', () => {
+    const gltf = {
+      scenes: [{ nodes: [0] }],
+      nodes: [
+        { children: [1, 2] },
+        { name: 'IBC wicking bed', children: [3, 4] },
+        { name: 'Section faces and notes', children: [5] },
+        { name: 'Plinth', mesh: 0 },
+        { name: 'Cladding', mesh: 1 },
+        { name: 'Geom3D' },
+      ],
+    }
+    expect(extractTopLevelGroups(gltf)).toEqual(['Plinth', 'Cladding'])
+  })
   it('returns nothing for an empty glTF', () => {
     expect(extractTopLevelGroups({})).toEqual([])
   })

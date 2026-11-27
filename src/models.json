@@ -39,5 +39,29 @@
       { "group": "10  Existing landing comparison • toggle", "label": "Existing landing comparison", "visible": false },
       { "group": "11  Roof-loaded 4×4 clearance • toggle", "label": "Roof-loaded 4×4 clearance", "visible": false }
     ]
+  },
+  {
+    "id": "wicking-bed",
+    "title": "Wicking Bed with Cladding",
+    "description": "IBC wicking bed with Merbau timber cladding.",
+    "glb": "/models/wicking-bed-with-timber-cladding.glb",
+    "thumbnail": "/thumbnails/wicking-bed.webp",
+    "order": 3,
+    "camera": { "orbit": "30deg 65deg auto" },
+    "autoOrbit": true,
+    "explode": true,
+    "layers": [
+      { "group": "Treated pine plinth and fixings", "label": "Treated pine plinth" },
+      { "group": "Inset support pallet | assumed", "label": "Support pallet" },
+      { "group": "HDPE tub | open cut rim", "label": "HDPE tub" },
+      { "group": "Black woven outer wrap", "label": "Woven outer wrap" },
+      { "group": "Galvanised cage" },
+      { "group": "Wicking layers" },
+      { "group": "Plumbing | fill and overflow", "label": "Fill and overflow plumbing" },
+      { "group": "Strawberry planting" },
+      { "group": "01 Batten rings", "label": "Batten rings" },
+      { "group": "02 Merbau cladding", "label": "Merbau cladding" },
+      { "group": "03 Merbau capping", "label": "Merbau capping" }
+    ]
   }
 ]
