@@ -7,7 +7,7 @@ Lets the owner publish or update Models through files and Catalog data, with bui
 ## Requirements
 
 ### Requirement: Catalog entry fields
-Each Catalog entry SHALL have a unique stable ID, title, Description, GLB path, thumbnail path and manual order, and MAY have a Notes path, initial camera settings, a Stage name, an Auto-orbit setting, an Explode setting (true or false; default off) and a list of Layers. Each Layer SHALL name a top-level group in the GLB and MAY give a display label (defaulting to the group name) and a default visibility (defaulting to visible).
+Each Catalog entry SHALL have a unique stable ID, title, Description, GLB path, thumbnail path and manual order, and MAY have a Notes path, initial camera settings, a Stage name, an Auto-orbit setting, an Explode setting (true or false; default off) and a list of Layers. Each Layer SHALL name a top-level group in the GLB and MAY give a display label (defaulting to the group name) and a default visibility (defaulting to visible). When a single group wraps the whole Model, its sections SHALL count as the top-level groups.
 
 #### Scenario: Add a Model
 - **WHEN** the owner adds a GLB, thumbnail, optional Notes and a Catalog entry
@@ -24,6 +24,10 @@ Each Catalog entry SHALL have a unique stable ID, title, Description, GLB path, 
 #### Scenario: Add Layers
 - **WHEN** the owner lists top-level group names as Layers in an entry
 - **THEN** visitors can show and hide those groups with no viewer code changes
+
+#### Scenario: Model wrapped in one group
+- **WHEN** a GLB's only top-level group wraps the whole Model (e.g. "Final staircase") and the owner lists its sections as Layers
+- **THEN** the build accepts them and visitors can show and hide each section
 
 ### Requirement: Build-time validation
 The build SHALL fail with a clear message when an entry has a duplicate ID, a missing GLB or thumbnail file, an unknown Stage name, an invalid Auto-orbit setting, or a Layer that is malformed, duplicated within the entry, or not a top-level group in that entry's GLB. A missing Notes file or path SHALL NOT fail the build.

@@ -1,25 +1,38 @@
 # Timber stair — builder overview
 
-Based on SketchUp model `stairs-james-design-v1-backup`, reviewed 22 November 2026. All dimensions in **millimetres**, approximate unless stated. Timber species below reflect the requested material intent.
+Based on SketchUp model `stairs-james-design-v2-final-dimensions`, reviewed 27 November 2026. All dimensions in **millimetres**, approximate unless stated. Timber species below reflect the requested material intent.
 
 ## Layout and dimensions
 
-- **Arrangement:** U-shaped stair with two parallel flights and four shaped turning treads around a central post; closed risers.
-- **Overall stair footprint:** approximately **1,900 wide × 3,220 long**, including the 180 projection at the foot of the lower flight.
-- **Total rise:** approximately **3,340**, with **18 rises at 185.55**. Confirm finished floor levels before setting out.
-- **Tread sequence:** nine lower straight treads, four turning treads (10–13), then five upper tread pieces (14–18). The final piece meets the upper floor.
-- **Flight width:** approximately **895** between the outside wall line and central post zone, before finishes and handrail allowances. Lower straight tread pieces are modelled **950 wide**; upper pieces **895 wide**. Confirm trimming and finished clear width.
-- **Straight-flight going:** **250** between successive nosings. Typical tread pieces are **302 deep × 32 thick**, including overlap; the final upper piece is **202 deep**.
-- **Turning area:** approximately **1,900 × 970**. The four shaped treads require individual templates around the post.
+- **Arrangement:** U-shaped stair with two parallel flights, three winders and a return landing beside a central post; closed risers.
+- **Overall stair footprint:** approximately **1,800 wide × 3,210 long**.
+- **Total rise:** approximately **3,300**, with **18 rises at about 183.3**. Confirm finished floor levels before setting out.
+- **Tread sequence:** nine lower straight treads (T01–T09), three winders (T10–T12), a return landing (T13, about **889 × 1,237**), then five upper treads (T14–T18). The top tread meets the upstairs carpet.
+- **Tread widths:** lower straight treads **902**, upper treads **847**, before finishes and handrail allowances. Confirm trimming and finished clear width.
+- **Straight-flight going:** **250** between successive nosings. Typical treads are **302 deep × 32 thick**, including overlap; the top tread at the carpet junction is **260 deep**.
+- **Winders:** shaped plan envelopes of about **880 × 625**, **939 × 934** and **596 × 893**. Each needs an individual template around the post.
 
 ## Timber and framing
 
 - **Treads:** **Victorian ash or Tasmanian oak**, finished thickness **32**; select species and finish before ordering.
-- **Risers:** modelled **32 thick**, with approximately **154 exposed height** between treads. Confirm riser material and finish.
-- **Flight stringers:** **300 × 42 LVL**, three per flight: one each side and one intermediate; six total. Sizes are model labels, subject to final structural detailing.
-- **Turning/support framing:** LVL bearers, trimmers and blocking. Model labels include **200 × 42**, **190 × 42** and **240 × 42**; some labelled depths differ from the shaped geometry. Reconcile sections before ordering or cutting.
-- **Central post/newel:** **110 × 110 finished dressed timber**. Modelled overall length approximately **4,359**; confirm species, final height and connections.
-- **Balustrade:** model includes **45 × 45** balusters and capping; confirm timber, handrail profile and final layout.
+- **Risers:** hardwood, **32 thick**, with about **151 exposed height** between treads. Confirm riser material and finish.
+- **Lower flight stringers:** **345 × 42 LVL** on the wall side and in the centre; the newel-side stringer is cut from a **427 min × 42** LVL blank. A timber-framed support wall (sole plate, raking top plate, studs) sits under the lower flight.
+- **Upper flight stringers:** three **345 × 42 LVL** (proposed).
+- **Landing framing:** LVL front and rear bearers **240 × 42 × 860 long**; joists **240 × 42 × 1,276 long** (one **240 × 58**).
+- **Winder framing:** LVL members **183.3** and **200 × 42**, with a diagonal bearer under each framed winder.
+- **Upper-floor header:** two **190 × 45** LVL plies plus a **250 × 42** stair-side LVL.
+- **Central post/newel:** **110 × 110** modelled envelope; confirm species, final height and connections.
+
+## Balustrade and handrail
+
+- **Balustrade:** nine **45 × 45** reclaimed hardwood balusters with a hardwood cap **45 wide × 32**, raking with a level return.
+- **Wall handrail:** round hardwood rail, **50** diameter, on nine stainless steel wall brackets (bracket positions indicative).
+
+## Walls and finishes
+
+- Stud walls each side and at the rear, lined with **13** plasterboard; plasterboard soffit under the stair and landing.
+- Upper floor finished with **15** carpet and underlay; ground floor **18** engineered board.
+- Upper floor has a **110** centre divider with a **130 × 20** hardwood cap.
 
 ## Confirm before fabrication
 

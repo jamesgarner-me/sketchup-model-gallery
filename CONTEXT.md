@@ -57,7 +57,7 @@ An optional slow turntable rotation a Model performs when its Viewer opens, unti
 _Avoid_: Auto-rotate, spin, turntable mode
 
 **Layer**:
-A named top-level SketchUp group in a Model's export that visitors can show or hide. Only groups listed for the Model in the Catalog are Layers.
+A named top-level SketchUp group in a Model's export that visitors can show or hide. When one group wraps the whole Model, its sections count as the top-level groups. Only groups listed for the Model in the Catalog are Layers.
 _Avoid_: Tag, part, SketchUp layer
 
 **Viewpoint**:
