@@ -13,7 +13,7 @@
       { "group": "Finished stair | Hardwood", "label": "Finished stair" },
       { "group": "Structural framing" },
       { "group": "Balustrade and handrail" },
-      { "group": "Floors, walls and linings", "visible": false }
+      { "group": "Floors, walls and linings" }
     ]
   },
   {

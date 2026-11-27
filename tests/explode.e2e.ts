@@ -93,9 +93,9 @@ test('Explode: only visible Layers explode, and Layers changes re-spread straigh
   const moved = async (n: string) => dist(await nodePos(page, n), rest[n]) > 0.01
   const camBefore = await cam(page)
 
-  // Floors, walls and linings start hidden (Catalog default), so it stays put; visible groups move.
+  // Every Layer starts visible (Catalog default), so all groups move.
   await slider.fill('1000')
-  expect(await moved(WALLS)).toBe(false)
+  expect(await moved(WALLS)).toBe(true)
   expect(await moved(FINISHED)).toBe(true)
 
   await page.getByRole('button', { name: 'Layers' }).click()
@@ -111,7 +111,9 @@ test('Explode: only visible Layers explode, and Layers changes re-spread straigh
     expect(hit).toBe('explode-slider')
   }
 
-  // Showing a Layer while exploded spreads it at once; hiding one puts it back at rest.
+  // Hiding a Layer while exploded puts it back at rest; showing it again spreads it at once.
+  await panel.getByRole('checkbox', { name: 'Floors, walls and linings' }).click()
+  await expect.poll(() => moved(WALLS)).toBe(false)
   await panel.getByRole('checkbox', { name: 'Floors, walls and linings' }).click()
   await expect.poll(() => moved(WALLS)).toBe(true)
   await panel.getByRole('checkbox', { name: 'Finished stair' }).click()
@@ -130,15 +132,15 @@ test('Explode: only visible Layers explode, and Layers changes re-spread straigh
 
   // Restore defaults re-spreads for the current slider position.
   await panel.getByRole('button', { name: 'Restore defaults' }).click()
-  expect(await moved(WALLS)).toBe(false)
+  expect(await moved(WALLS)).toBe(true)
   expect(await moved(FINISHED)).toBe(true)
 
   // None of this moved the camera.
   expect(await cam(page)).toEqual(camBefore)
 
-  // Reset view: starting Layers back (walls hidden again) and assembled.
+  // Reset view: starting Layers back (walls shown again) and assembled.
   await panel.getByRole('checkbox', { name: 'Floors, walls and linings' }).click()
-  await expect.poll(() => moved(WALLS)).toBe(true)
+  await expect.poll(() => moved(WALLS)).toBe(false)
   await page.keyboard.press('Escape')
   await page.getByRole('button', { name: 'Reset view' }).click()
   await expect(slider).toHaveValue('0')
@@ -148,5 +150,5 @@ test('Explode: only visible Layers explode, and Layers changes re-spread straigh
     const sym = Object.getOwnPropertySymbols(el).find((s) => s.description === 'scene')!
     return el[sym].model.getObjectByName(WALLS).visible
   }, WALLS)
-  expect(wallVisible).toBe(false)
+  expect(wallVisible).toBe(true)
 })
